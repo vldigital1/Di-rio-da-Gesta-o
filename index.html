@@ -1,0 +1,2779 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F8BBD0">
+<title>Diário da Gestação</title>
+<link rel="icon" href="logo_gestacao.jpg-.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DIÁRIO DA GESTAÇÃO — Design System
+   ============================================================ */
+:root{
+  --pink:#F8BBD0; --mint:#A5D6A7; --yellow:#FFF59D; --blue:#BBDEFB; --lilac:#E1BEE7;
+  --pink-ink:#C2185B; --mint-ink:#2E7D46; --yellow-ink:#9A7B0A; --blue-ink:#1565C0; --lilac-ink:#7B3FA0;
+  --pink-soft:#FDEEF4; --mint-soft:#EDF7EE; --yellow-soft:#FFFBE6; --blue-soft:#EAF3FD; --lilac-soft:#F6EDFA;
+
+  --bg:#F6F4F9;
+  --bg-grad:radial-gradient(1200px 600px at 8% -10%, #FDEAF2 0%, transparent 55%),
+            radial-gradient(1000px 520px at 100% 0%, #EAF2FD 0%, transparent 50%),
+            radial-gradient(900px 600px at 50% 110%, #F3EDFA 0%, transparent 55%);
+  --surface:#FFFFFF;
+  --surface-2:#FBFAFD;
+  --surface-3:#F4F1F8;
+  --glass:rgba(255,255,255,.72);
+  --sidebar:rgba(255,255,255,.78);
+
+  --text:#221C2A;
+  --text-2:#655D72;
+  --text-3:#9A93A6;
+
+  --border:rgba(34,28,42,.08);
+  --border-2:rgba(34,28,42,.14);
+
+  --shadow-xs:0 1px 2px rgba(34,28,42,.05);
+  --shadow-sm:0 2px 8px rgba(34,28,42,.06), 0 1px 2px rgba(34,28,42,.04);
+  --shadow-md:0 8px 24px rgba(34,28,42,.08), 0 2px 6px rgba(34,28,42,.04);
+  --shadow-lg:0 24px 60px rgba(34,28,42,.14), 0 6px 16px rgba(34,28,42,.06);
+  --shadow-glow:0 10px 30px rgba(224,98,155,.28);
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:22px; --r-xl:28px; --r-full:999px;
+
+  --sidebar-w:268px;
+  --topbar-h:72px;
+
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease-in-out:cubic-bezier(.65,0,.35,1);
+
+  --accent:#E0629B;
+  --accent-2:#8E5BC7;
+  --accent-grad:linear-gradient(135deg,#F8BBD0 0%,#E1BEE7 48%,#BBDEFB 100%);
+  --accent-grad-strong:linear-gradient(135deg,#EE7FAE 0%,#B77BD8 52%,#6FA8E8 100%);
+}
+
+[data-theme="dark"]{
+  --pink-ink:#F8A5C4; --mint-ink:#94D59B; --yellow-ink:#F0DC85; --blue-ink:#94C4F5; --lilac-ink:#D6A8EC;
+  --pink-soft:rgba(248,187,208,.11); --mint-soft:rgba(165,214,167,.11); --yellow-soft:rgba(255,245,157,.10);
+  --blue-soft:rgba(187,222,251,.11); --lilac-soft:rgba(225,190,231,.11);
+
+  --bg:#0C0A11;
+  --bg-grad:radial-gradient(1200px 600px at 8% -10%, rgba(224,98,155,.16) 0%, transparent 55%),
+            radial-gradient(1000px 520px at 100% 0%, rgba(111,168,232,.14) 0%, transparent 50%),
+            radial-gradient(900px 600px at 50% 110%, rgba(142,91,199,.16) 0%, transparent 55%);
+  --surface:#15111D;
+  --surface-2:#1B1626;
+  --surface-3:#221C2F;
+  --glass:rgba(21,17,29,.72);
+  --sidebar:rgba(17,14,24,.82);
+
+  --text:#F2EEF7;
+  --text-2:#A79FB5;
+  --text-3:#736B81;
+
+  --border:rgba(255,255,255,.08);
+  --border-2:rgba(255,255,255,.15);
+
+  --shadow-xs:0 1px 2px rgba(0,0,0,.4);
+  --shadow-sm:0 2px 10px rgba(0,0,0,.4);
+  --shadow-md:0 10px 30px rgba(0,0,0,.45);
+  --shadow-lg:0 28px 70px rgba(0,0,0,.6);
+  --shadow-glow:0 10px 34px rgba(224,98,155,.35);
+
+  --accent:#F394BC; --accent-2:#BA8AE0;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); background-image:var(--bg-grad);
+  background-attachment:fixed;
+  color:var(--text);
+  font-family:'Roboto',system-ui,-apple-system,sans-serif;
+  font-size:16px; font-weight:400; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  transition:background-color .5s var(--ease), color .35s var(--ease);
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:'Poppins',sans-serif; margin:0; line-height:1.25; letter-spacing:-.015em}
+h1{font-size:24px;font-weight:600}
+h2{font-size:20px;font-weight:600}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+::selection{background:var(--pink);color:#221C2A}
+
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-track{background:transparent}
+*::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px;border:3px solid transparent;background-clip:content-box}
+*::-webkit-scrollbar-thumb:hover{background:var(--text-3);background-clip:content-box}
+
+.ic{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ic-sm{width:16px;height:16px}
+.ic-lg{width:24px;height:24px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ============================================================ APP SHELL */
+.app{display:flex;min-height:100dvh}
+
+.sidebar{
+  width:var(--sidebar-w);flex:none;position:fixed;inset:0 auto 0 0;z-index:60;
+  background:var(--sidebar);backdrop-filter:blur(22px) saturate(180%);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  transition:transform .42s var(--ease);
+}
+.sb-brand{display:flex;align-items:center;gap:11px;padding:20px 18px 16px;flex:none}
+.sb-logo{width:40px;height:40px;border-radius:13px;object-fit:cover;box-shadow:var(--shadow-sm);border:1px solid var(--border)}
+.sb-brand-txt strong{display:block;font-family:'Poppins';font-size:15.5px;font-weight:600;letter-spacing:-.02em;line-height:1.15}
+.sb-brand-txt span{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);font-weight:500;margin-top:2px}
+.sb-close{display:none;margin-left:auto;background:none;border:0;padding:6px;border-radius:10px;color:var(--text-2);cursor:pointer}
+
+.sb-scroll{flex:1;overflow-y:auto;padding:4px 12px 16px;overscroll-behavior:contain}
+.sb-group{margin-bottom:18px}
+.sb-group-label{font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);padding:0 12px 8px;font-family:'Poppins'}
+.nav-item{
+  position:relative;display:flex;align-items:center;gap:12px;width:100%;
+  padding:9.5px 12px;border-radius:12px;border:0;background:none;cursor:pointer;
+  color:var(--text-2);font-family:'Poppins';font-size:14px;font-weight:500;text-align:left;
+  transition:background .22s var(--ease), color .22s var(--ease), transform .18s var(--ease);
+}
+.nav-item span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-item .ic{transition:transform .3s var(--ease), color .22s}
+.nav-item:hover{background:var(--surface-3);color:var(--text)}
+.nav-item:hover .ic{transform:translateX(1px) scale(1.06)}
+.nav-item:active{transform:scale(.985)}
+.nav-item.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm);font-weight:600}
+.nav-item.active .ic{color:var(--accent)}
+.nav-item.active::before{
+  content:'';position:absolute;left:-12px;top:50%;transform:translateY(-50%);
+  width:3px;height:20px;border-radius:0 4px 4px 0;background:var(--accent-grad-strong);
+  animation:navMark .4s var(--ease);
+}
+@keyframes navMark{from{height:0;opacity:0}to{height:20px;opacity:1}}
+.nav-badge{font-size:10.5px;font-weight:700;font-family:'Poppins';padding:2px 7px;border-radius:99px;background:var(--pink-soft);color:var(--pink-ink);letter-spacing:.02em}
+
+.sb-foot{flex:none;padding:12px;border-top:1px solid var(--border)}
+.sb-progress{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:13px 14px;box-shadow:var(--shadow-xs)}
+.sb-progress .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.sb-progress .row b{font-family:'Poppins';font-size:13px;font-weight:600}
+.sb-progress .row i{font-style:normal;font-size:11.5px;color:var(--text-3);font-weight:500}
+.bar{height:7px;border-radius:99px;background:var(--surface-3);overflow:hidden;position:relative}
+.bar>i{display:block;height:100%;border-radius:99px;background:var(--accent-grad-strong);transition:width 1.1s var(--ease);position:relative;overflow:hidden}
+.bar>i::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:shimmer 2.4s infinite}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(200%)}}
+
+.main{flex:1;min-width:0;margin-left:var(--sidebar-w);display:flex;flex-direction:column}
+
+.topbar{
+  position:sticky;top:0;z-index:40;height:var(--topbar-h);flex:none;
+  display:flex;align-items:center;gap:12px;padding:0 24px;
+  background:var(--glass);backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border);
+}
+.tb-menu{display:none;background:none;border:0;padding:8px;margin-left:-8px;border-radius:11px;color:var(--text);cursor:pointer}
+.tb-greet{min-width:0;flex:1}
+.tb-greet h1{font-size:19px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-greet p{font-size:12.5px;color:var(--text-3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-actions{display:flex;align-items:center;gap:9px;flex:none}
+
+.icon-btn{
+  width:40px;height:40px;display:grid;place-items:center;border-radius:12px;
+  border:1px solid var(--border);background:var(--surface);color:var(--text-2);cursor:pointer;
+  box-shadow:var(--shadow-xs);
+  transition:transform .18s var(--ease), box-shadow .22s var(--ease), color .2s, background .3s;
+}
+.icon-btn:hover{color:var(--text);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.icon-btn:active{transform:translateY(0) scale(.94);box-shadow:var(--shadow-xs)}
+
+.theme-toggle{position:relative;overflow:hidden}
+.theme-toggle .ic{transition:transform .5s var(--ease), opacity .3s}
+.theme-toggle .ic-sun{position:absolute;opacity:0;transform:rotate(-90deg) scale(.4)}
+[data-theme="dark"] .theme-toggle .ic-moon{opacity:0;transform:rotate(90deg) scale(.4)}
+[data-theme="dark"] .theme-toggle .ic-sun{opacity:1;transform:none}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:0 18px;height:44px;border-radius:13px;border:1px solid transparent;cursor:pointer;
+  font-family:'Poppins';font-size:15px;font-weight:500;letter-spacing:-.01em;
+  transition:transform .16s var(--ease), box-shadow .24s var(--ease), background .25s, opacity .2s;
+  white-space:nowrap;
+}
+.btn:active{transform:translateY(1px) scale(.975)}
+.btn-primary{background:var(--accent-grad-strong);color:#fff;box-shadow:var(--shadow-glow)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(224,98,155,.4)}
+.btn-ghost{background:var(--surface);border-color:var(--border);color:var(--text-2);box-shadow:var(--shadow-xs)}
+.btn-ghost:hover{color:var(--text);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.btn-soft{background:var(--surface-3);color:var(--text);border-color:transparent}
+.btn-soft:hover{background:var(--border);transform:translateY(-2px)}
+.btn-sm{height:36px;padding:0 13px;font-size:13.5px;border-radius:11px}
+.btn-block{width:100%}
+.btn:disabled{opacity:.5;pointer-events:none}
+
+.avatar{
+  width:40px;height:40px;border-radius:13px;flex:none;cursor:pointer;position:relative;
+  background:var(--accent-grad);display:grid;place-items:center;
+  font-family:'Poppins';font-weight:600;font-size:15px;color:#3B2E44;
+  box-shadow:var(--shadow-sm);border:1px solid var(--border);
+  transition:transform .2s var(--ease), box-shadow .22s;
+}
+.avatar:hover{transform:translateY(-2px) scale(1.03);box-shadow:var(--shadow-md)}
+.avatar::after{content:'';position:absolute;right:-2px;bottom:-2px;width:11px;height:11px;border-radius:99px;background:var(--mint);border:2.2px solid var(--surface)}
+
+.stage{flex:1;padding:28px 24px 96px;max-width:1320px;width:100%;margin:0 auto}
+.view{animation:viewIn .44s var(--ease) both}
+@keyframes viewIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+.view.back{animation:viewInBack .44s var(--ease) both}
+@keyframes viewInBack{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+
+.page-head{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.page-head .t{flex:1;min-width:220px}
+.page-head h1{font-size:26px;font-weight:600}
+.page-head p{color:var(--text-2);font-size:14.5px;margin-top:4px}
+.page-head .a{display:flex;gap:9px;flex-wrap:wrap}
+
+/* ---------- CARDS / GRID ---------- */
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g-side{grid-template-columns:minmax(0,1.65fr) minmax(0,1fr)}
+.span2{grid-column:span 2}
+
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:22px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+}
+.card-hover:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--border-2)}
+.card-head{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.card-head h3{flex:1;min-width:0}
+.card-head .sub{font-size:12.5px;color:var(--text-3);font-weight:400;font-family:'Roboto'}
+.chip-ic{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;flex:none}
+.chip-ic.pink{background:var(--pink-soft);color:var(--pink-ink)}
+.chip-ic.mint{background:var(--mint-soft);color:var(--mint-ink)}
+.chip-ic.blue{background:var(--blue-soft);color:var(--blue-ink)}
+.chip-ic.lilac{background:var(--lilac-soft);color:var(--lilac-ink)}
+.chip-ic.yellow{background:var(--yellow-soft);color:var(--yellow-ink)}
+
+.tag{display:inline-flex;align-items:center;gap:5px;font-family:'Poppins';font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:99px;letter-spacing:.01em}
+.tag.pink{background:var(--pink-soft);color:var(--pink-ink)}
+.tag.mint{background:var(--mint-soft);color:var(--mint-ink)}
+.tag.blue{background:var(--blue-soft);color:var(--blue-ink)}
+.tag.lilac{background:var(--lilac-soft);color:var(--lilac-ink)}
+.tag.yellow{background:var(--yellow-soft);color:var(--yellow-ink)}
+.tag.gray{background:var(--surface-3);color:var(--text-2)}
+
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .k{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);font-weight:600;font-family:'Poppins'}
+.stat .v{font-family:'Poppins';font-size:29px;font-weight:600;letter-spacing:-.03em;line-height:1.15}
+.stat .v small{font-size:14px;font-weight:500;color:var(--text-3);letter-spacing:0}
+.stat .d{font-size:12.5px;color:var(--text-2)}
+
+.divider{height:1px;background:var(--border);margin:16px 0;border:0}
+
+.empty{text-align:center;padding:40px 20px;color:var(--text-3)}
+.empty .ic{width:34px;height:34px;margin-bottom:12px;stroke-width:1.3;opacity:.7}
+.empty h3{font-size:15.5px;color:var(--text-2);margin-bottom:5px}
+.empty p{font-size:13.5px;max-width:330px;margin:0 auto 16px}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;border-radius:var(--r-xl);overflow:hidden;padding:30px 32px;
+  color:#fff;box-shadow:var(--shadow-lg);min-height:214px;display:flex;flex-direction:column;justify-content:flex-end;
+}
+.hero-bg{position:absolute;inset:0;background-image:url('banner%20backgraud.jpg.jpeg');background-size:cover;background-position:center;transform:scale(1.06);animation:heroPan 26s var(--ease-in-out) infinite alternate}
+@keyframes heroPan{from{transform:scale(1.06) translate3d(0,0,0)}to{transform:scale(1.14) translate3d(-1.5%,-1.5%,0)}}
+.hero-veil{position:absolute;inset:0;background:linear-gradient(115deg,rgba(58,26,48,.86) 0%,rgba(72,38,96,.62) 45%,rgba(30,64,110,.44) 100%)}
+.hero-veil2{position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,10,26,.7) 0%,transparent 62%)}
+.hero>h2,.hero>.sub,.hero>.hero-chips{position:relative;z-index:2}
+.hero-top{position:absolute;top:22px;left:32px;right:32px;display:flex;justify-content:space-between;align-items:flex-start;z-index:2}
+.hero h2{font-size:31px;font-weight:600;letter-spacing:-.03em;text-shadow:0 2px 20px rgba(0,0,0,.3)}
+.hero .sub{font-size:14px;opacity:.9;margin-top:5px;max-width:52ch}
+.hero-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.hero-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:99px;background:rgba(255,255,255,.16);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.24);font-family:'Poppins';font-size:12.5px;font-weight:500}
+.hero-chip b{font-weight:600}
+
+.ring{position:relative;width:96px;height:96px;flex:none}
+.ring svg{transform:rotate(-90deg);width:100%;height:100%}
+.ring circle{fill:none;stroke-linecap:round}
+.ring .trk{stroke:var(--surface-3)}
+.ring .val{stroke:url(#ringGrad);transition:stroke-dashoffset 1.4s var(--ease)}
+.ring .lbl{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .lbl b{display:block;font-family:'Poppins';font-size:22px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.ring .lbl span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);font-weight:600;font-family:'Poppins'}
+
+/* ---------- FORM ---------- */
+.field{margin-bottom:15px}
+.field>label{display:block;font-family:'Poppins';font-size:12.5px;font-weight:600;color:var(--text-2);margin-bottom:7px;letter-spacing:.01em}
+.input,textarea.input,select.input{
+  width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--border-2);
+  background:var(--surface-2);color:var(--text);font-size:15px;outline:none;
+  transition:border-color .2s, box-shadow .25s, background .25s;
+}
+textarea.input{resize:vertical;min-height:104px;line-height:1.65;font-family:'Roboto'}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(224,98,155,.14);background:var(--surface)}
+.input::placeholder{color:var(--text-3)}
+select.input{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239A93A6' stroke-width='2' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 12px center;background-size:17px;padding-right:38px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.hint{font-size:12px;color:var(--text-3);margin-top:6px}
+
+.seg{display:flex;gap:6px;padding:4px;background:var(--surface-3);border-radius:13px;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar{display:none}
+.seg button{
+  flex:1;white-space:nowrap;padding:8px 14px;border:0;border-radius:10px;background:none;cursor:pointer;
+  font-family:'Poppins';font-size:13.5px;font-weight:500;color:var(--text-2);
+  transition:all .24s var(--ease);
+}
+.seg button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm);font-weight:600}
+.seg button:not(.on):hover{color:var(--text)}
+
+.moods{display:flex;gap:9px;flex-wrap:wrap}
+.mood{
+  width:54px;height:54px;border-radius:16px;border:1.5px solid var(--border);background:var(--surface-2);
+  display:grid;place-items:center;font-size:24px;cursor:pointer;line-height:1;
+  transition:transform .22s var(--ease), border-color .22s, background .22s, box-shadow .22s;
+}
+.mood:hover{transform:translateY(-3px) scale(1.05);box-shadow:var(--shadow-md)}
+.mood.on{border-color:var(--accent);background:var(--pink-soft);transform:translateY(-3px) scale(1.06);box-shadow:var(--shadow-glow)}
+
+.list{display:flex;flex-direction:column;gap:10px}
+.row-item{
+  display:flex;align-items:center;gap:13px;padding:13px 15px;border-radius:15px;
+  background:var(--surface-2);border:1px solid var(--border);
+  transition:transform .22s var(--ease), box-shadow .22s, border-color .22s, background .22s;
+}
+.row-item:hover{transform:translateX(3px);box-shadow:var(--shadow-sm);border-color:var(--border-2)}
+.row-item .body{flex:1;min-width:0}
+.row-item .body b{display:block;font-family:'Poppins';font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.row-item .body small{display:block;font-size:12.5px;color:var(--text-3);margin-top:1px}
+.row-actions{display:flex;gap:5px;flex:none;opacity:.55;transition:opacity .2s}
+.row-item:hover .row-actions{opacity:1}
+.mini-btn{width:31px;height:31px;display:grid;place-items:center;border-radius:9px;border:0;background:none;color:var(--text-3);cursor:pointer;transition:all .18s var(--ease)}
+.mini-btn:hover{background:var(--surface-3);color:var(--text)}
+.mini-btn.danger:hover{background:var(--pink-soft);color:var(--pink-ink)}
+
+.chk{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;padding:11px 14px;border-radius:14px;border:1px solid var(--border);background:var(--surface-2);transition:all .22s var(--ease);position:relative}
+.chk:hover{border-color:var(--border-2);transform:translateX(3px)}
+.chk input{position:absolute;opacity:0;pointer-events:none}
+.chk .box{width:22px;height:22px;flex:none;border-radius:7px;border:1.8px solid var(--border-2);display:grid;place-items:center;transition:all .28s var(--ease);background:var(--surface)}
+.chk .box svg{width:13px;height:13px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .35s var(--ease) .05s}
+.chk input:checked+.box{background:var(--accent-grad-strong);border-color:transparent;transform:scale(1.06)}
+.chk input:checked+.box svg{stroke-dashoffset:0}
+.chk .txt{flex:1;font-size:14.5px;transition:all .28s var(--ease)}
+.chk input:checked~.txt{color:var(--text-3);text-decoration:line-through;text-decoration-color:var(--border-2)}
+
+/* ---------- CALENDÁRIO ---------- */
+.cal-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.cal-head b{flex:1;font-family:'Poppins';font-size:16px;font-weight:600}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal-dow{text-align:center;font-family:'Poppins';font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding-bottom:6px}
+.cal-day{
+  position:relative;aspect-ratio:1;border-radius:12px;border:0;background:none;cursor:pointer;
+  display:grid;place-items:center;font-family:'Poppins';font-size:13.5px;font-weight:500;color:var(--text-2);
+  transition:all .2s var(--ease);
+}
+.cal-day:hover{background:var(--surface-3);color:var(--text);transform:scale(1.08)}
+.cal-day.out{opacity:.28;pointer-events:none}
+.cal-day.today{color:var(--accent);font-weight:700;background:var(--pink-soft)}
+.cal-day.has::after{content:'';position:absolute;bottom:6px;width:5px;height:5px;border-radius:99px;background:var(--accent-2)}
+.cal-day.sel{background:var(--accent-grad-strong);color:#fff;box-shadow:var(--shadow-glow);transform:scale(1.06)}
+.cal-day.sel::after{background:#fff}
+
+/* ---------- ÁGUA ---------- */
+.water-wrap{display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap}
+.glass-vis{position:relative;width:132px;height:180px;flex:none}
+.glass-body{position:absolute;inset:0;border:3px solid var(--border-2);border-top:0;border-radius:10px 10px 30px 30px;overflow:hidden;background:var(--surface-2)}
+.glass-fill{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,#8FC4F2,#5C9FE0);transition:height 1s var(--ease)}
+.glass-fill::before,.glass-fill::after{content:'';position:absolute;left:-50%;width:200%;height:22px;top:-11px;background:rgba(255,255,255,.35);border-radius:44%;animation:wave 5.5s linear infinite}
+.glass-fill::after{animation-duration:8s;animation-direction:reverse;opacity:.5;top:-8px}
+@keyframes wave{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.glass-lbl{position:absolute;inset:0;display:grid;place-items:center;z-index:2;text-align:center;font-family:'Poppins'}
+.glass-lbl b{display:block;font-size:25px;font-weight:600;letter-spacing:-.03em;color:var(--text);text-shadow:0 1px 10px var(--surface)}
+.glass-lbl span{font-size:11.5px;color:var(--text-2);font-weight:500}
+.cup-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:10px}
+.cup{
+  padding:13px 8px;border-radius:14px;border:1.5px solid var(--border);background:var(--surface-2);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--blue-ink);
+  font-family:'Poppins';font-size:12px;font-weight:600;
+  transition:all .22s var(--ease);
+}
+.cup:hover{transform:translateY(-3px);border-color:var(--blue);background:var(--blue-soft);box-shadow:var(--shadow-md)}
+.cup:active{transform:scale(.94)}
+
+/* ---------- MEMÓRIAS ---------- */
+.mem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.mem{border-radius:var(--r-lg);overflow:hidden;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-sm);transition:transform .32s var(--ease),box-shadow .32s var(--ease);cursor:pointer;position:relative}
+.mem:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:var(--shadow-lg)}
+.mem-photo{aspect-ratio:4/3;background:var(--surface-3);position:relative;overflow:hidden}
+.mem-photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);display:block}
+.mem:hover .mem-photo img{transform:scale(1.06)}
+.mem-photo .ph{position:absolute;inset:0;display:grid;place-items:center;background:var(--accent-grad);color:#fff}
+.mem-body{padding:14px 16px 16px}
+.mem-body .m{font-size:22px;line-height:1;margin-bottom:8px;display:block}
+.mem-body b{display:block;font-family:'Poppins';font-size:13px;font-weight:600;color:var(--text-3);letter-spacing:.02em;margin-bottom:5px}
+.mem-body p{font-size:14px;color:var(--text-2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;line-height:1.55}
+
+/* ---------- CHARTS ---------- */
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart .axis{stroke:var(--border);stroke-width:1}
+.chart .glab{font-size:10px;fill:var(--text-3);font-family:'Poppins';font-weight:500}
+.chart .lin{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:2400;stroke-dashoffset:2400;animation:draw 1.6s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.chart .dot{stroke:var(--surface);stroke-width:2.4;opacity:0;animation:pop .4s var(--ease) forwards}
+@keyframes pop{from{opacity:0}to{opacity:1}}
+.chart .barr{animation:growBar .8s var(--ease) both;transform-origin:bottom;transform-box:fill-box}
+@keyframes growBar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+/* ---------- CARREGAMENTO PREMIUM (IA) ---------- */
+.ai-overlay{
+  position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;
+  background:rgba(12,10,17,.42);backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  opacity:0;pointer-events:none;transition:opacity .34s var(--ease);
+}
+[data-theme="dark"] .ai-overlay{background:rgba(5,4,8,.62)}
+.ai-overlay.on{opacity:1;pointer-events:auto}
+.ai-card{
+  width:min(420px,100%);background:var(--surface);border:1px solid var(--border-2);
+  border-radius:var(--r-xl);padding:34px 30px 26px;box-shadow:var(--shadow-lg);text-align:center;
+  transform:translateY(22px) scale(.95);opacity:0;transition:all .44s var(--ease);
+}
+.ai-overlay.on .ai-card{transform:none;opacity:1}
+
+.orb{position:relative;width:84px;height:84px;margin:0 auto 22px}
+.orb-core{
+  position:absolute;inset:14px;border-radius:50%;
+  background:conic-gradient(from 0deg,#F8BBD0,#E1BEE7,#BBDEFB,#A5D6A7,#FFF59D,#F8BBD0);
+  animation:spin 3.4s linear infinite;
+}
+.orb-core::after{content:'';position:absolute;inset:7px;border-radius:50%;background:var(--surface)}
+.orb-glow{position:absolute;inset:6px;border-radius:50%;background:conic-gradient(from 90deg,#F8BBD0,#BBDEFB,#E1BEE7,#F8BBD0);filter:blur(13px);opacity:.7;animation:spin 4.6s linear infinite reverse}
+.orb-ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--border-2);animation:pulseRing 2.4s var(--ease) infinite}
+.orb-ring.r2{animation-delay:.8s}
+.orb-ring.r3{animation-delay:1.6s}
+.orb-dot{position:absolute;top:50%;left:50%;width:6px;height:6px;margin:-3px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:orbit 2.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulseRing{0%{transform:scale(.82);opacity:.9}100%{transform:scale(1.4);opacity:0}}
+@keyframes orbit{from{transform:rotate(0deg) translateX(42px) rotate(0deg)}to{transform:rotate(360deg) translateX(42px) rotate(-360deg)}}
+
+.ai-card h3{font-size:18px;margin-bottom:4px}
+.ai-sub{font-size:12.5px;color:var(--text-3);margin-bottom:20px}
+.ai-steps{text-align:left;display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
+.ai-step{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--text-3);opacity:.4;transition:all .4s var(--ease)}
+.ai-step .mk{width:18px;height:18px;flex:none;border-radius:50%;border:1.5px solid var(--border-2);display:grid;place-items:center;transition:border-color .4s,background .4s}
+.ai-step .mk svg{width:10px;height:10px;stroke:#fff;stroke-width:3.4;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .3s .1s}
+.ai-step.run{opacity:1;color:var(--text)}
+.ai-step.run .mk{border-color:var(--accent);border-right-color:transparent;animation:spin .7s linear infinite}
+.ai-step.done{opacity:1;color:var(--text-2)}
+.ai-step.done .mk{background:var(--accent-grad-strong);border-color:transparent;animation:none}
+.ai-step.done .mk svg{opacity:1}
+.ai-bar{height:4px;border-radius:99px;background:var(--surface-3);overflow:hidden;margin-bottom:12px}
+.ai-bar>i{display:block;height:100%;width:0;border-radius:99px;background:var(--accent-grad-strong);transition:width .5s var(--ease)}
+.ai-foot{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-3);font-family:'Poppins';font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px}
+.ai-foot .ic{width:13px;height:13px;color:var(--accent)}
+
+.nprogress{position:fixed;top:0;left:0;height:2.5px;z-index:300;width:0;background:var(--accent-grad-strong);box-shadow:0 0 14px var(--accent);opacity:0;transition:width .3s var(--ease),opacity .3s}
+.nprogress.on{opacity:1}
+
+.sk{background:linear-gradient(90deg,var(--surface-3) 25%,var(--border) 37%,var(--surface-3) 63%);background-size:400% 100%;animation:skwave 1.35s ease infinite;border-radius:10px}
+@keyframes skwave{from{background-position:100% 50%}to{background-position:0 50%}}
+.sk-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm)}
+.sk-line{height:12px;margin-bottom:11px}
+
+/* ---------- MODAL ---------- */
+.modal-bg{position:fixed;inset:0;z-index:150;background:rgba(12,10,17,.44);backdrop-filter:blur(9px);opacity:0;pointer-events:none;transition:opacity .32s var(--ease);display:flex;align-items:center;justify-content:center;padding:20px}
+.modal-bg.on{opacity:1;pointer-events:auto}
+.modal{
+  width:min(560px,100%);max-height:88dvh;display:flex;flex-direction:column;
+  background:var(--surface);border:1px solid var(--border-2);border-radius:var(--r-xl);
+  box-shadow:var(--shadow-lg);transform:translateY(28px) scale(.96);opacity:0;
+  transition:all .4s var(--ease);
+}
+.modal-bg.on .modal{transform:none;opacity:1}
+.modal-head{display:flex;align-items:center;gap:12px;padding:20px 22px 14px;flex:none}
+.modal-head h2{flex:1;font-size:19px}
+.modal-body{padding:4px 22px 6px;overflow-y:auto;flex:1}
+.modal-foot{display:flex;gap:10px;padding:16px 22px 20px;flex:none;border-top:1px solid var(--border);margin-top:8px}
+.modal-foot .btn{flex:1}
+
+/* ---------- TOAST + CORAÇÃO ---------- */
+.toasts{position:fixed;bottom:22px;right:22px;z-index:250;display:flex;flex-direction:column;gap:10px;align-items:flex-end;pointer-events:none}
+.toast{
+  display:flex;align-items:center;gap:11px;padding:13px 17px;border-radius:15px;
+  background:var(--surface);border:1px solid var(--border-2);box-shadow:var(--shadow-lg);
+  font-size:14px;font-weight:500;max-width:340px;
+  animation:toastIn .48s var(--ease) both;
+}
+.toast.out{animation:toastOut .34s var(--ease) forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(60px) scale(.9)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateX(60px) scale(.9)}}
+.toast .ic{color:var(--mint-ink)}
+
+.heart-pop{position:fixed;z-index:260;pointer-events:none;color:var(--accent);animation:heartPop 1.15s var(--ease) forwards}
+.heart-pop svg{width:56px;height:56px;fill:currentColor;stroke:none;filter:drop-shadow(0 6px 20px rgba(224,98,155,.5))}
+@keyframes heartPop{
+  0%{transform:translate(-50%,-50%) scale(.3);opacity:0}
+  18%{transform:translate(-50%,-50%) scale(1.25);opacity:1}
+  32%{transform:translate(-50%,-50%) scale(.95)}
+  46%{transform:translate(-50%,-58%) scale(1.1)}
+  100%{transform:translate(-50%,-190%) scale(.65);opacity:0}
+}
+.confetti{position:fixed;z-index:255;pointer-events:none;width:8px;height:8px;border-radius:2px;animation:conf 1.5s var(--ease) forwards}
+@keyframes conf{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot))}}
+
+/* ---------- BOTTOM NAV ---------- */
+.bottomnav{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:70;
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+  background:var(--glass);backdrop-filter:blur(22px) saturate(180%);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  border-top:1px solid var(--border);
+}
+.bn-inner{display:flex;justify-content:space-around;align-items:center;gap:4px}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;border:0;background:none;cursor:pointer;color:var(--text-3);font-family:'Poppins';font-size:10px;font-weight:500;border-radius:12px;transition:color .22s,transform .22s var(--ease)}
+.bn-item.active{color:var(--accent)}
+.bn-item.active .ic{transform:translateY(-2px) scale(1.08)}
+.bn-item .ic{transition:transform .3s var(--ease)}
+.bn-item:active{transform:scale(.92)}
+.bn-fab{
+  width:48px;height:48px;border-radius:16px;border:0;margin-top:-22px;flex:none;
+  background:var(--accent-grad-strong);color:#fff;display:grid;place-items:center;cursor:pointer;
+  box-shadow:var(--shadow-glow);transition:transform .2s var(--ease)
+}
+.bn-fab:active{transform:scale(.9)}
+
+.scrim{position:fixed;inset:0;z-index:55;background:rgba(12,10,17,.45);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .34s var(--ease)}
+.scrim.on{opacity:1;pointer-events:auto}
+
+/* ---------- ARTIGOS / FÓRUM / TIMELINE ---------- */
+.article{display:flex;gap:15px;padding:15px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface-2);cursor:pointer;transition:all .28s var(--ease)}
+.article:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border-2)}
+.article .thumb{width:62px;height:62px;flex:none;border-radius:14px;display:grid;place-items:center}
+.article .body{flex:1;min-width:0}
+.article .body b{display:block;font-family:'Poppins';font-size:14.5px;font-weight:600;margin-bottom:3px;letter-spacing:-.01em}
+.article .body p{font-size:13px;color:var(--text-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.article .meta{display:flex;gap:9px;margin-top:7px;font-size:11.5px;color:var(--text-3);font-family:'Poppins';font-weight:500}
+
+.post{padding:18px;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--surface-2);transition:all .28s var(--ease)}
+.post:hover{border-color:var(--border-2);box-shadow:var(--shadow-sm)}
+.post-head{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.post-av{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-family:'Poppins';font-weight:600;font-size:14px;flex:none}
+.post-head b{display:block;font-family:'Poppins';font-size:14px;font-weight:600}
+.post-head small{color:var(--text-3);font-size:12px}
+.post p{font-size:14.5px;color:var(--text-2);line-height:1.65;white-space:pre-wrap}
+.post-foot{display:flex;gap:8px;margin-top:13px;align-items:center;flex-wrap:wrap}
+.like-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);cursor:pointer;font-size:13px;font-family:'Poppins';font-weight:500;transition:all .22s var(--ease)}
+.like-btn:hover{border-color:var(--pink);color:var(--pink-ink);transform:translateY(-2px)}
+.like-btn.on{background:var(--pink-soft);border-color:transparent;color:var(--pink-ink)}
+.like-btn.on .ic{fill:currentColor;animation:heartBeat .5s var(--ease)}
+@keyframes heartBeat{0%,100%{transform:scale(1)}30%{transform:scale(1.35)}60%{transform:scale(.92)}}
+
+.tl{position:relative;padding-left:30px}
+.tl::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--pink),var(--lilac),var(--blue));border-radius:99px}
+.tl-item{position:relative;padding-bottom:20px}
+.tl-item::before{content:'';position:absolute;left:-26px;top:5px;width:12px;height:12px;border-radius:99px;background:var(--surface);border:2.5px solid var(--accent);box-shadow:0 0 0 3px var(--surface)}
+.tl-item.dim::before{border-color:var(--border-2)}
+.tl-item b{font-family:'Poppins';font-size:14.5px;font-weight:600;display:block}
+.tl-item small{color:var(--text-3);font-size:12.5px}
+.tl-item p{font-size:14px;color:var(--text-2);margin-top:4px}
+
+.kick-pad{
+  width:100%;aspect-ratio:1/.82;max-width:290px;margin:0 auto;border-radius:36px;border:0;cursor:pointer;
+  background:var(--accent-grad);color:#3B2E44;display:grid;place-items:center;text-align:center;
+  box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+  transition:transform .16s var(--ease);font-family:'Poppins';
+}
+.kick-pad:active{transform:scale(.955)}
+.kick-pad b{display:block;font-size:44px;font-weight:600;letter-spacing:-.04em;line-height:1}
+.kick-pad span{font-size:13px;font-weight:500;opacity:.75}
+.kick-pad .rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:translate(-50%,-50%) scale(0);animation:rip .7s var(--ease) forwards;pointer-events:none}
+@keyframes rip{to{transform:translate(-50%,-50%) scale(9);opacity:0}}
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width:1180px){
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-side{grid-template-columns:1fr}
+}
+@media (max-width:960px){
+  .sidebar{transform:translateX(-100%);box-shadow:var(--shadow-lg)}
+  .sidebar.open{transform:none}
+  .sb-close{display:block}
+  .main{margin-left:0}
+  .tb-menu{display:block}
+  .bottomnav{display:block}
+  .stage{padding:20px 16px 118px}
+  .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero{padding:24px 22px;min-height:190px}
+  .hero-top{top:18px;left:22px;right:22px}
+  .hero h2{font-size:25px}
+  .toasts{bottom:100px;left:16px;right:16px;align-items:stretch}
+  .toast{max-width:none}
+}
+@media (max-width:620px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .span2{grid-column:span 1}
+  .topbar{padding:0 16px;gap:8px}
+  .tb-greet h1{font-size:16.5px}
+  .tb-greet p{font-size:11.5px}
+  .btn-add-txt{display:none}
+  .btn-add{width:44px;padding:0}
+  .field-row{grid-template-columns:1fr}
+  .page-head h1{font-size:22px}
+  .card{padding:18px;border-radius:var(--r-md)}
+  .mem-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .modal{border-radius:var(--r-lg)}
+  .water-wrap{gap:18px}
+  .hero{min-height:0;padding:20px 20px 22px}
+  .hero-top{position:relative;top:auto;left:auto;right:auto;margin-bottom:14px;flex-wrap:wrap;gap:8px;justify-content:flex-start}
+  .hero h2{font-size:23px}
+  .hero-chip{padding:6px 11px;font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ SPRITE DE ÍCONES (traço premium, sem emoji) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#EE7FAE"/><stop offset="52%" stop-color="#B77BD8"/><stop offset="100%" stop-color="#6FA8E8"/>
+  </linearGradient>
+  <linearGradient id="chartPink" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#EE7FAE" stop-opacity=".28"/><stop offset="100%" stop-color="#EE7FAE" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="chartBlue" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#6FA8E8" stop-opacity=".3"/><stop offset="100%" stop-color="#6FA8E8" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#EE7FAE"/><stop offset="100%" stop-color="#B77BD8"/>
+  </linearGradient>
+</defs>
+<symbol id="i-dash" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2.2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2.2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2.2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2.2"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5s-7.6-4.9-7.6-10.1A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 7.6 2.8c0 5.2-7.6 10.1-7.6 10.1Z"/></symbol>
+<symbol id="i-heart-f" viewBox="0 0 24 24"><path d="M12 20.5s-7.6-4.9-7.6-10.1A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 7.6 2.8c0 5.2-7.6 10.1-7.6 10.1Z"/></symbol>
+<symbol id="i-profile" viewBox="0 0 24 24"><path d="M12 21s-7.3-4.6-7.3-9.8A4.3 4.3 0 0 1 12 8.5a4.3 4.3 0 0 1 7.3 2.7c0 5.2-7.3 9.8-7.3 9.8Z"/><path d="M6.5 12.6h2.8l1.4-2.6 1.8 4.4 1.3-1.8h3.7"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3.4"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+<symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2.5 12.5h4L9.5 5l4.5 14 2.8-6.5h4.7"/></symbol>
+<symbol id="i-growth" viewBox="0 0 24 24"><path d="M3 16.8l5.2-5.2 3.4 3.4L20.5 6"/><path d="M15 6h5.5v5.5"/><path d="M3 21h18"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24"><path d="M4.5 19.5c-2-8 3-15 15.5-15.5.5 12.5-7.5 17.5-15.5 15.5Z"/><path d="M8.5 15.5c1.6-3.4 4.3-5.8 7.5-7"/></symbol>
+<symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.2s6.2 5.9 6.2 10.3a6.2 6.2 0 0 1-12.4 0C5.8 9.1 12 3.2 12 3.2Z"/><path d="M9.2 14.2a2.9 2.9 0 0 0 2.4 3"/></symbol>
+<symbol id="i-waves" viewBox="0 0 24 24"><path d="M2.5 7.5c1.6-1.6 3.2-1.6 4.8 0s3.2 1.6 4.8 0 3.2-1.6 4.8 0 3.2 1.6 4.6 0"/><path d="M2.5 12.5c1.6-1.6 3.2-1.6 4.8 0s3.2 1.6 4.8 0 3.2-1.6 4.8 0 3.2 1.6 4.6 0"/><path d="M2.5 17.5c1.6-1.6 3.2-1.6 4.8 0s3.2 1.6 4.8 0 3.2-1.6 4.8 0 3.2 1.6 4.6 0"/></symbol>
+<symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3.4"/><circle cx="8.6" cy="9.6" r="1.7"/><path d="M3.6 17.4l4.3-4.3a2 2 0 0 1 2.8 0l3.4 3.4"/><path d="M13.4 14.6l1.7-1.7a2 2 0 0 1 2.8 0l2.5 2.5"/></symbol>
+<symbol id="i-checklist" viewBox="0 0 24 24"><path d="M3.2 6.4l1.6 1.6L8.2 4.6"/><path d="M3.2 12.4l1.6 1.6 3.4-3.4"/><path d="M3.2 18.4l1.6 1.6 3.4-3.4"/><path d="M12 6.5h9M12 12.5h9M12 18.5h6"/></symbol>
+<symbol id="i-bag" viewBox="0 0 24 24"><rect x="2.8" y="7" width="18.4" height="13.5" rx="3.2"/><path d="M8.6 7V5.6A2.6 2.6 0 0 1 11.2 3h1.6a2.6 2.6 0 0 1 2.6 2.6V7"/><path d="M2.8 12.2h18.4M12 11v2.4"/></symbol>
+<symbol id="i-plan" viewBox="0 0 24 24"><path d="M13.8 2.8H8A3.2 3.2 0 0 0 4.8 6v12A3.2 3.2 0 0 0 8 21.2h8a3.2 3.2 0 0 0 3.2-3.2V8.2Z"/><path d="M13.6 2.9V8h5.4"/><path d="M8.6 13h6.8M8.6 16.8h4.4"/></symbol>
+<symbol id="i-analytics" viewBox="0 0 24 24"><path d="M3 20.5h18"/><path d="M6.2 20.5v-5.8M11 20.5V6.2M15.8 20.5v-9M20.6 20.5V10"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M3 7.5h8.5M16.5 7.5H21M3 16.5h4.5M12.5 16.5H21"/><circle cx="14" cy="7.5" r="2.6"/><circle cx="10" cy="16.5" r="2.6"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.6C10.2 4.9 7.4 4.1 3.5 4.4v13.4c3.9-.3 6.7.5 8.5 2.2 1.8-1.7 4.6-2.5 8.5-2.2V4.4c-3.9-.3-6.7.5-8.5 2.2Z"/><path d="M12 6.6V20"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9.2" cy="8" r="3.4"/><path d="M2.8 19.6c0-3.5 2.9-5.4 6.4-5.4s6.4 1.9 6.4 5.4"/><path d="M16.2 5.1a3.4 3.4 0 0 1 0 6.4M17.8 14.6c2.1.6 3.4 2.1 3.4 4.6"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.2v13.6M5.2 12h13.6"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.4 14.8A8.6 8.6 0 0 1 9.2 3.6a8.6 8.6 0 1 0 11.2 11.2Z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.1"/><path d="M12 2.2v2.1M12 19.7v2.1M4.1 4.1l1.5 1.5M18.4 18.4l1.5 1.5M2.2 12h2.1M19.7 12h2.1M4.1 19.9l1.5-1.5M18.4 5.6l1.5-1.5"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M3.5 7h17M3.5 12h17M3.5 17h11"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6.2 6.2l11.6 11.6M17.8 6.2L6.2 17.8"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4.8 12.6l4.6 4.6L19.2 7.4"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M11.5 2.6l1.9 4.9 4.9 1.9-4.9 1.9-1.9 4.9-1.9-4.9-4.9-1.9 4.9-1.9z"/><path d="M18.4 15.4l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M3.8 6.5h16.4M9 6.5V5.2A1.7 1.7 0 0 1 10.7 3.5h2.6A1.7 1.7 0 0 1 15 5.2v1.3"/><path d="M5.8 6.5l.9 12.2a2.2 2.2 0 0 0 2.2 2h6.2a2.2 2.2 0 0 0 2.2-2l.9-12.2"/><path d="M10.2 10.5v6M13.8 10.5v6"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20.2h4.2L20 8.4a2.97 2.97 0 0 0-4.2-4.2L4 16v4.2Z"/><path d="M14.6 5.6l3.8 3.8"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24"><path d="M4.2 7.8h2.9l1.5-2.4h6.8l1.5 2.4h2.9a1.6 1.6 0 0 1 1.6 1.6v8.4a2.4 2.4 0 0 1-2.4 2.4H5a2.4 2.4 0 0 1-2.4-2.4V9.4a1.6 1.6 0 0 1 1.6-1.6Z"/><circle cx="12" cy="13.6" r="3.4"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9.5a6 6 0 1 1 12 0c0 3.9 1.5 5.4 1.5 5.4h-15S6 13.4 6 9.5Z"/><path d="M10 18.4a2 2 0 0 0 4 0"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6.8v5.6l3.6 2"/></symbol>
+<symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9.2 4.8l7.2 7.2-7.2 7.2"/></symbol>
+<symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M14.8 4.8L7.6 12l7.2 7.2"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.6"/><path d="M15.8 15.8l4.6 4.6"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10.2 8.6l5.4 3.4-5.4 3.4z"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2.8" width="6" height="11" rx="3"/><path d="M5.5 11.4a6.5 6.5 0 0 0 13 0M12 17.9v3.3"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="3.4"/><path d="M12 8.4v3.2M12 11.6l2.6-2.2"/><path d="M8 15.6h8"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.2s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10.2" r="2.6"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3.5v11.4M7.6 10.6l4.4 4.4 4.4-4.4"/><path d="M4 17.5v1.4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1.4"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5.6" r="2.8"/><circle cx="6" cy="12" r="2.8"/><circle cx="18" cy="18.4" r="2.8"/><path d="M8.5 10.7l7-3.7M8.5 13.3l7 3.7"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.4l2.6 5.4 5.9.8-4.3 4.1 1.1 5.9-5.3-2.9-5.3 2.9 1.1-5.9L3.5 9.6l5.9-.8z"/></symbol>
+</svg>
+
+<div class="nprogress" id="nprog"></div>
+
+<div class="app">
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <img class="sb-logo" src="logo_gestacao.jpg-.png" alt="">
+      <div class="sb-brand-txt">
+        <strong>Diário da Gestação</strong>
+        <span>Sua jornada</span>
+      </div>
+      <button class="sb-close" id="sbClose" aria-label="Fechar menu"><svg class="ic"><use href="#i-x"/></svg></button>
+    </div>
+    <nav class="sb-scroll" id="navRoot"></nav>
+    <div class="sb-foot">
+      <div class="sb-progress">
+        <div class="row"><b id="sbWeek">Semana —</b><i id="sbTri">—</i></div>
+        <div class="bar"><i id="sbBar" style="width:0%"></i></div>
+      </div>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+    <header class="topbar">
+      <button class="tb-menu" id="btnMenu" aria-label="Abrir menu"><svg class="ic ic-lg"><use href="#i-menu"/></svg></button>
+      <div class="tb-greet">
+        <h1 id="greetTitle">Olá</h1>
+        <p id="greetSub">Carregando sua jornada…</p>
+      </div>
+      <div class="tb-actions">
+        <button class="icon-btn theme-toggle" id="btnTheme" aria-label="Alternar modo escuro" title="Modo escuro">
+          <svg class="ic ic-moon"><use href="#i-moon"/></svg>
+          <svg class="ic ic-sun"><use href="#i-sun"/></svg>
+        </button>
+        <button class="btn btn-primary btn-add" id="btnAdd">
+          <svg class="ic"><use href="#i-plus"/></svg><span class="btn-add-txt" id="btnAddTxt">Adicionar</span>
+        </button>
+        <button class="avatar" id="btnAvatar" aria-label="Perfil"><span id="avatarTxt">M</span></button>
+      </div>
+    </header>
+    <main class="stage" id="stage"></main>
+  </div>
+</div>
+
+<!-- ================= BOTTOM NAV (mobile) ================= -->
+<nav class="bottomnav">
+  <div class="bn-inner" id="bnRoot"></div>
+</nav>
+
+<!-- ================= OVERLAY DE CARREGAMENTO IA ================= -->
+<div class="ai-overlay" id="aiOverlay" role="status" aria-live="polite">
+  <div class="ai-card">
+    <div class="orb">
+      <span class="orb-glow"></span>
+      <span class="orb-core"></span>
+      <span class="orb-ring"></span><span class="orb-ring r2"></span><span class="orb-ring r3"></span>
+      <span class="orb-dot"></span>
+    </div>
+    <h3 id="aiTitle">Processando</h3>
+    <p class="ai-sub" id="aiSub">Preparando seus dados</p>
+    <div class="ai-steps" id="aiSteps"></div>
+    <div class="ai-bar"><i id="aiBar"></i></div>
+    <div class="ai-foot"><svg class="ic"><use href="#i-spark"/></svg><span>Assistente gestacional</span></div>
+  </div>
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <span class="chip-ic pink" id="modalIcon"><svg class="ic"><use href="#i-spark"/></svg></span>
+      <h2 id="modalTitle">Título</h2>
+      <button class="mini-btn" id="modalClose" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* ============================================================
+   DIÁRIO DA GESTAÇÃO — núcleo
+   ============================================================ */
+const $  = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+const ic = (n,c='ic')=>`<svg class="${c}"><use href="#i-${n}"/></svg>`;
+const uid= ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const pad= n=>String(n).padStart(2,'0');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc = s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const DOW=['dom','seg','ter','qua','qui','sex','sáb'];
+
+const iso = d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const hoje = ()=>iso(new Date());
+const parseISO = s=>{const [y,m,d]=String(s).split('-').map(Number);return new Date(y,m-1,d,12,0,0)};
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const fmt = s=>{if(!s)return '—';const d=parseISO(s);return `${pad(d.getDate())} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`};
+const fmtShort=s=>{if(!s)return '—';const d=parseISO(s);return `${pad(d.getDate())}/${pad(d.getMonth()+1)}`};
+const diasEntre=(a,b)=>Math.round((parseISO(b)-parseISO(a))/864e5);
+
+/* ---------------- estado ---------------- */
+const KEY='diario_gestacao_v1';
+function defaults(){
+  const dum = iso(addDays(new Date(),-158));
+  return {
+    profile:{nome:'',bebe:'',dum,dpp:iso(addDays(parseISO(dum),280)),sexo:'surpresa',tipoSangue:'',
+             altura:165,pesoInicial:62,medico:'',hospital:'',gestacao:1},
+    theme:'light', onboarded:false,
+    entries:[], consultas:[], perguntas:[], sintomas:[], pesos:[],
+    agua:{}, metaAgua:2500, refeicoes:[], chutes:[],
+    checklist:{}, checklistCustom:[], mala:{}, malaCustom:[], plano:{},
+    posts:null, likes:{},
+    config:{lembretes:true, animacoes:true, semanaAuto:true}
+  };
+}
+let state = defaults();
+function load(){
+  try{ const raw=localStorage.getItem(KEY); if(raw) state=Object.assign(defaults(),JSON.parse(raw)); }catch(e){}
+  if(!state.posts) state.posts = seedPosts();
+}
+let saveT;
+function save(){ clearTimeout(saveT); saveT=setTimeout(()=>{ try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast('Armazenamento cheio — remova algumas fotos','warn')} },180); }
+
+/* ---------------- cálculo gestacional ---------------- */
+function gest(){
+  const p=state.profile;
+  if(!p.dpp) return {ok:false,w:0,d:0,total:0,pct:0,rest:0,tri:1};
+  const rest = diasEntre(hoje(), p.dpp);
+  const total= clamp(280-rest,0,294);
+  const w=Math.floor(total/7), d=total%7;
+  const tri = w<14?1:(w<28?2:3);
+  return {ok:true,w,d,total,rest,pct:clamp(total/280*100,0,100),tri};
+}
+const TRI_NOME={1:'1º trimestre',2:'2º trimestre',3:'3º trimestre'};
+
+/* ---------------- dados do bebê por semana ---------------- */
+const BABY=[
+ [4,'semente de papoula',0.1,0.4],[5,'semente de gergelim',0.3,0.6],[6,'lentilha',0.6,0.9],
+ [7,'mirtilo',1.3,1.5],[8,'framboesa',1.6,2],[9,'azeitona',2.3,3],[10,'morango',3.1,4],
+ [11,'figo',4.1,7],[12,'limão',5.4,14],[13,'vagem',7.4,23],[14,'pêssego',8.7,43],
+ [15,'maçã',10.1,70],[16,'abacate',11.6,100],[17,'pera',13,140],[18,'pimentão',14.2,190],
+ [19,'tomate',15.3,240],[20,'banana',16.4,300],[21,'cenoura',26.7,360],[22,'mamão',27.8,430],
+ [23,'manga',28.9,501],[24,'espiga de milho',30,600],[25,'nabo',34.6,660],[26,'alface',35.6,760],
+ [27,'couve-flor',36.6,875],[28,'berinjela',37.6,1005],[29,'abóbora pequena',38.6,1153],
+ [30,'repolho',39.9,1319],[31,'coco',41.1,1502],[32,'jicama',42.4,1702],[33,'abacaxi',43.7,1918],
+ [34,'melão cantalupo',45,2146],[35,'melão',46.2,2383],[36,'alface romana',47.4,2622],
+ [37,'acelga',48.6,2859],[38,'alho-poró',49.8,3083],[39,'melancia pequena',50.7,3288],[40,'abóbora',51.2,3462]
+];
+const babyAt=w=>BABY.find(b=>b[0]===clamp(w,4,40))||BABY[0];
+
+const MARCOS=[
+ [4,'Implantação','O embrião se fixa no útero e o coração começa a se formar.'],
+ [6,'Batimentos cardíacos','O coraçãozinho já bate e pode ser visto no ultrassom.'],
+ [8,'Braços e pernas','Formam-se os membros e os traços do rostinho.'],
+ [12,'Fim do 1º trimestre','Todos os órgãos principais estão formados. Risco de perda diminui muito.'],
+ [16,'Audição','O bebê começa a perceber sons — sua voz é a favorita.'],
+ [20,'Ultrassom morfológico','Metade do caminho! Possível descobrir o sexo.'],
+ [24,'Viabilidade','A partir daqui há chance real de sobrevivência fora do útero.'],
+ [28,'3º trimestre','O bebê abre os olhos e tem ciclos de sono definidos.'],
+ [32,'Ganho de peso','Ele engorda rápido e os pulmões amadurecem.'],
+ [36,'Posição final','Normalmente vira de cabeça para baixo, pronto para nascer.'],
+ [37,'Termo precoce','A gestação já é considerada a termo.'],
+ [40,'Data provável','Chegou a hora de conhecer seu bebê.']
+];
+
+/* ---------------- feedback visual ---------------- */
+function toast(msg,tipo='ok'){
+  const el=document.createElement('div');
+  el.className='toast';
+  el.innerHTML=`${ic(tipo==='ok'?'check':(tipo==='warn'?'bell':'spark'))}<span>${esc(msg)}</span>`;
+  $('#toasts').appendChild(el);
+  setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),340)},2900);
+}
+function heartPop(x,y){
+  const el=document.createElement('div');
+  el.className='heart-pop';
+  el.style.left=(x??innerWidth/2)+'px'; el.style.top=(y??innerHeight/2)+'px';
+  el.innerHTML=`<svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-10.6A4.7 4.7 0 0 1 12 7.4a4.7 4.7 0 0 1 8 3c0 5.4-8 10.6-8 10.6Z"/></svg>`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1200);
+}
+function confetti(x,y){
+  const cores=['#F8BBD0','#A5D6A7','#FFF59D','#BBDEFB','#E1BEE7'];
+  for(let i=0;i<16;i++){
+    const c=document.createElement('i');
+    c.className='confetti';
+    c.style.left=x+'px'; c.style.top=y+'px';
+    c.style.background=cores[i%5];
+    c.style.setProperty('--dx',(Math.random()*220-110)+'px');
+    c.style.setProperty('--dy',(-Math.random()*160-40)+'px');
+    c.style.setProperty('--rot',(Math.random()*720-360)+'deg');
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),1550);
+  }
+}
+
+/* ---------------- carregamento premium (IA) ---------------- */
+let aiBusy=false;
+async function aiRun(title,sub,steps,work){
+  const ov=$('#aiOverlay');
+  $('#aiTitle').textContent=title; $('#aiSub').textContent=sub;
+  $('#aiSteps').innerHTML=steps.map((s,i)=>
+    `<div class="ai-step" data-i="${i}"><span class="mk"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>${esc(s)}</span></div>`).join('');
+  $('#aiBar').style.width='0%';
+  ov.classList.add('on'); aiBusy=true;
+  let result;
+  const job = work ? Promise.resolve().then(work) : Promise.resolve();
+  for(let i=0;i<steps.length;i++){
+    const el=$(`.ai-step[data-i="${i}"]`);
+    el.classList.add('run');
+    await sleep(240+Math.random()*300);
+    el.classList.remove('run'); el.classList.add('done');
+    $('#aiBar').style.width=Math.round((i+1)/steps.length*100)+'%';
+  }
+  try{ result=await job; }catch(e){ console.error(e); }
+  await sleep(240);
+  ov.classList.remove('on'); aiBusy=false;
+  return result;
+}
+
+/* barra fina de navegação */
+let npT;
+function nprogStart(){
+  const el=$('#nprog'); clearTimeout(npT);
+  el.classList.add('on'); el.style.width='0%';
+  requestAnimationFrame(()=>{el.style.width='62%'});
+}
+function nprogDone(){
+  const el=$('#nprog'); el.style.width='100%';
+  npT=setTimeout(()=>{el.classList.remove('on');setTimeout(()=>el.style.width='0%',300)},260);
+}
+
+/* ---------------- modal ---------------- */
+let modalSubmit=null;
+function openModal({title,icon='spark',cor='pink',body,ok='Salvar',cancel='Cancelar',onOk,wide}){
+  $('#modalTitle').textContent=title;
+  $('#modalIcon').className='chip-ic '+cor;
+  $('#modalIcon').innerHTML=ic(icon);
+  $('#modalBody').innerHTML=body;
+  $('#modalFoot').innerHTML = ok
+    ? `<button class="btn btn-soft" id="mCancel">${esc(cancel)}</button><button class="btn btn-primary" id="mOk">${esc(ok)}</button>`
+    : `<button class="btn btn-soft btn-block" id="mCancel">${esc(cancel)}</button>`;
+  $('#modalBg').classList.add('on');
+  modalSubmit=onOk;
+  $('#mCancel').onclick=closeModal;
+  const okBtn=$('#mOk');
+  if(okBtn) okBtn.onclick=()=>{ if(!modalSubmit || modalSubmit()!==false) closeModal(); };
+  setTimeout(()=>{const f=$('#modalBody input,#modalBody textarea,#modalBody select'); if(f&&innerWidth>620)f.focus()},380);
+}
+function closeModal(){ $('#modalBg').classList.remove('on'); modalSubmit=null; }
+$('#modalClose').onclick=closeModal;
+$('#modalBg').onclick=e=>{ if(e.target.id==='modalBg') closeModal(); };
+addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+/* ---------------- navegação ---------------- */
+const NAV=[
+ {g:'Principal',items:[
+   {id:'painel',t:'Painel Principal',i:'dash'},
+   {id:'perfil',t:'Perfil da Gestação',i:'profile'},
+   {id:'consultas',t:'Consultas',i:'calendar'},
+   {id:'sintomas',t:'Sintomas',i:'pulse'},
+   {id:'crescimento',t:'Crescimento do Bebê',i:'growth'}]},
+ {g:'Cuidados diários',items:[
+   {id:'nutricao',t:'Nutrição',i:'leaf'},
+   {id:'agua',t:'Água',i:'drop'},
+   {id:'movimentos',t:'Movimentos e Chutes',i:'waves'},
+   {id:'memorias',t:'Memórias',i:'image'}]},
+ {g:'Preparação',items:[
+   {id:'checklist',t:'Lista de Verificação',i:'checklist'},
+   {id:'mala',t:'Mala da Maternidade',i:'bag'},
+   {id:'parto',t:'Plano de Parto',i:'plan'}]},
+ {g:'Conteúdo',items:[
+   {id:'dicas',t:'Dicas',i:'book'},
+   {id:'comunidade',t:'Comunidade',i:'users'}]},
+ {g:'Sistema',items:[
+   {id:'analises',t:'Análises',i:'analytics'},
+   {id:'config',t:'Configurações',i:'settings'}]}
+];
+const TITULOS={};NAV.forEach(g=>g.items.forEach(i=>TITULOS[i.id]=i.t));
+const ICONES={};NAV.forEach(g=>g.items.forEach(i=>ICONES[i.id]=i.i));
+const ORDEM=NAV.flatMap(g=>g.items.map(i=>i.id));
+
+let view='painel';
+
+function renderNav(){
+  $('#navRoot').innerHTML = NAV.map(gr=>`
+    <div class="sb-group">
+      <div class="sb-group-label">${gr.g}</div>
+      ${gr.items.map(it=>`
+        <button class="nav-item${it.id===view?' active':''}" data-go="${it.id}">
+          ${ic(it.i)}<span>${it.t}</span>${navBadge(it.id)}
+        </button>`).join('')}
+    </div>`).join('');
+  $('#bnRoot').innerHTML = `
+    ${bnBtn('painel','dash','Painel')}
+    ${bnBtn('consultas','calendar','Consultas')}
+    <button class="bn-fab" id="bnFab" aria-label="Adicionar">${ic('plus','ic ic-lg')}</button>
+    ${bnBtn('agua','drop','Água')}
+    <button class="bn-item" id="bnMenu">${ic('menu')}<span>Menu</span></button>`;
+  $('#bnFab').onclick=e=>quickAdd(e);
+  $('#bnMenu').onclick=openSidebar;
+}
+const bnBtn=(id,i,t)=>`<button class="bn-item${view===id?' active':''}" data-go="${id}">${ic(i)}<span>${t}</span></button>`;
+
+function navBadge(id){
+  if(id==='consultas'){
+    const n=state.consultas.filter(c=>c.data>=hoje()).length;
+    return n?`<span class="nav-badge">${n}</span>`:'';
+  }
+  if(id==='agua'){
+    const g=gest(); const ml=state.agua[hoje()]||0;
+    return ml>=state.metaAgua?`<span class="nav-badge" style="background:var(--mint-soft);color:var(--mint-ink)">ok</span>`:'';
+  }
+  return '';
+}
+
+const PESADAS=new Set(['analises','crescimento']);
+async function go(id,fromNav=true){
+  if(aiBusy) return;
+  closeSidebar();
+  if(id===view && $('#stage').dataset.ready==='1'){ return; }
+  const dir = ORDEM.indexOf(id) < ORDEM.indexOf(view) ? 'back':'fwd';
+  view=id; renderNav(); updateTopbar();
+  location.hash=id;
+  $('#stage').dataset.ready='0';
+
+  if(PESADAS.has(id)){
+    $('#stage').innerHTML=skeleton(id);
+    await aiRun(
+      id==='analises'?'Compilando suas análises':'Modelando o crescimento',
+      id==='analises'?'Correlacionando registros da sua gestação':'Comparando com curvas de referência da OMS',
+      id==='analises'
+        ? ['Reunindo registros locais','Normalizando séries temporais','Detectando padrões e correlações','Gerando insights personalizados']
+        : ['Lendo idade gestacional','Carregando curvas de referência','Projetando peso e comprimento','Preparando visualização']
+    );
+  }else{
+    nprogStart();
+    $('#stage').innerHTML=skeleton(id);
+    await sleep(280+Math.random()*180);
+    nprogDone();
+  }
+  paint(dir);
+}
+function paint(dir='fwd'){
+  const html = (VIEWS[view]||VIEWS.painel)();
+  $('#stage').innerHTML=`<div class="view${dir==='back'?' back':''}">${html}</div>`;
+  $('#stage').dataset.ready='1';
+  if(BIND[view]) BIND[view]();
+  updateSidebarProgress();
+  $('#stage').scrollTop=0; window.scrollTo({top:0,behavior:'smooth'});
+}
+function repaint(){ // re-render sem carregamento
+  const html=(VIEWS[view]||VIEWS.painel)();
+  $('#stage').innerHTML=`<div class="view" style="animation:none">${html}</div>`;
+  if(BIND[view]) BIND[view]();
+  renderNav(); updateSidebarProgress();
+}
+
+function skeleton(id){
+  const card=(h)=>`<div class="sk-card"><div class="sk sk-line" style="width:38%"></div><div class="sk sk-line" style="width:82%"></div><div class="sk sk-line" style="width:64%"></div><div class="sk" style="height:${h}px;margin-top:14px"></div></div>`;
+  return `<div class="grid" style="gap:18px">
+    <div class="sk" style="height:118px;border-radius:22px"></div>
+    <div class="grid g3">${card(70)}${card(70)}${card(70)}</div>
+    <div class="grid g-side">${card(180)}${card(180)}</div>
+  </div>`;
+}
+
+/* ---------------- topbar ---------------- */
+function saudacao(){
+  const h=new Date().getHours();
+  return h<5?'Boa madrugada':h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';
+}
+function updateTopbar(){
+  const nome=state.profile.nome?.trim()||'mamãe';
+  $('#greetTitle').textContent=`${saudacao()}, ${nome}`;
+  const g=gest();
+  $('#greetSub').textContent = g.ok
+    ? `${TITULOS[view]} · Semana ${g.w} · ${TRI_NOME[g.tri]} · faltam ${Math.max(0,g.rest)} dias`
+    : `${TITULOS[view]} · configure sua data provável do parto`;
+  $('#avatarTxt').textContent=(nome[0]||'M').toUpperCase();
+  $('#btnAddTxt').textContent=ADD_LABEL[view]||'Adicionar';
+}
+function updateSidebarProgress(){
+  const g=gest();
+  $('#sbWeek').textContent = g.ok?`Semana ${g.w}`+(g.d?` + ${g.d}d`:''):'Semana —';
+  $('#sbTri').textContent  = g.ok?`${Math.round(g.pct)}%`:'—';
+  $('#sbBar').style.width  = (g.ok?g.pct:0)+'%';
+}
+
+/* ---------------- sidebar mobile ---------------- */
+const openSidebar=()=>{$('#sidebar').classList.add('open');$('#scrim').classList.add('on')};
+const closeSidebar=()=>{$('#sidebar').classList.remove('open');$('#scrim').classList.remove('on')};
+$('#btnMenu').onclick=openSidebar; $('#sbClose').onclick=closeSidebar; $('#scrim').onclick=closeSidebar;
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-go]');
+  if(b){ go(b.dataset.go); }
+});
+
+/* ---------------- tema ---------------- */
+function setTheme(t){
+  state.theme=t; document.documentElement.dataset.theme=t;
+  $('meta[name=theme-color]').setAttribute('content', t==='dark'?'#0C0A11':'#F8BBD0');
+  save();
+}
+$('#btnTheme').onclick=()=>{
+  setTheme(state.theme==='dark'?'light':'dark');
+  if($('#stage').dataset.ready==='1') repaint();
+  toast(state.theme==='dark'?'Modo escuro ativado':'Modo claro ativado');
+};
+$('#btnAvatar').onclick=()=>go('perfil');
+</script>
+
+<script>
+/* ============================================================
+   Gráficos (SVG puro)
+   ============================================================ */
+function chartLine(data,o={}){
+  const w=o.w||620,h=o.h||200,pl=38,pr=14,pt=16,pb=28;
+  if(!data.length) return emptyBox(o.vazio||'Sem dados ainda');
+  const ys=data.map(d=>d.y); let min=Math.min(...ys),max=Math.max(...ys);
+  if(min===max){min-=1;max+=1}
+  const r=max-min; min-=r*.18; max+=r*.18;
+  const X=i=>pl+(data.length===1?(w-pl-pr)/2:i*(w-pl-pr)/(data.length-1));
+  const Y=v=>pt+(1-(v-min)/(max-min))*(h-pt-pb);
+  const p=data.map((d,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(d.y).toFixed(1)}`).join(' ');
+  const area=`${p} L${X(data.length-1).toFixed(1)} ${h-pb} L${X(0).toFixed(1)} ${h-pb} Z`;
+  let grid='';
+  for(let i=0;i<=3;i++){
+    const v=min+(max-min)*i/3, y=Y(v);
+    grid+=`<line class="axis" x1="${pl}" y1="${y.toFixed(1)}" x2="${w-pr}" y2="${y.toFixed(1)}" stroke-dasharray="3 5"/>
+           <text class="glab" x="4" y="${(y+3.5).toFixed(1)}">${v.toFixed(o.dec??0)}</text>`;
+  }
+  const step=Math.ceil(data.length/7);
+  const xlab=data.map((d,i)=> (i%step===0||i===data.length-1)?`<text class="glab" x="${X(i).toFixed(1)}" y="${h-8}" text-anchor="middle">${esc(d.x)}</text>`:'').join('');
+  const dots=data.map((d,i)=>`<circle class="dot" cx="${X(i).toFixed(1)}" cy="${Y(d.y).toFixed(1)}" r="4" fill="${o.cor||'#EE7FAE'}" style="animation-delay:${(.9+i*.05).toFixed(2)}s"><title>${esc(d.x)}: ${d.y}${o.un||''}</title></circle>`).join('');
+  return `<svg class="chart" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="height:${h}px">
+    ${grid}<path d="${area}" fill="${o.fill||'url(#chartPink)'}"/>
+    <path class="lin" d="${p}" stroke="${o.stroke||'url(#lineGrad)'}"/>${dots}${xlab}</svg>`;
+}
+function chartBars(data,o={}){
+  const w=o.w||620,h=o.h||190,pl=38,pr=14,pt=16,pb=30;
+  if(!data.length) return emptyBox(o.vazio||'Sem dados ainda');
+  const max=Math.max(o.max||0,...data.map(d=>d.y))*1.12||1;
+  const bw=(w-pl-pr)/data.length, bar=Math.min(bw*.56,38);
+  let grid='';
+  for(let i=0;i<=3;i++){
+    const v=max*i/3, y=pt+(1-i/3)*(h-pt-pb);
+    grid+=`<line class="axis" x1="${pl}" y1="${y.toFixed(1)}" x2="${w-pr}" y2="${y.toFixed(1)}" stroke-dasharray="3 5"/>
+           <text class="glab" x="4" y="${(y+3.5).toFixed(1)}">${Math.round(v)}</text>`;
+  }
+  const bars=data.map((d,i)=>{
+    const bh=Math.max(2,(d.y/max)*(h-pt-pb)), x=pl+i*bw+(bw-bar)/2, y=h-pb-bh;
+    return `<rect class="barr" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bar.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(6,bar/2).toFixed(1)}" fill="${d.cor||o.cor||'url(#lineGrad)'}" style="animation-delay:${(i*.06).toFixed(2)}s"><title>${esc(d.x)}: ${d.y}${o.un||''}</title></rect>
+      <text class="glab" x="${(pl+i*bw+bw/2).toFixed(1)}" y="${h-10}" text-anchor="middle">${esc(d.x)}</text>`;
+  }).join('');
+  if(o.meta){ const y=h-pb-(o.meta/max)*(h-pt-pb);
+    return `<svg class="chart" viewBox="0 0 ${w} ${h}" style="height:${h}px">${grid}${bars}
+      <line x1="${pl}" y1="${y.toFixed(1)}" x2="${w-pr}" y2="${y.toFixed(1)}" stroke="var(--mint-ink)" stroke-width="1.6" stroke-dasharray="6 5" opacity=".8"/></svg>`;
+  }
+  return `<svg class="chart" viewBox="0 0 ${w} ${h}" style="height:${h}px">${grid}${bars}</svg>`;
+}
+const emptyBox=(t)=>`<div class="empty">${ic('analytics')}<h3>${esc(t)}</h3><p>Os gráficos aparecem assim que você registrar os primeiros dados.</p></div>`;
+
+function ringHTML(pct,label,sub){
+  const R=42,C=2*Math.PI*R;
+  return `<div class="ring"><svg viewBox="0 0 100 100">
+    <circle class="trk" cx="50" cy="50" r="${R}" stroke-width="8"/>
+    <circle class="val" cx="50" cy="50" r="${R}" stroke-width="8" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C*(1-pct/100)).toFixed(1)}"/>
+  </svg><div class="lbl"><div><b>${label}</b><span>${sub}</span></div></div></div>`;
+}
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+const VIEWS={}, BIND={}, ADD_LABEL={};
+
+/* util de resumo */
+function aguaHoje(){ return state.agua[hoje()]||0 }
+function chutesHoje(){ return state.chutes.filter(c=>c.data===hoje()).reduce((a,c)=>a+c.n,0) }
+function proximaConsulta(){ return state.consultas.filter(c=>c.data>=hoje()).sort((a,b)=>(a.data+a.hora).localeCompare(b.data+b.hora))[0] }
+function pesoAtual(){ const p=[...state.pesos].sort((a,b)=>a.data.localeCompare(b.data)); return p.length?p[p.length-1]:null }
+function ganhoPeso(){ const a=pesoAtual(); return a?+(a.peso-(state.profile.pesoInicial||a.peso)).toFixed(1):0 }
+function imc(){ const p=state.profile.pesoInicial, h=(state.profile.altura||165)/100; return (p&&h)?+(p/(h*h)).toFixed(1):null }
+
+function resumoIA(){
+  const g=gest(); if(!g.ok) return 'Cadastre a data provável do parto no Perfil da Gestação para receber um resumo personalizado.';
+  const b=babyAt(g.w);
+  const ml=aguaHoje(), meta=state.metaAgua;
+  const sint7=state.sintomas.filter(s=>diasEntre(s.data,hoje())<=7);
+  const top=Object.entries(sint7.reduce((a,s)=>(a[s.tipo]=(a[s.tipo]||0)+1,a),{})).sort((a,b)=>b[1]-a[1])[0];
+  const c=proximaConsulta();
+  let t=[];
+  t.push(`Você está na semana ${g.w}${g.d?` e ${g.d} dia${g.d>1?'s':''}`:''} — ${TRI_NOME[g.tri].toLowerCase()}. O bebê tem aproximadamente ${b[2]} cm e ${b[3]>=1000?(b[3]/1000).toFixed(2)+' kg':b[3]+' g'}, o tamanho de um(a) ${b[1]}.`);
+  if(ml>=meta) t.push(`Sua hidratação de hoje já atingiu a meta de ${(meta/1000).toFixed(1)} L. Excelente.`);
+  else if(ml>0) t.push(`Você bebeu ${ml} ml hoje; faltam ${meta-ml} ml para a meta diária.`);
+  else t.push(`Ainda não há registro de água hoje — a recomendação é de cerca de ${(meta/1000).toFixed(1)} L por dia na gestação.`);
+  if(top) t.push(`Nos últimos 7 dias, o sintoma mais registrado foi "${top[0]}" (${top[1]}x). Vale comentar na próxima consulta.`);
+  if(c) t.push(`Próxima consulta: ${fmt(c.data)} às ${c.hora} com ${c.medico||'seu médico'}.`);
+  const m=MARCOS.filter(m=>m[0]>=g.w)[0];
+  if(m) t.push(`Marco à frente: semana ${m[0]} — ${m[1]}. ${m[2]}`);
+  return t.join(' ');
+}
+
+/* ============================== PAINEL ============================== */
+ADD_LABEL.painel='Adicionar';
+VIEWS.painel=()=>{
+  const g=gest(), b=babyAt(g.w), c=proximaConsulta(), pa=pesoAtual();
+  const ml=aguaHoje(), pctAgua=Math.round(ml/state.metaAgua*100);
+  const ult=[...state.entries].sort((a,b)=>b.data.localeCompare(a.data)).slice(0,4);
+  const marcos=MARCOS.map(m=>({w:m[0],t:m[1],d:m[2],feito:g.w>=m[0]}));
+  const prox=marcos.filter(m=>!m.feito).slice(0,3);
+  const feitos=marcos.filter(m=>m.feito).slice(-2);
+
+  return `
+  <section class="hero" style="margin-bottom:18px">
+    <div class="hero-bg"></div><div class="hero-veil"></div><div class="hero-veil2"></div>
+    <div class="hero-top">
+      <span class="hero-chip">${ic('spark','ic ic-sm')} ${TRI_NOME[g.tri]}</span>
+      <span class="hero-chip">${ic('clock','ic ic-sm')} <b>${Math.max(0,g.rest)}</b> dias restantes</span>
+    </div>
+    <h2>${g.ok?`Semana ${g.w}`:'Configure sua gestação'}${g.d?`<span style="font-size:18px;opacity:.75"> + ${g.d}d</span>`:''}</h2>
+    <p class="sub">${g.ok?`Seu bebê está do tamanho de um(a) <b>${b[1]}</b> — cerca de ${b[2]} cm e ${b[3]>=1000?(b[3]/1000).toFixed(2)+' kg':b[3]+' g'}.`:'Informe a data da última menstruação ou a data provável do parto para começar.'}</p>
+    <div class="hero-chips">
+      <button class="hero-chip" data-go="memorias" style="cursor:pointer;border:1px solid rgba(255,255,255,.24);color:#fff">${ic('image','ic ic-sm')} Nova memória</button>
+      <button class="hero-chip" data-go="crescimento" style="cursor:pointer;border:1px solid rgba(255,255,255,.24);color:#fff">${ic('growth','ic ic-sm')} Crescimento</button>
+      <button class="hero-chip" data-go="consultas" style="cursor:pointer;border:1px solid rgba(255,255,255,.24);color:#fff">${ic('calendar','ic ic-sm')} Consultas</button>
+    </div>
+  </section>
+
+  <div class="grid g4" style="margin-bottom:18px">
+    <div class="card card-hover" data-go="agua" style="cursor:pointer">
+      <div class="card-head"><span class="chip-ic blue">${ic('drop')}</span><h3>Água</h3></div>
+      <div class="stat"><div class="v">${ml}<small> ml</small></div><div class="d">${pctAgua}% da meta de ${state.metaAgua} ml</div></div>
+      <div class="bar" style="margin-top:12px"><i style="width:${clamp(pctAgua,0,100)}%;background:linear-gradient(90deg,#8FC4F2,#5C9FE0)"></i></div>
+    </div>
+    <div class="card card-hover" data-go="movimentos" style="cursor:pointer">
+      <div class="card-head"><span class="chip-ic lilac">${ic('waves')}</span><h3>Movimentos</h3></div>
+      <div class="stat"><div class="v">${chutesHoje()}<small> hoje</small></div><div class="d">${g.w>=28?'Meta: 10 movimentos em 2h':'Contagem recomendada a partir da semana 28'}</div></div>
+    </div>
+    <div class="card card-hover" data-go="consultas" style="cursor:pointer">
+      <div class="card-head"><span class="chip-ic mint">${ic('calendar')}</span><h3>Próxima consulta</h3></div>
+      <div class="stat"><div class="v" style="font-size:${c?'20px':'29px'}">${c?fmtShort(c.data)+' · '+c.hora:'—'}</div>
+      <div class="d">${c?esc(c.titulo):'Nenhuma consulta agendada'}</div></div>
+    </div>
+    <div class="card card-hover" data-go="analises" style="cursor:pointer">
+      <div class="card-head"><span class="chip-ic pink">${ic('scale')}</span><h3>Peso</h3></div>
+      <div class="stat"><div class="v">${pa?pa.peso:'—'}<small> kg</small></div>
+      <div class="d">${pa?(ganhoPeso()>=0?'+':'')+ganhoPeso()+' kg desde o início':'Registre seu peso'}</div></div>
+    </div>
+  </div>
+
+  <div class="grid g-side" style="margin-bottom:18px">
+    <div class="card">
+      <div class="card-head">
+        <span class="chip-ic lilac">${ic('spark')}</span>
+        <h3>Resumo da semana<div class="sub">Gerado a partir dos seus registros</div></h3>
+        <button class="btn btn-ghost btn-sm" id="btnResumo">${ic('spark','ic ic-sm')} Atualizar</button>
+      </div>
+      <p id="resumoTxt" style="font-size:15px;color:var(--text-2);line-height:1.75">${esc(resumoIA())}</p>
+      <hr class="divider">
+      <div class="grid g3" style="gap:12px">
+        ${miniStat('Semanas',g.w,'de 40')}
+        ${miniStat('Progresso',Math.round(g.pct)+'%','concluído')}
+        ${miniStat('Memórias',state.entries.length,'registros')}
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px">
+      ${ringHTML(g.pct,g.ok?g.w:'—','semanas')}
+      <div style="text-align:center">
+        <b style="font-family:'Poppins';font-size:15px;display:block">${g.ok?fmt(state.profile.dpp):'Sem data'}</b>
+        <span style="font-size:12.5px;color:var(--text-3)">Data provável do parto</span>
+      </div>
+      <button class="btn btn-soft btn-block btn-sm" data-go="perfil">${ic('edit','ic ic-sm')} Ajustar datas</button>
+    </div>
+  </div>
+
+  <div class="grid g-side">
+    <div class="card">
+      <div class="card-head"><span class="chip-ic yellow">${ic('star')}</span><h3>Marcos da jornada</h3></div>
+      <div class="tl">
+        ${feitos.map(m=>tlItem(m,true)).join('')}
+        ${prox.map(m=>tlItem(m,false)).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="chip-ic pink">${ic('image')}</span><h3>Últimas memórias</h3>
+        <button class="mini-btn" data-go="memorias">${ic('chev-r','ic ic-sm')}</button></div>
+      ${ult.length?`<div class="list">${ult.map(e=>`
+        <div class="row-item"><span style="font-size:22px">${e.humor||'•'}</span>
+          <div class="body"><b>${fmtShort(e.data)} · ${esc(e.titulo||'Registro')}</b><small>${esc((e.texto||'').slice(0,58))}${(e.texto||'').length>58?'…':''}</small></div>
+        </div>`).join('')}</div>`
+      :`<div class="empty">${ic('image')}<h3>Nenhuma memória ainda</h3><p>Registre como você se sente hoje — daqui a alguns meses isso vale ouro.</p><button class="btn btn-primary btn-sm" data-go="memorias">${ic('plus','ic ic-sm')} Criar primeira</button></div>`}
+    </div>
+  </div>`;
+};
+const miniStat=(k,v,d)=>`<div style="background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:13px 14px">
+  <div class="stat"><div class="k">${k}</div><div class="v" style="font-size:22px">${v}</div><div class="d" style="font-size:11.5px">${d}</div></div></div>`;
+const tlItem=(m,feito)=>`<div class="tl-item${feito?'':' dim'}">
+  <b>Semana ${m.w} · ${esc(m.t)}</b><small>${feito?'concluído':'a caminho'}</small><p>${esc(m.d)}</p></div>`;
+
+BIND.painel=()=>{
+  $('#btnResumo').onclick=async()=>{
+    await aiRun('Analisando sua semana','Cruzando sintomas, hidratação, peso e consultas',
+      ['Coletando registros dos últimos 7 dias','Comparando com a semana anterior','Consultando marcos gestacionais','Redigindo o resumo']);
+    $('#resumoTxt').textContent=resumoIA();
+    toast('Resumo atualizado');
+  };
+};
+
+/* ============================== PERFIL ============================== */
+ADD_LABEL.perfil='Salvar';
+VIEWS.perfil=()=>{
+  const p=state.profile, g=gest(), i=imc();
+  return `
+  <div class="page-head"><div class="t"><h1>Perfil da Gestação</h1>
+    <p>Os dados abaixo alimentam todos os cálculos do aplicativo.</p></div></div>
+
+  <div class="grid g-side">
+    <div class="card">
+      <div class="card-head"><span class="chip-ic pink">${ic('profile')}</span><h3>Dados principais</h3></div>
+      <div class="field-row">
+        <div class="field"><label>Seu nome</label><input class="input" id="pNome" value="${esc(p.nome)}" placeholder="Como quer ser chamada"></div>
+        <div class="field"><label>Nome do bebê (ou apelido)</label><input class="input" id="pBebe" value="${esc(p.bebe)}" placeholder="Ex.: Feijãozinho"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Data da última menstruação</label><input class="input" type="date" id="pDum" value="${p.dum||''}"></div>
+        <div class="field"><label>Data provável do parto</label><input class="input" type="date" id="pDpp" value="${p.dpp||''}"></div>
+      </div>
+      <p class="hint">Ao preencher a última menstruação, a data provável do parto é calculada automaticamente (regra de Naegele: +280 dias).</p>
+      <hr class="divider">
+      <div class="field-row">
+        <div class="field"><label>Sexo do bebê</label><select class="input" id="pSexo">
+          ${['surpresa','menina','menino'].map(s=>`<option value="${s}"${p.sexo===s?' selected':''}>${s==='surpresa'?'Ainda é surpresa':s[0].toUpperCase()+s.slice(1)}</option>`).join('')}
+        </select></div>
+        <div class="field"><label>Tipo sanguíneo</label><select class="input" id="pSangue">
+          <option value="">Não informado</option>
+          ${['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(s=>`<option${p.tipoSangue===s?' selected':''}>${s}</option>`).join('')}
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Altura (cm)</label><input class="input" type="number" id="pAltura" value="${p.altura||''}" min="120" max="220"></div>
+        <div class="field"><label>Peso antes da gestação (kg)</label><input class="input" type="number" step="0.1" id="pPeso" value="${p.pesoInicial||''}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Obstetra</label><input class="input" id="pMedico" value="${esc(p.medico)}" placeholder="Dra. / Dr."></div>
+        <div class="field"><label>Maternidade</label><input class="input" id="pHosp" value="${esc(p.hospital)}" placeholder="Onde pretende ter o bebê"></div>
+      </div>
+      <button class="btn btn-primary" id="btnSalvarPerfil">${ic('check','ic ic-sm')} Salvar e recalcular</button>
+    </div>
+
+    <div>
+      <div class="card" style="text-align:center;margin-bottom:18px">
+        ${ringHTML(g.pct,g.ok?g.w:'—','semanas')}
+        <h3 style="margin-top:14px">${g.ok?TRI_NOME[g.tri]:'Sem data definida'}</h3>
+        <p style="font-size:13.5px;color:var(--text-2);margin-top:4px">${g.ok?`${g.total} dias de gestação · faltam ${Math.max(0,g.rest)}`:'Preencha as datas ao lado'}</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="chip-ic mint">${ic('scale')}</span><h3>Corpo</h3></div>
+        <div class="list">
+          ${infoRow('IMC pré-gestacional',i?i+' kg/m²':'—', i?classIMC(i):'informe peso e altura')}
+          ${infoRow('Ganho de peso',(ganhoPeso()>=0?'+':'')+ganhoPeso()+' kg', faixaGanho())}
+          ${infoRow('Registros de peso',state.pesos.length,'medições salvas')}
+        </div>
+        <button class="btn btn-soft btn-block btn-sm" id="btnAddPeso" style="margin-top:12px">${ic('plus','ic ic-sm')} Registrar peso de hoje</button>
+      </div>
+    </div>
+  </div>`;
+};
+const infoRow=(k,v,d)=>`<div class="row-item"><div class="body"><b>${k}</b><small>${d}</small></div><span class="tag gray">${v}</span></div>`;
+function classIMC(v){ return v<18.5?'abaixo do peso':v<25?'peso adequado':v<30?'sobrepeso':'obesidade' }
+function faixaGanho(){
+  const i=imc(); if(!i) return 'defina altura e peso inicial';
+  const f = i<18.5?[12.5,18]:i<25?[11.5,16]:i<30?[7,11.5]:[5,9];
+  return `recomendado ${f[0]}–${f[1]} kg no total`;
+}
+BIND.perfil=()=>{
+  $('#pDum').onchange=e=>{ if(e.target.value) $('#pDpp').value=iso(addDays(parseISO(e.target.value),280)); };
+  $('#btnSalvarPerfil').onclick=async()=>{
+    const p=state.profile;
+    p.nome=$('#pNome').value.trim(); p.bebe=$('#pBebe').value.trim();
+    p.dum=$('#pDum').value; p.dpp=$('#pDpp').value;
+    p.sexo=$('#pSexo').value; p.tipoSangue=$('#pSangue').value;
+    p.altura=+$('#pAltura').value||165; p.pesoInicial=+$('#pPeso').value||p.pesoInicial;
+    p.medico=$('#pMedico').value.trim(); p.hospital=$('#pHosp').value.trim();
+    state.onboarded=true; save();
+    await aiRun('Recalculando sua gestação','Atualizando idade gestacional e projeções',
+      ['Validando datas informadas','Calculando idade gestacional','Reposicionando marcos e consultas','Atualizando painel']);
+    updateTopbar(); repaint(); toast('Perfil salvo e recalculado');
+  };
+  $('#btnAddPeso').onclick=()=>modalPeso();
+};
+function modalPeso(){
+  openModal({title:'Registrar peso',icon:'scale',cor:'mint',
+    body:`<div class="field-row">
+      <div class="field"><label>Data</label><input class="input" type="date" id="wD" value="${hoje()}"></div>
+      <div class="field"><label>Peso (kg)</label><input class="input" type="number" step="0.1" id="wP" value="${pesoAtual()?.peso||state.profile.pesoInicial||''}"></div></div>
+      <p class="hint">O ganho ideal depende do seu IMC inicial: ${faixaGanho()}.</p>`,
+    ok:'Salvar peso',
+    onOk:()=>{
+      const d=$('#wD').value, p=+$('#wP').value;
+      if(!d||!p){ toast('Preencha data e peso','warn'); return false; }
+      state.pesos=state.pesos.filter(x=>x.data!==d).concat([{data:d,peso:p}]);
+      save(); repaint(); toast('Peso registrado');
+    }});
+}
+</script>
+
+<script>
+/* ============================== CONSULTAS ============================== */
+ADD_LABEL.consultas='Nova consulta';
+let calRef=new Date();
+const TIPOS_CONSULTA=['Pré-natal de rotina','Ultrassom','Exames laboratoriais','Dentista','Nutricionista','Anestesista','Outro'];
+
+VIEWS.consultas=()=>{
+  const futuras=state.consultas.filter(c=>c.data>=hoje()).sort((a,b)=>(a.data+a.hora).localeCompare(b.data+b.hora));
+  const passadas=state.consultas.filter(c=>c.data<hoje()).sort((a,b)=>(b.data+b.hora).localeCompare(a.data+a.hora));
+  return `
+  <div class="page-head"><div class="t"><h1>Consultas</h1><p>Agende, receba lembretes e chegue preparada com as perguntas certas.</p></div>
+    <div class="a"><button class="btn btn-primary" id="btnNovaConsulta">${ic('plus','ic ic-sm')} Nova consulta</button></div></div>
+
+  <div class="grid g-side">
+    <div>
+      <div class="card" style="margin-bottom:18px">
+        <div class="cal-head">
+          <button class="mini-btn" id="calPrev">${ic('chev-l','ic ic-sm')}</button>
+          <b>${MESES[calRef.getMonth()][0].toUpperCase()+MESES[calRef.getMonth()].slice(1)} de ${calRef.getFullYear()}</b>
+          <button class="mini-btn" id="calNext">${ic('chev-r','ic ic-sm')}</button>
+          <button class="btn btn-soft btn-sm" id="calHoje">Hoje</button>
+        </div>
+        <div class="cal-grid">
+          ${DOW.map(d=>`<div class="cal-dow">${d}</div>`).join('')}
+          ${calDias()}
+        </div>
+        <hr class="divider">
+        <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--text-3)">
+          <span style="display:flex;align-items:center;gap:6px"><i style="width:7px;height:7px;border-radius:9px;background:var(--accent-2);display:block"></i> com consulta</span>
+          <span style="display:flex;align-items:center;gap:6px"><i style="width:7px;height:7px;border-radius:9px;background:var(--accent);display:block"></i> hoje</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="chip-ic mint">${ic('calendar')}</span><h3>Próximas</h3>
+          <span class="tag mint">${futuras.length}</span></div>
+        ${futuras.length?`<div class="list">${futuras.map(consultaRow).join('')}</div>`
+          :`<div class="empty">${ic('calendar')}<h3>Nenhuma consulta futura</h3><p>Agende seu próximo pré-natal para não perder o acompanhamento.</p>
+             <button class="btn btn-primary btn-sm" id="btnNovaConsulta2">${ic('plus','ic ic-sm')} Agendar</button></div>`}
+        ${passadas.length?`<hr class="divider"><div class="sb-group-label" style="padding-left:0">Histórico</div>
+          <div class="list">${passadas.slice(0,6).map(consultaRow).join('')}</div>`:''}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="chip-ic lilac">${ic('checklist')}</span><h3>Perguntas para levar<div class="sub">Anote enquanto lembra</div></h3></div>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <input class="input" id="qNova" placeholder="Ex.: posso continuar treinando?">
+        <button class="btn btn-primary btn-sm" id="qAdd" style="flex:none">${ic('plus','ic ic-sm')}</button>
+      </div>
+      ${state.perguntas.length?`<div class="list">${state.perguntas.map((q,i)=>`
+        <label class="chk"><input type="checkbox" data-q="${i}"${q.feito?' checked':''}>
+          <span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+          <span class="txt">${esc(q.t)}</span>
+          <button class="mini-btn danger" data-delq="${i}">${ic('trash','ic ic-sm')}</button></label>`).join('')}</div>`
+        :`<div class="empty" style="padding:26px 10px">${ic('checklist')}<h3>Sua lista está vazia</h3><p>Toda dúvida que surgir no meio do dia pode virar uma pergunta aqui.</p></div>`}
+      <hr class="divider">
+      <button class="btn btn-ghost btn-block btn-sm" id="qSugerir">${ic('spark','ic ic-sm')} Sugerir perguntas para a semana ${gest().w}</button>
+    </div>
+  </div>`;
+};
+function consultaRow(c){
+  const passou=c.data<hoje();
+  return `<div class="row-item">
+    <span class="chip-ic ${passou?'gray':'mint'}" style="${passou?'background:var(--surface-3);color:var(--text-3)':''}">${ic(c.tipo==='Ultrassom'?'image':'calendar')}</span>
+    <div class="body"><b>${esc(c.titulo)}</b><small>${fmt(c.data)} · ${c.hora} ${c.medico?'· '+esc(c.medico):''} ${c.local?'· '+esc(c.local):''}</small></div>
+    <div class="row-actions">
+      <button class="mini-btn" data-editc="${c.id}">${ic('edit','ic ic-sm')}</button>
+      <button class="mini-btn danger" data-delc="${c.id}">${ic('trash','ic ic-sm')}</button>
+    </div></div>`;
+}
+function calDias(){
+  const y=calRef.getFullYear(), m=calRef.getMonth();
+  const first=new Date(y,m,1), start=first.getDay(), dias=new Date(y,m+1,0).getDate();
+  const prev=new Date(y,m,0).getDate();
+  let out='';
+  for(let i=start-1;i>=0;i--) out+=`<button class="cal-day out">${prev-i}</button>`;
+  for(let d=1;d<=dias;d++){
+    const s=`${y}-${pad(m+1)}-${pad(d)}`;
+    const has=state.consultas.some(c=>c.data===s);
+    out+=`<button class="cal-day${s===hoje()?' today':''}${has?' has':''}" data-dia="${s}">${d}</button>`;
+  }
+  const total=start+dias, resto=(7-total%7)%7;
+  for(let d=1;d<=resto;d++) out+=`<button class="cal-day out">${d}</button>`;
+  return out;
+}
+BIND.consultas=()=>{
+  const nova=()=>modalConsulta();
+  $('#btnNovaConsulta').onclick=nova;
+  if($('#btnNovaConsulta2')) $('#btnNovaConsulta2').onclick=nova;
+  $('#calPrev').onclick=()=>{calRef=new Date(calRef.getFullYear(),calRef.getMonth()-1,1);repaint()};
+  $('#calNext').onclick=()=>{calRef=new Date(calRef.getFullYear(),calRef.getMonth()+1,1);repaint()};
+  $('#calHoje').onclick=()=>{calRef=new Date();repaint()};
+  $$('[data-dia]').forEach(b=>b.onclick=()=>{
+    const d=b.dataset.dia, cs=state.consultas.filter(c=>c.data===d);
+    if(cs.length) openModal({title:fmt(d),icon:'calendar',cor:'mint',ok:'',cancel:'Fechar',
+      body:`<div class="list">${cs.map(c=>`<div class="row-item"><div class="body"><b>${esc(c.titulo)}</b><small>${c.hora} · ${esc(c.medico||'—')} · ${esc(c.local||'—')}</small>${c.notas?`<p style="font-size:13.5px;color:var(--text-2);margin-top:6px">${esc(c.notas)}</p>`:''}</div></div>`).join('')}</div>`});
+    else modalConsulta(null,d);
+  });
+  $$('[data-editc]').forEach(b=>b.onclick=()=>modalConsulta(state.consultas.find(c=>c.id===b.dataset.editc)));
+  $$('[data-delc]').forEach(b=>b.onclick=()=>{
+    state.consultas=state.consultas.filter(c=>c.id!==b.dataset.delc); save(); repaint(); toast('Consulta removida');
+  });
+  const addQ=()=>{
+    const v=$('#qNova').value.trim(); if(!v) return;
+    state.perguntas.push({t:v,feito:false}); save(); repaint(); toast('Pergunta adicionada');
+  };
+  $('#qAdd').onclick=addQ;
+  $('#qNova').onkeydown=e=>{if(e.key==='Enter')addQ()};
+  $$('[data-q]').forEach(c=>c.onchange=()=>{state.perguntas[+c.dataset.q].feito=c.checked;save()});
+  $$('[data-delq]').forEach(b=>b.onclick=e=>{e.preventDefault();state.perguntas.splice(+b.dataset.delq,1);save();repaint()});
+  $('#qSugerir').onclick=async()=>{
+    const g=gest();
+    await aiRun('Preparando suas perguntas','Selecionando o que importa nesta fase da gestação',
+      ['Lendo sua idade gestacional','Cruzando com sintomas registrados','Filtrando temas do trimestre','Montando a lista']);
+    const sug=sugestoesPerguntas(g.w);
+    sug.forEach(t=>{ if(!state.perguntas.some(q=>q.t===t)) state.perguntas.push({t,feito:false}) });
+    save(); repaint(); toast(`${sug.length} perguntas adicionadas`);
+  };
+};
+function sugestoesPerguntas(w){
+  if(w<14) return ['Quais exames preciso fazer neste trimestre?','Posso continuar meus medicamentos atuais?','Qual ácido fólico e dosagem devo tomar?','O que fazer se o enjoo não passar?'];
+  if(w<28) return ['Quando será o ultrassom morfológico?','Meu ganho de peso está adequado?','Posso viajar de avião nesta fase?','Preciso do teste de tolerância à glicose?'];
+  return ['Qual a posição do bebê agora?','Quais sinais indicam trabalho de parto?','Como funciona meu plano de parto na maternidade?','Quando devo procurar a maternidade?','Preciso repetir algum exame antes do parto?'];
+}
+function modalConsulta(c,dataPre){
+  const e=c||{id:null,titulo:'',tipo:TIPOS_CONSULTA[0],data:dataPre||hoje(),hora:'09:00',medico:state.profile.medico,local:state.profile.hospital,notas:''};
+  openModal({title:c?'Editar consulta':'Nova consulta',icon:'calendar',cor:'mint',
+    body:`
+      <div class="field"><label>Título</label><input class="input" id="cT" value="${esc(e.titulo)}" placeholder="Ex.: Pré-natal — 24 semanas"></div>
+      <div class="field"><label>Tipo</label><select class="input" id="cTipo">${TIPOS_CONSULTA.map(t=>`<option${e.tipo===t?' selected':''}>${t}</option>`).join('')}</select></div>
+      <div class="field-row">
+        <div class="field"><label>Data</label><input class="input" type="date" id="cD" value="${e.data}"></div>
+        <div class="field"><label>Hora</label><input class="input" type="time" id="cH" value="${e.hora}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Profissional</label><input class="input" id="cM" value="${esc(e.medico||'')}"></div>
+        <div class="field"><label>Local</label><input class="input" id="cL" value="${esc(e.local||'')}"></div>
+      </div>
+      <div class="field"><label>Anotações</label><textarea class="input" id="cN" placeholder="O que foi conversado, orientações, resultados…">${esc(e.notas||'')}</textarea></div>`,
+    ok:c?'Salvar alterações':'Agendar',
+    onOk:()=>{
+      const o={id:e.id||uid(),titulo:$('#cT').value.trim()||$('#cTipo').value,tipo:$('#cTipo').value,
+        data:$('#cD').value,hora:$('#cH').value,medico:$('#cM').value.trim(),local:$('#cL').value.trim(),notas:$('#cN').value.trim()};
+      if(!o.data){toast('Informe a data','warn');return false}
+      state.consultas=state.consultas.filter(x=>x.id!==o.id).concat([o]);
+      save(); repaint(); toast(c?'Consulta atualizada':'Consulta agendada');
+    }});
+}
+
+/* ============================== SINTOMAS ============================== */
+ADD_LABEL.sintomas='Registrar sintoma';
+const SINTOMAS=['Náusea','Enjoo matinal','Fadiga','Azia','Dor nas costas','Dor de cabeça','Inchaço','Insônia','Cãibras','Tontura','Falta de ar','Contrações','Alteração de humor','Desejo alimentar','Sensibilidade nos seios','Prisão de ventre'];
+const INTENSIDADE=['Muito leve','Leve','Moderado','Forte','Muito forte'];
+let sintPeriodo=7;
+
+VIEWS.sintomas=()=>{
+  const lim=sintPeriodo;
+  const dados=state.sintomas.filter(s=>diasEntre(s.data,hoje())<lim).sort((a,b)=>b.data.localeCompare(a.data));
+  const freq=Object.entries(dados.reduce((a,s)=>(a[s.tipo]=(a[s.tipo]||0)+1,a),{})).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const serie=[];
+  for(let i=lim-1;i>=0;i--){
+    const d=iso(addDays(new Date(),-i));
+    serie.push({x:fmtShort(d),y:state.sintomas.filter(s=>s.data===d).length});
+  }
+  const media=dados.length?(dados.reduce((a,s)=>a+s.nivel,0)/dados.length).toFixed(1):'—';
+  return `
+  <div class="page-head"><div class="t"><h1>Sintomas</h1><p>Registrar o que você sente ajuda seu médico a enxergar padrões.</p></div>
+    <div class="a"><button class="btn btn-primary" id="btnNovoSint">${ic('plus','ic ic-sm')} Registrar</button></div></div>
+
+  <div class="seg" style="max-width:380px;margin-bottom:18px">
+    ${[7,30,90].map(d=>`<button class="${sintPeriodo===d?'on':''}" data-per="${d}">${d} dias</button>`).join('')}
+  </div>
+
+  <div class="grid g3" style="margin-bottom:18px">
+    <div class="card"><div class="stat"><div class="k">Registros</div><div class="v">${dados.length}</div><div class="d">nos últimos ${lim} dias</div></div></div>
+    <div class="card"><div class="stat"><div class="k">Intensidade média</div><div class="v">${media}<small>/5</small></div><div class="d">${media!=='—'?INTENSIDADE[Math.round(media)-1]||'':'sem dados'}</div></div></div>
+    <div class="card"><div class="stat"><div class="k">Mais frequente</div><div class="v" style="font-size:19px">${freq[0]?esc(freq[0][0]):'—'}</div><div class="d">${freq[0]?freq[0][1]+' ocorrências':'nenhum registro'}</div></div></div>
+  </div>
+
+  <div class="grid g-side" style="margin-bottom:18px">
+    <div class="card">
+      <div class="card-head"><span class="chip-ic pink">${ic('pulse')}</span><h3>Registros por dia</h3></div>
+      ${chartBars(serie,{h:190,cor:'url(#lineGrad)',un:' registros'})}
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="chip-ic lilac">${ic('analytics')}</span><h3>Mais frequentes</h3></div>
+      ${freq.length?freq.map(([t,n])=>`
+        <div style="margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px"><span>${esc(t)}</span><b style="font-family:'Poppins'">${n}</b></div>
+          <div class="bar"><i style="width:${Math.round(n/freq[0][1]*100)}%"></i></div>
+        </div>`).join(''):emptyBox('Nada registrado no período')}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="chip-ic yellow">${ic('clock')}</span><h3>Histórico</h3>
+      <button class="btn btn-ghost btn-sm" id="btnAnaliseSint">${ic('spark','ic ic-sm')} Analisar padrões</button></div>
+    ${dados.length?`<div class="list">${dados.slice(0,30).map(s=>`
+      <div class="row-item">
+        <span class="chip-ic ${['mint','mint','yellow','pink','pink'][s.nivel-1]}">${ic('pulse')}</span>
+        <div class="body"><b>${esc(s.tipo)}</b><small>${fmt(s.data)} · ${INTENSIDADE[s.nivel-1]}${s.nota?' · '+esc(s.nota):''}</small></div>
+        <button class="mini-btn danger" data-dels="${s.id}">${ic('trash','ic ic-sm')}</button>
+      </div>`).join('')}</div>`
+      :`<div class="empty">${ic('pulse')}<h3>Nenhum sintoma registrado</h3><p>Registre como está se sentindo — mesmo os dias bons contam.</p></div>`}
+  </div>`;
+};
+BIND.sintomas=()=>{
+  $('#btnNovoSint').onclick=()=>modalSintoma();
+  $$('[data-per]').forEach(b=>b.onclick=()=>{sintPeriodo=+b.dataset.per;repaint()});
+  $$('[data-dels]').forEach(b=>b.onclick=()=>{state.sintomas=state.sintomas.filter(s=>s.id!==b.dataset.dels);save();repaint();toast('Registro removido')});
+  $('#btnAnaliseSint').onclick=async()=>{
+    await aiRun('Analisando seus sintomas','Buscando correlações com hidratação, sono e semana gestacional',
+      ['Agrupando por tipo e intensidade','Comparando com a semana anterior','Cruzando com hidratação e peso','Formulando observações']);
+    openModal({title:'Padrões encontrados',icon:'spark',cor:'lilac',ok:'',cancel:'Fechar',body:analiseSintomas()});
+  };
+};
+function analiseSintomas(){
+  const d7=state.sintomas.filter(s=>diasEntre(s.data,hoje())<7);
+  const d14=state.sintomas.filter(s=>diasEntre(s.data,hoje())>=7&&diasEntre(s.data,hoje())<14);
+  if(!d7.length&&!d14.length) return `<p style="color:var(--text-2)">Ainda não há registros suficientes. Registre seus sintomas por alguns dias para que a análise faça sentido.</p>`;
+  const freq=Object.entries(d7.reduce((a,s)=>(a[s.tipo]=(a[s.tipo]||0)+1,a),{})).sort((a,b)=>b[1]-a[1]);
+  const m7=d7.length?d7.reduce((a,s)=>a+s.nivel,0)/d7.length:0;
+  const m14=d14.length?d14.reduce((a,s)=>a+s.nivel,0)/d14.length:0;
+  const dif=m14?((m7-m14)/m14*100):0;
+  const g=gest();
+  let out=`<div class="list">`;
+  out+=`<div class="row-item"><div class="body"><b>Volume de registros</b><small>${d7.length} nos últimos 7 dias · ${d14.length} nos 7 anteriores</small></div></div>`;
+  if(m14) out+=`<div class="row-item"><div class="body"><b>Intensidade</b><small>Média ${m7.toFixed(1)}/5 — ${dif>5?'aumento':dif<-5?'redução':'estável'} de ${Math.abs(dif).toFixed(0)}% em relação à semana anterior</small></div></div>`;
+  if(freq[0]) out+=`<div class="row-item"><div class="body"><b>Sintoma dominante</b><small>${esc(freq[0][0])} (${freq[0][1]}x). ${dicaSintoma(freq[0][0])}</small></div></div>`;
+  const ml=Object.entries(state.agua).filter(([d])=>diasEntre(d,hoje())<7).map(([,v])=>v);
+  if(ml.length) out+=`<div class="row-item"><div class="body"><b>Hidratação no período</b><small>Média de ${Math.round(ml.reduce((a,b)=>a+b,0)/ml.length)} ml/dia. ${ml.reduce((a,b)=>a+b,0)/ml.length<state.metaAgua*0.8?'Abaixo da meta — desidratação intensifica dor de cabeça, cãibras e contrações de treinamento.':'Dentro de uma faixa saudável.'}</small></div></div>`;
+  out+=`<div class="row-item"><div class="body"><b>Contexto da semana ${g.w}</b><small>${esc(contextoSemana(g.w))}</small></div></div>`;
+  out+=`</div><p class="hint" style="margin-top:14px">Esta análise é gerada a partir dos seus próprios registros e não substitui avaliação médica. Sangramento, dor forte, febre ou redução de movimentos exigem contato imediato com seu obstetra.</p>`;
+  return out;
+}
+function dicaSintoma(t){
+  const m={'Náusea':'Refeições pequenas e frequentes e gengibre costumam ajudar.','Enjoo matinal':'Comer algo seco antes de levantar reduz a intensidade.',
+  'Azia':'Evite deitar logo após comer e reduza frituras e cafeína.','Fadiga':'Comum no 1º e 3º trimestres; priorize sono e ferro na dieta.',
+  'Dor nas costas':'Alongamento, calor local e travesseiro entre as pernas ajudam.','Inchaço':'Eleve as pernas e reduza sódio; inchaço súbito no rosto/mãos deve ser avaliado.',
+  'Cãibras':'Hidratação, magnésio e alongamento da panturrilha antes de dormir.','Insônia':'Rotina noturna e travesseiro de corpo melhoram o sono lateral.',
+  'Contrações':'Se forem regulares e progressivas antes de 37 semanas, procure a maternidade.','Dor de cabeça':'Hidrate-se; dor forte com visão turva precisa de avaliação urgente.'};
+  return m[t]||'Vale registrar a frequência e comentar na próxima consulta.';
+}
+function contextoSemana(w){
+  if(w<13) return 'No 1º trimestre, enjoo, sono e sensibilidade são esperados pela elevação do hCG e da progesterona.';
+  if(w<28) return 'No 2º trimestre os sintomas costumam aliviar; dores lombares e azia aparecem com o crescimento do útero.';
+  return 'No 3º trimestre, peso, azia, insônia e contrações de treinamento (Braxton Hicks) são frequentes.';
+}
+function modalSintoma(){
+  openModal({title:'Registrar sintoma',icon:'pulse',cor:'pink',
+    body:`<div class="field"><label>Sintoma</label><select class="input" id="sT">${SINTOMAS.map(s=>`<option>${s}</option>`).join('')}</select></div>
+      <div class="field"><label>Intensidade</label><div class="seg" id="sNiv">${INTENSIDADE.map((t,i)=>`<button data-n="${i+1}" class="${i===2?'on':''}">${i+1}</button>`).join('')}</div>
+        <p class="hint" id="sNivTxt">Moderado</p></div>
+      <div class="field-row"><div class="field"><label>Data</label><input class="input" type="date" id="sD" value="${hoje()}"></div></div>
+      <div class="field"><label>Observação (opcional)</label><input class="input" id="sN" placeholder="Ex.: piorou depois do almoço"></div>`,
+    ok:'Registrar',
+    onOk:()=>{
+      const n=+($('#sNiv .on')?.dataset.n||3);
+      state.sintomas.push({id:uid(),tipo:$('#sT').value,nivel:n,data:$('#sD').value,nota:$('#sN').value.trim()});
+      save(); repaint(); toast('Sintoma registrado');
+    }});
+  $$('#sNiv button').forEach(b=>b.onclick=()=>{
+    $$('#sNiv button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    $('#sNivTxt').textContent=INTENSIDADE[+b.dataset.n-1];
+  });
+}
+</script>
+
+<script>
+/* ============================== CRESCIMENTO DO BEBÊ ============================== */
+ADD_LABEL.crescimento='Registrar peso';
+let semanaVista=null;
+function chartCrescimento(idx,cor,fill,un,atual){
+  const w=620,h=210,pl=40,pr=14,pt=16,pb=28;
+  const d=BABY.map(b=>({w:b[0],v:b[idx]}));
+  const max=Math.max(...d.map(x=>x.v))*1.1, min=0;
+  const X=i=>pl+i*(w-pl-pr)/(d.length-1);
+  const Y=v=>pt+(1-(v-min)/(max-min))*(h-pt-pb);
+  const p=d.map((x,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(x.v).toFixed(1)}`).join(' ');
+  const area=`${p} L${X(d.length-1).toFixed(1)} ${h-pb} L${X(0).toFixed(1)} ${h-pb} Z`;
+  let grid='';
+  for(let i=0;i<=3;i++){const v=max*i/3,y=Y(v);
+    grid+=`<line class="axis" x1="${pl}" y1="${y.toFixed(1)}" x2="${w-pr}" y2="${y.toFixed(1)}" stroke-dasharray="3 5"/><text class="glab" x="4" y="${(y+3.5).toFixed(1)}">${v>=1000?(v/1000).toFixed(1)+'k':Math.round(v)}</text>`}
+  const xl=d.map((x,i)=> x.w%6===0||i===d.length-1?`<text class="glab" x="${X(i).toFixed(1)}" y="${h-8}" text-anchor="middle">S${x.w}</text>`:'').join('');
+  let mark='';
+  const i=d.findIndex(x=>x.w===clamp(atual,4,40));
+  if(i>=0){ const cx=X(i),cy=Y(d[i].v);
+    mark=`<line x1="${cx.toFixed(1)}" y1="${pt}" x2="${cx.toFixed(1)}" y2="${h-pb}" stroke="${cor}" stroke-width="1.4" stroke-dasharray="5 4" opacity=".6"/>
+      <circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="6.5" fill="${cor}" stroke="var(--surface)" stroke-width="3"/>
+      <text class="glab" x="${clamp(cx,pl+22,w-pr-30).toFixed(1)}" y="${clamp(cy-14,14,h).toFixed(1)}" text-anchor="middle" style="font-size:11px;font-weight:700;fill:${cor}">${d[i].v}${un}</text>`;
+  }
+  return `<svg class="chart" viewBox="0 0 ${w} ${h}" style="height:${h}px">${grid}<path d="${area}" fill="${fill}"/><path class="lin" d="${p}" stroke="${cor}"/>${mark}${xl}</svg>`;
+}
+VIEWS.crescimento=()=>{
+  const g=gest(); const sem=clamp(semanaVista??g.w,4,40); const b=babyAt(sem);
+  const ant=babyAt(sem-1), cresc=(b[2]-ant[2]).toFixed(1), engordou=b[3]-ant[3];
+  const marcos=MARCOS.filter(m=>Math.abs(m[0]-sem)<=4);
+  return `
+  <div class="page-head"><div class="t"><h1>Crescimento do Bebê</h1><p>Comprimento e peso estimados semana a semana, com marcos de desenvolvimento.</p></div></div>
+
+  <div class="card" style="margin-bottom:18px;background:var(--accent-grad);border:0;color:#3B2E44">
+    <div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap">
+      <div style="flex:1;min-width:230px">
+        <span class="tag" style="background:rgba(255,255,255,.5);color:#3B2E44">Semana ${sem}</span>
+        <h2 style="font-size:28px;margin:10px 0 6px">Do tamanho de um(a) ${esc(b[1])}</h2>
+        <p style="font-size:15px;opacity:.85">Aproximadamente <b>${b[2]} cm</b> e <b>${b[3]>=1000?(b[3]/1000).toFixed(2)+' kg':b[3]+' g'}</b>. Nesta semana ele cresceu cerca de ${cresc} cm e ganhou ${engordou>=1000?(engordou/1000).toFixed(2)+' kg':engordou+' g'}.</p>
+      </div>
+      <div style="display:flex;gap:12px">
+        <div style="background:rgba(255,255,255,.55);border-radius:18px;padding:16px 20px;text-align:center;min-width:96px">
+          <b style="font-family:'Poppins';font-size:26px;display:block;letter-spacing:-.03em">${b[2]}</b><span style="font-size:11.5px;font-weight:600">cm</span></div>
+        <div style="background:rgba(255,255,255,.55);border-radius:18px;padding:16px 20px;text-align:center;min-width:96px">
+          <b style="font-family:'Poppins';font-size:26px;display:block;letter-spacing:-.03em">${b[3]>=1000?(b[3]/1000).toFixed(1):b[3]}</b><span style="font-size:11.5px;font-weight:600">${b[3]>=1000?'kg':'g'}</span></div>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <input type="range" id="semSlider" min="4" max="40" value="${sem}" style="width:100%;accent-color:#C2185B">
+      <div style="display:flex;justify-content:space-between;font-size:11.5px;font-weight:600;font-family:'Poppins';opacity:.7;margin-top:4px"><span>Semana 4</span><span>Semana 40</span></div>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:18px">
+    <div class="card"><div class="card-head"><span class="chip-ic blue">${ic('growth')}</span><h3>Comprimento<div class="sub">cm, da cabeça aos pés</div></h3></div>
+      ${chartCrescimento(2,'#6FA8E8','url(#chartBlue)',' cm',sem)}</div>
+    <div class="card"><div class="card-head"><span class="chip-ic pink">${ic('scale')}</span><h3>Peso<div class="sub">gramas</div></h3></div>
+      ${chartCrescimento(3,'#EE7FAE','url(#chartPink)',' g',sem)}</div>
+  </div>
+
+  <div class="grid g-side">
+    <div class="card">
+      <div class="card-head"><span class="chip-ic yellow">${ic('star')}</span><h3>Marcos por perto</h3></div>
+      <div class="tl">${marcos.map(m=>`<div class="tl-item${g.w>=m[0]?'':' dim'}"><b>Semana ${m[0]} · ${esc(m[1])}</b><small>${g.w>=m[0]?'já aconteceu':'em breve'}</small><p>${esc(m[2])}</p></div>`).join('')||'<p style="color:var(--text-3)">Sem marcos próximos desta semana.</p>'}</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="chip-ic mint">${ic('scale')}</span><h3>Seu peso</h3>
+        <button class="btn btn-ghost btn-sm" id="btnPesoC">${ic('plus','ic ic-sm')}</button></div>
+      ${state.pesos.length?chartLine([...state.pesos].sort((a,b)=>a.data.localeCompare(b.data)).map(p=>({x:fmtShort(p.data),y:p.peso})),{h:170,dec:1,un:' kg'})
+        :emptyBox('Nenhum peso registrado')}
+      <hr class="divider">
+      <div class="list">${infoRow('Ganho total',(ganhoPeso()>=0?'+':'')+ganhoPeso()+' kg',faixaGanho())}</div>
+    </div>
+  </div>`;
+};
+BIND.crescimento=()=>{
+  const s=$('#semSlider');
+  s.oninput=()=>{ semanaVista=+s.value; };
+  s.onchange=()=>{ semanaVista=+s.value; repaint(); };
+  $('#btnPesoC').onclick=()=>modalPeso();
+};
+
+/* ============================== NUTRIÇÃO ============================== */
+ADD_LABEL.nutricao='Registrar refeição';
+const REFEICOES=['Café da manhã','Lanche da manhã','Almoço','Lanche da tarde','Jantar','Ceia'];
+const NUTRIENTES=[
+ ['Ácido fólico','600 mcg/dia','Previne defeitos do tubo neural','Folhas verde-escuras, feijão, lentilha, laranja','mint'],
+ ['Ferro','27 mg/dia','Evita anemia e sustenta o volume sanguíneo','Carne vermelha, feijão, beterraba com vitamina C','pink'],
+ ['Cálcio','1000 mg/dia','Forma ossos e dentes do bebê','Leite, iogurte, queijo, gergelim, brócolis','blue'],
+ ['Ômega-3 (DHA)','200–300 mg/dia','Desenvolve cérebro e visão','Sardinha, salmão, chia, linhaça, nozes','lilac'],
+ ['Proteína','+25 g/dia no 2º e 3º tri','Constrói tecidos do bebê e da placenta','Ovos, frango, peixe, leguminosas','yellow'],
+ ['Vitamina D','600 UI/dia','Ajuda na absorção do cálcio','Sol da manhã, ovo, peixes gordos','mint']
+];
+const EVITAR=[
+ ['Carne e ovo crus ou malpassados','Risco de toxoplasmose e salmonela'],
+ ['Peixes com muito mercúrio','Cação, peixe-espada, atum em excesso'],
+ ['Leite e queijos não pasteurizados','Risco de listeriose'],
+ ['Álcool','Não existe quantidade segura na gestação'],
+ ['Cafeína acima de 200 mg/dia','Cerca de 2 xícaras pequenas de café'],
+ ['Adoçantes em excesso e ultraprocessados','Preferir alimentos in natura']
+];
+function calMeta(){ const t=gest().tri; return t===1?2000:t===2?2340:2450 }
+VIEWS.nutricao=()=>{
+  const hj=state.refeicoes.filter(r=>r.data===hoje());
+  const kcal=hj.reduce((a,r)=>a+(+r.kcal||0),0), meta=calMeta();
+  const serie=[];
+  for(let i=6;i>=0;i--){const d=iso(addDays(new Date(),-i));
+    serie.push({x:DOW[parseISO(d).getDay()],y:state.refeicoes.filter(r=>r.data===d).reduce((a,r)=>a+(+r.kcal||0),0)})}
+  return `
+  <div class="page-head"><div class="t"><h1>Nutrição</h1><p>Metas do ${TRI_NOME[gest().tri].toLowerCase()}, nutrientes-chave e o que evitar.</p></div>
+    <div class="a"><button class="btn btn-primary" id="btnRef">${ic('plus','ic ic-sm')} Registrar refeição</button></div></div>
+
+  <div class="grid g3" style="margin-bottom:18px">
+    <div class="card"><div class="card-head"><span class="chip-ic mint">${ic('leaf')}</span><h3>Hoje</h3></div>
+      <div class="stat"><div class="v">${kcal}<small> / ${meta} kcal</small></div><div class="d">${hj.length} refeição${hj.length===1?'':'ões'} registrada${hj.length===1?'':'s'}</div></div>
+      <div class="bar" style="margin-top:12px"><i style="width:${clamp(kcal/meta*100,0,100)}%;background:linear-gradient(90deg,#8FD08F,#4CAF7D)"></i></div></div>
+    <div class="card"><div class="stat"><div class="k">Meta do trimestre</div><div class="v">${meta}<small> kcal</small></div>
+      <div class="d">${gest().tri===1?'sem acréscimo calórico':gest().tri===2?'+340 kcal/dia':'+450 kcal/dia'}</div></div></div>
+    <div class="card"><div class="stat"><div class="k">Média 7 dias</div><div class="v">${Math.round(serie.reduce((a,s)=>a+s.y,0)/7)}<small> kcal</small></div><div class="d">considerando o que foi registrado</div></div></div>
+  </div>
+
+  <div class="grid g-side" style="margin-bottom:18px">
+    <div class="card"><div class="card-head"><span class="chip-ic mint">${ic('analytics')}</span><h3>Consumo da semana</h3></div>
+      ${chartBars(serie,{h:190,meta,cor:'#7BC48F',un:' kcal'})}
+      <p class="hint">A linha tracejada marca a meta diária estimada para o seu trimestre.</p></div>
+    <div class="card"><div class="card-head"><span class="chip-ic yellow">${ic('clock')}</span><h3>Refeições de hoje</h3></div>
+      ${hj.length?`<div class="list">${hj.map(r=>`<div class="row-item"><div class="body"><b>${esc(r.tipo)}</b><small>${esc(r.desc||'—')}</small></div>
+        <span class="tag gray">${r.kcal||0} kcal</span><button class="mini-btn danger" data-delr="${r.id}">${ic('trash','ic ic-sm')}</button></div>`).join('')}</div>`
+      :`<div class="empty" style="padding:26px 10px">${ic('leaf')}<h3>Nada registrado hoje</h3><p>Registrar ajuda a perceber padrões junto com os sintomas.</p></div>`}</div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="card-head"><span class="chip-ic pink">${ic('spark')}</span><h3>Nutrientes essenciais na gestação</h3></div>
+    <div class="grid g3">
+      ${NUTRIENTES.map(n=>`<div style="background:var(--surface-2);border:1px solid var(--border);border-radius:16px;padding:16px">
+        <span class="tag ${n[4]}">${esc(n[1])}</span>
+        <b style="display:block;font-family:'Poppins';font-size:15px;margin:9px 0 5px">${esc(n[0])}</b>
+        <p style="font-size:13px;color:var(--text-2)">${esc(n[2])}</p>
+        <p style="font-size:12.5px;color:var(--text-3);margin-top:7px"><b>Fontes:</b> ${esc(n[3])}</p></div>`).join('')}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="chip-ic pink">${ic('bell')}</span><h3>O que evitar</h3></div>
+    <div class="list">${EVITAR.map(e=>`<div class="row-item"><span class="chip-ic pink">${ic('x')}</span>
+      <div class="body"><b>${esc(e[0])}</b><small>${esc(e[1])}</small></div></div>`).join('')}</div>
+    <p class="hint">Orientações gerais. Seu obstetra ou nutricionista pode ajustar tudo isso ao seu caso.</p>
+  </div>`;
+};
+BIND.nutricao=()=>{
+  $('#btnRef').onclick=()=>modalRefeicao();
+  $$('[data-delr]').forEach(b=>b.onclick=()=>{state.refeicoes=state.refeicoes.filter(r=>r.id!==b.dataset.delr);save();repaint()});
+};
+function modalRefeicao(){
+  openModal({title:'Registrar refeição',icon:'leaf',cor:'mint',
+    body:`<div class="field"><label>Refeição</label><select class="input" id="rT">${REFEICOES.map(r=>`<option>${r}</option>`).join('')}</select></div>
+      <div class="field"><label>O que você comeu</label><textarea class="input" id="rD" style="min-height:84px" placeholder="Ex.: arroz integral, feijão, filé de frango grelhado e salada"></textarea></div>
+      <div class="field-row">
+        <div class="field"><label>Calorias estimadas</label><input class="input" type="number" id="rK" placeholder="Ex.: 520"></div>
+        <div class="field"><label>Data</label><input class="input" type="date" id="rDt" value="${hoje()}"></div></div>`,
+    ok:'Registrar',
+    onOk:()=>{
+      state.refeicoes.push({id:uid(),tipo:$('#rT').value,desc:$('#rD').value.trim(),kcal:+$('#rK').value||0,data:$('#rDt').value});
+      save(); repaint(); toast('Refeição registrada');
+    }});
+}
+</script>
+
+<script>
+/* ============================== ÁGUA ============================== */
+ADD_LABEL.agua='Registrar água';
+const COPOS=[[100,'Gole'],[200,'Copo'],[300,'Caneca'],[500,'Garrafa'],[750,'Squeeze']];
+VIEWS.agua=()=>{
+  const ml=aguaHoje(), meta=state.metaAgua, pct=clamp(ml/meta*100,0,100);
+  const serie=[];
+  for(let i=6;i>=0;i--){const d=iso(addDays(new Date(),-i));
+    serie.push({x:DOW[parseISO(d).getDay()],y:state.agua[d]||0,cor:(state.agua[d]||0)>=meta?'#7BC48F':'#7FB6EC'})}
+  const media=Math.round(serie.reduce((a,s)=>a+s.y,0)/7);
+  const diasOk=serie.filter(s=>s.y>=meta).length;
+  return `
+  <div class="page-head"><div class="t"><h1>Água</h1><p>Na gestação o volume sanguíneo aumenta cerca de 45% — hidratação deixa de ser detalhe.</p></div>
+    <div class="a"><button class="btn btn-ghost" id="btnMeta">${ic('settings','ic ic-sm')} Meta: ${(meta/1000).toFixed(1)} L</button></div></div>
+
+  <div class="grid g-side" style="margin-bottom:18px">
+    <div class="card">
+      <div class="water-wrap">
+        <div class="glass-vis">
+          <div class="glass-body"><div class="glass-fill" id="glassFill" style="height:${pct}%"></div></div>
+          <div class="glass-lbl"><div><b>${(ml/1000).toFixed(2)} L</b><span>${Math.round(pct)}% da meta</span></div></div>
+        </div>
+        <div style="flex:1;min-width:250px">
+          <h3 style="margin-bottom:4px">${ml>=meta?'Meta batida hoje':'Faltam '+(meta-ml)+' ml'}</h3>
+          <p style="font-size:13.5px;color:var(--text-2);margin-bottom:16px">Toque em uma medida para somar ao dia.</p>
+          <div class="cup-grid">
+            ${COPOS.map(c=>`<button class="cup" data-add="${c[0]}">${ic('drop')}<span>${c[0]} ml</span><span style="font-weight:400;font-size:10.5px;color:var(--text-3)">${c[1]}</span></button>`).join('')}
+          </div>
+          <div style="display:flex;gap:9px;margin-top:14px">
+            <button class="btn btn-soft btn-sm" data-add="-200">Desfazer 200 ml</button>
+            <button class="btn btn-soft btn-sm" id="btnZerar">Zerar dia</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;justify-content:center;gap:14px">
+      ${ringHTML(pct,Math.round(pct)+'%','hidratação')}
+      <div class="list" style="width:100%">
+        ${infoRow('Média 7 dias',media+' ml','considerando todos os dias')}
+        ${infoRow('Dias na meta',diasOk+'/7','últimos 7 dias')}
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="chip-ic blue">${ic('analytics')}</span><h3>Últimos 7 dias</h3></div>
+    ${chartBars(serie,{h:200,meta,un:' ml'})}
+    <p class="hint">Barras verdes indicam dias em que a meta foi atingida.</p>
+  </div>`;
+};
+BIND.agua=()=>{
+  $$('[data-add]').forEach(b=>b.onclick=e=>{
+    const v=+b.dataset.add, d=hoje();
+    state.agua[d]=Math.max(0,(state.agua[d]||0)+v);
+    save();
+    const r=b.getBoundingClientRect();
+    if(v>0){ const ml=state.agua[d];
+      if(ml>=state.metaAgua && ml-v<state.metaAgua){ confetti(r.left+r.width/2,r.top); toast('Meta de hidratação atingida'); }
+    }
+    repaint();
+  });
+  $('#btnZerar').onclick=()=>{ delete state.agua[hoje()]; save(); repaint(); toast('Registro do dia zerado'); };
+  $('#btnMeta').onclick=()=>openModal({title:'Meta diária de água',icon:'drop',cor:'blue',
+    body:`<div class="field"><label>Meta (ml)</label><input class="input" type="number" id="mMeta" value="${state.metaAgua}" step="100" min="1000" max="5000"></div>
+      <p class="hint">Recomendação geral na gestação: 2,3 a 3,0 litros por dia, incluindo a água dos alimentos. Ajuste conforme orientação do seu médico, clima e atividade física.</p>`,
+    ok:'Salvar meta',onOk:()=>{ state.metaAgua=clamp(+$('#mMeta').value||2500,500,6000); save(); repaint(); toast('Meta atualizada'); }});
+};
+
+/* ============================== MOVIMENTOS E CHUTES ============================== */
+ADD_LABEL.movimentos='Contar chutes';
+let sessaoAtiva=null;
+VIEWS.movimentos=()=>{
+  const g=gest();
+  const hj=state.chutes.filter(c=>c.data===hoje());
+  const total=hj.reduce((a,c)=>a+c.n,0);
+  const s=state.chutes.find(x=>x.id===sessaoAtiva);
+  const serie=[];
+  for(let i=6;i>=0;i--){const d=iso(addDays(new Date(),-i));
+    serie.push({x:DOW[parseISO(d).getDay()],y:state.chutes.filter(c=>c.data===d).reduce((a,c)=>a+c.n,0)})}
+  const hist=[...state.chutes].sort((a,b)=>(b.data+b.inicio).localeCompare(a.data+a.inicio)).slice(0,10);
+  return `
+  <div class="page-head"><div class="t"><h1>Movimentos e Chutes</h1>
+    <p>${g.w>=28?'A partir da semana 28 recomenda-se contar 10 movimentos em até 2 horas, no mesmo horário do dia.':'A contagem formal costuma começar na semana 28 — mas você já pode registrar o que sentir.'}</p></div></div>
+
+  <div class="grid g-side" style="margin-bottom:18px">
+    <div class="card" style="text-align:center">
+      <button class="kick-pad" id="kickPad">
+        <div><b id="kickN">${s?s.n:0}</b><span>${s?'movimentos nesta sessão':'toque a cada movimento'}</span></div>
+      </button>
+      <div style="display:flex;gap:9px;justify-content:center;margin-top:18px;flex-wrap:wrap">
+        <button class="btn btn-soft btn-sm" id="kickNova">${ic('plus','ic ic-sm')} Nova sessão</button>
+        ${s?`<button class="btn btn-soft btn-sm" id="kickFim">${ic('check','ic ic-sm')} Encerrar sessão</button>`:''}
+      </div>
+      ${s?`<p class="hint" style="margin-top:12px">Sessão iniciada às ${s.inicio}${s.n>=10?' · meta de 10 movimentos atingida':''}</p>`:''}
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="chip-ic lilac">${ic('waves')}</span><h3>Hoje</h3></div>
+      <div class="stat" style="margin-bottom:14px"><div class="v">${total}<small> movimentos</small></div><div class="d">${hj.length} sessão${hj.length===1?'':'ões'} registrada${hj.length===1?'':'s'}</div></div>
+      <div class="bar"><i style="width:${clamp(total/10*100,0,100)}%"></i></div>
+      <hr class="divider">
+      <p style="font-size:13.5px;color:var(--text-2)">Se perceber <b>redução importante</b> no padrão habitual de movimentos, deite do lado esquerdo, beba algo gelado e conte por 2 horas. Se não atingir 10 movimentos, procure a maternidade.</p>
+    </div>
+  </div>
+
+  <div class="grid g-side">
+    <div class="card"><div class="card-head"><span class="chip-ic blue">${ic('analytics')}</span><h3>Movimentos por dia</h3></div>
+      ${chartBars(serie,{h:190,meta:10,cor:'#B77BD8',un:' mov.'})}</div>
+    <div class="card"><div class="card-head"><span class="chip-ic yellow">${ic('clock')}</span><h3>Sessões recentes</h3></div>
+      ${hist.length?`<div class="list">${hist.map(c=>`<div class="row-item">
+        <span class="chip-ic ${c.n>=10?'mint':'gray'}" style="${c.n>=10?'':'background:var(--surface-3);color:var(--text-3)'}">${ic('waves')}</span>
+        <div class="body"><b>${c.n} movimento${c.n===1?'':'s'}</b><small>${fmtShort(c.data)} · ${c.inicio}${c.fim&&c.fim!==c.inicio?'–'+c.fim:''}</small></div>
+        <button class="mini-btn danger" data-delk="${c.id}">${ic('trash','ic ic-sm')}</button></div>`).join('')}</div>`
+      :`<div class="empty" style="padding:26px 10px">${ic('waves')}<h3>Nenhuma sessão ainda</h3><p>Toque no painel a cada movimento que sentir.</p></div>`}</div>
+  </div>`;
+};
+BIND.movimentos=()=>{
+  const kp=$('#kickPad');
+  kp.onclick=e=>{
+    const now=new Date();
+    let s=state.chutes.find(x=>x.id===sessaoAtiva);
+    if(!s || Date.now()-s.ts>2*3600e3 || s.data!==hoje()){
+      s={id:uid(),data:hoje(),ts:Date.now(),inicio:`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,n:0};
+      state.chutes.push(s); sessaoAtiva=s.id;
+    }
+    s.n++; s.ts=Date.now();
+    s.fim=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    save();
+    $('#kickN').textContent=s.n;
+    const r=kp.getBoundingClientRect();
+    const rip=document.createElement('span'); rip.className='rip';
+    rip.style.left=(e.clientX-r.left)+'px'; rip.style.top=(e.clientY-r.top)+'px';
+    rip.style.width='40px'; rip.style.height='40px';
+    kp.appendChild(rip); setTimeout(()=>rip.remove(),750);
+    heartPop(e.clientX,e.clientY);
+    if(s.n===10){ confetti(r.left+r.width/2,r.top+40); toast('10 movimentos registrados — ótimo sinal'); }
+  };
+  $('#kickNova').onclick=()=>{ sessaoAtiva=null; repaint(); toast('Nova sessão iniciada ao primeiro toque'); };
+  if($('#kickFim')) $('#kickFim').onclick=()=>{ sessaoAtiva=null; repaint(); toast('Sessão encerrada'); };
+  $$('[data-delk]').forEach(b=>b.onclick=()=>{state.chutes=state.chutes.filter(c=>c.id!==b.dataset.delk);save();repaint()});
+};
+
+/* ============================== MEMÓRIAS (DIÁRIO) ============================== */
+ADD_LABEL.memorias='Nova memória';
+const HUMORES=['😊','🥰','😴','🤢','😢','😤','🤩','😌'];
+const HUMOR_NOME={'😊':'Feliz','🥰':'Amada','😴':'Cansada','🤢':'Enjoada','😢':'Sensível','😤':'Irritada','🤩':'Animada','😌':'Tranquila'};
+let filtroMem='todos';
+VIEWS.memorias=()=>{
+  let lista=[...state.entries].sort((a,b)=>b.data.localeCompare(a.data));
+  if(filtroMem==='fotos') lista=lista.filter(e=>e.foto);
+  else if(filtroMem!=='todos') lista=lista.filter(e=>e.humor===filtroMem);
+  const humores=Object.entries(state.entries.reduce((a,e)=>(e.humor&&(a[e.humor]=(a[e.humor]||0)+1),a),{})).sort((a,b)=>b[1]-a[1]);
+  return `
+  <div class="page-head"><div class="t"><h1>Memórias</h1><p>Seu diário da gestação — texto, humor e fotos guardados só no seu dispositivo.</p></div>
+    <div class="a"><button class="btn btn-primary" id="btnNovaMem">${ic('plus','ic ic-sm')} Nova memória</button></div></div>
+
+  <div class="grid g4" style="margin-bottom:18px">
+    <div class="card"><div class="stat"><div class="k">Registros</div><div class="v">${state.entries.length}</div><div class="d">na sua linha do tempo</div></div></div>
+    <div class="card"><div class="stat"><div class="k">Com foto</div><div class="v">${state.entries.filter(e=>e.foto).length}</div><div class="d">momentos guardados</div></div></div>
+    <div class="card"><div class="stat"><div class="k">Humor mais comum</div><div class="v" style="font-size:26px">${humores[0]?humores[0][0]+' '+HUMOR_NOME[humores[0][0]]:'—'}</div><div class="d">${humores[0]?humores[0][1]+' registros':'sem dados'}</div></div></div>
+    <div class="card"><div class="stat"><div class="k">Semana atual</div><div class="v">${gest().w}</div><div class="d">${state.entries.filter(e=>diasEntre(e.data,hoje())<7).length} registros nos últimos 7 dias</div></div></div>
+  </div>
+
+  <div class="seg" style="margin-bottom:18px;max-width:640px">
+    <button class="${filtroMem==='todos'?'on':''}" data-fm="todos">Todas</button>
+    <button class="${filtroMem==='fotos'?'on':''}" data-fm="fotos">Com foto</button>
+    ${HUMORES.slice(0,5).map(h=>`<button class="${filtroMem===h?'on':''}" data-fm="${h}">${h}</button>`).join('')}
+  </div>
+
+  ${lista.length?`<div class="mem-grid">${lista.map(memCard).join('')}</div>`
+   :`<div class="card"><div class="empty">${ic('image')}<h3>Nenhuma memória por aqui</h3>
+      <p>Escreva sobre hoje: como você se sentiu, o que o bebê aprontou, o que você quer lembrar daqui a dez anos.</p>
+      <button class="btn btn-primary" id="btnNovaMem2">${ic('plus','ic ic-sm')} Criar memória</button></div></div>`}`;
+};
+const memCard=e=>`<article class="mem" data-mem="${e.id}">
+  <div class="mem-photo">${e.foto?`<img src="${e.foto}" alt="">`:`<div class="ph">${ic('image','ic ic-lg')}</div>`}</div>
+  <div class="mem-body"><span class="m">${e.humor||''}</span>
+    <b>${fmt(e.data)}${e.semana?` · semana ${e.semana}`:''}</b>
+    <p>${esc(e.titulo?e.titulo+' — ':'')}${esc(e.texto||'')}</p></div></article>`;
+BIND.memorias=()=>{
+  const abrir=()=>modalMemoria();
+  $('#btnNovaMem').onclick=abrir;
+  if($('#btnNovaMem2')) $('#btnNovaMem2').onclick=abrir;
+  $$('[data-fm]').forEach(b=>b.onclick=()=>{filtroMem=b.dataset.fm;repaint()});
+  $$('[data-mem]').forEach(c=>c.onclick=()=>{
+    const e=state.entries.find(x=>x.id===c.dataset.mem);
+    openModal({title:fmt(e.data),icon:'image',cor:'pink',ok:'',cancel:'Fechar',
+      body:`${e.foto?`<img src="${e.foto}" style="width:100%;border-radius:16px;margin-bottom:14px" alt="">`:''}
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+          ${e.humor?`<span style="font-size:26px">${e.humor}</span><span class="tag pink">${HUMOR_NOME[e.humor]||''}</span>`:''}
+          ${e.semana?`<span class="tag lilac">Semana ${e.semana}</span>`:''}</div>
+        ${e.titulo?`<h3 style="margin-bottom:8px">${esc(e.titulo)}</h3>`:''}
+        <p style="white-space:pre-wrap;color:var(--text-2);line-height:1.75">${esc(e.texto||'')}</p>
+        <hr class="divider">
+        <button class="btn btn-soft btn-block btn-sm" id="delMem">${ic('trash','ic ic-sm')} Excluir memória</button>`});
+    setTimeout(()=>{const d=$('#delMem'); if(d) d.onclick=()=>{
+      state.entries=state.entries.filter(x=>x.id!==e.id); save(); closeModal(); repaint(); toast('Memória removida');
+    }},60);
+  });
+};
+function modalMemoria(){
+  openModal({title:'Nova memória',icon:'image',cor:'pink',
+    body:`<div class="field"><label>Como você está se sentindo?</label>
+        <div class="moods" id="mHumor">${HUMORES.map((h,i)=>`<button class="mood${i===0?' on':''}" data-h="${h}" title="${HUMOR_NOME[h]}">${h}</button>`).join('')}</div></div>
+      <div class="field-row">
+        <div class="field"><label>Data</label><input class="input" type="date" id="mD" value="${hoje()}"></div>
+        <div class="field"><label>Título</label><input class="input" id="mT" placeholder="Ex.: primeiro chute"></div></div>
+      <div class="field"><label>O que você quer lembrar deste dia?</label>
+        <textarea class="input" id="mTx" placeholder="Escreva livremente…"></textarea></div>
+      <div class="field"><label>Foto (opcional)</label>
+        <input type="file" id="mF" accept="image/*" style="display:none">
+        <button class="btn btn-soft btn-block" id="mFBtn">${ic('camera','ic ic-sm')} Escolher foto</button>
+        <div id="mPrev" style="margin-top:10px"></div></div>`,
+    ok:'Salvar memória',
+    onOk:()=>{
+      const txt=$('#mTx').value.trim();
+      if(!txt && !fotoTmp){ toast('Escreva algo ou adicione uma foto','warn'); return false; }
+      state.entries.push({id:uid(),data:$('#mD').value,titulo:$('#mT').value.trim(),texto:txt,
+        humor:$('#mHumor .on')?.dataset.h||'',foto:fotoTmp,semana:gest().w});
+      save();
+      const c={x:innerWidth/2,y:innerHeight/2};
+      heartPop(c.x,c.y); confetti(c.x,c.y);
+      fotoTmp=null; repaint(); toast('Memória guardada');
+    }});
+  fotoTmp=null;
+  $$('#mHumor .mood').forEach(b=>b.onclick=()=>{$$('#mHumor .mood').forEach(x=>x.classList.remove('on'));b.classList.add('on')});
+  $('#mFBtn').onclick=()=>$('#mF').click();
+  $('#mF').onchange=e=>{
+    const f=e.target.files[0]; if(!f) return;
+    comprimir(f,d=>{ fotoTmp=d; $('#mPrev').innerHTML=`<img src="${d}" style="width:100%;border-radius:14px" alt="">`; });
+  };
+}
+let fotoTmp=null;
+function comprimir(file,cb){
+  const r=new FileReader();
+  r.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      const max=720, s=Math.min(1,max/Math.max(img.width,img.height));
+      const c=document.createElement('canvas');
+      c.width=Math.round(img.width*s); c.height=Math.round(img.height*s);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      cb(c.toDataURL('image/jpeg',0.72));
+    };
+    img.src=r.result;
+  };
+  r.readAsDataURL(file);
+}
+</script>
+
+<script>
+/* ============================== LISTA DE VERIFICAÇÃO ============================== */
+ADD_LABEL.checklist='Novo item';
+const CHECKLIST={
+ '1º trimestre (1–13 semanas)':[
+  'Confirmar a gestação com exame de sangue (beta-hCG)',
+  'Agendar a primeira consulta de pré-natal',
+  'Começar ácido fólico (conforme prescrição)',
+  'Fazer os exames do 1º trimestre',
+  'Ultrassom de translucência nucal (11–14 semanas)',
+  'Revisar medicamentos de uso contínuo com o médico',
+  'Suspender álcool e cigarro',
+  'Consultar o dentista',
+  'Verificar a carteira de vacinação',
+  'Informar o trabalho, se já se sentir confortável'],
+ '2º trimestre (14–27 semanas)':[
+  'Ultrassom morfológico (20–24 semanas)',
+  'Teste de tolerância à glicose (24–28 semanas)',
+  'Tomar a vacina dTpa (a partir de 20 semanas)',
+  'Escolher a maternidade',
+  'Pesquisar plano de saúde / cobertura do parto',
+  'Começar a montar o enxoval',
+  'Iniciar exercícios liberados pelo obstetra',
+  'Fazer curso de gestantes',
+  'Planejar a licença-maternidade',
+  'Escolher o pediatra do bebê'],
+ '3º trimestre (28–40 semanas)':[
+  'Consultas quinzenais e depois semanais',
+  'Exame de estreptococo do grupo B (35–37 semanas)',
+  'Finalizar o plano de parto',
+  'Arrumar a mala da maternidade',
+  'Instalar a cadeirinha no carro',
+  'Preparar o quarto do bebê',
+  'Definir quem acompanhará o parto',
+  'Combinar o trajeto até a maternidade',
+  'Deixar documentos separados',
+  'Conversar sobre amamentação e banco de leite']
+};
+VIEWS.checklist=()=>{
+  const custom=state.checklistCustom;
+  const todos=[...Object.values(CHECKLIST).flat(),...custom.map(c=>c.t)];
+  const feitos=todos.filter(t=>state.checklist[t]).length;
+  const pct=todos.length?Math.round(feitos/todos.length*100):0;
+  const triAtual=gest().tri;
+  return `
+  <div class="page-head"><div class="t"><h1>Lista de Verificação</h1><p>Tudo o que costuma ser feito em cada trimestre, no seu ritmo.</p></div>
+    <div class="a"><button class="btn btn-primary" id="btnAddCheck">${ic('plus','ic ic-sm')} Item personalizado</button></div></div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      ${ringHTML(pct,pct+'%','concluído')}
+      <div style="flex:1;min-width:220px">
+        <h3>${feitos} de ${todos.length} itens concluídos</h3>
+        <p style="font-size:13.5px;color:var(--text-2);margin-top:4px">Você está no ${TRI_NOME[triAtual].toLowerCase()} — foque nos itens desse bloco primeiro.</p>
+        <div class="bar" style="margin-top:14px"><i style="width:${pct}%"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g3">
+    ${Object.entries(CHECKLIST).map(([titulo,itens],idx)=>{
+      const f=itens.filter(t=>state.checklist[t]).length;
+      const atual=idx+1===triAtual;
+      return `<div class="card" style="${atual?'border-color:var(--accent);box-shadow:var(--shadow-md)':''}">
+        <div class="card-head"><span class="chip-ic ${['pink','mint','blue'][idx]}">${ic('checklist')}</span>
+          <h3 style="font-size:15px">${titulo}<div class="sub">${f}/${itens.length} concluídos</div></h3>
+          ${atual?'<span class="tag pink">atual</span>':''}</div>
+        <div class="bar" style="margin-bottom:14px"><i style="width:${Math.round(f/itens.length*100)}%"></i></div>
+        <div class="list">${itens.map(t=>chkItem(t)).join('')}</div></div>`;
+    }).join('')}
+  </div>
+
+  ${custom.length?`<div class="card" style="margin-top:18px">
+    <div class="card-head"><span class="chip-ic lilac">${ic('star')}</span><h3>Seus itens</h3></div>
+    <div class="list">${custom.map((c,i)=>`
+      <label class="chk"><input type="checkbox" data-chk="${esc(c.t)}"${state.checklist[c.t]?' checked':''}>
+        <span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+        <span class="txt">${esc(c.t)}</span>
+        <button class="mini-btn danger" data-delchk="${i}">${ic('trash','ic ic-sm')}</button></label>`).join('')}</div></div>`:''}`;
+};
+const chkItem=t=>`<label class="chk"><input type="checkbox" data-chk="${esc(t)}"${state.checklist[t]?' checked':''}>
+  <span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+  <span class="txt">${esc(t)}</span></label>`;
+BIND.checklist=()=>{
+  $$('[data-chk]').forEach(c=>c.onchange=e=>{
+    state.checklist[c.dataset.chk]=c.checked; save();
+    if(c.checked){ const r=c.getBoundingClientRect(); confetti(r.left+30,r.top); }
+    updateSidebarProgress();
+  });
+  $$('[data-delchk]').forEach(b=>b.onclick=e=>{e.preventDefault();state.checklistCustom.splice(+b.dataset.delchk,1);save();repaint()});
+  $('#btnAddCheck').onclick=()=>openModal({title:'Novo item',icon:'checklist',cor:'lilac',
+    body:`<div class="field"><label>Descrição</label><input class="input" id="ckT" placeholder="Ex.: comprar bolsa térmica"></div>`,
+    ok:'Adicionar',onOk:()=>{
+      const t=$('#ckT').value.trim(); if(!t) return false;
+      state.checklistCustom.push({t}); save(); repaint(); toast('Item adicionado');
+    }});
+};
+
+/* ============================== MALA DA MATERNIDADE ============================== */
+ADD_LABEL.mala='Novo item';
+const MALA={
+ 'Documentos':['RG e CPF','Cartão do plano de saúde','Cartão da gestante / pré-natal','Exames recentes','Plano de parto impresso','Certidão de casamento ou união'],
+ 'Para você':['4 camisolas com abertura frontal','Robe ou casaco leve','5 calcinhas confortáveis','2 sutiãs de amamentação','Absorventes pós-parto','Chinelo antiderrapante','Meias','Necessaire completa','Hidratante labial','Elástico de cabelo','Roupa para a alta','Travesseiro próprio'],
+ 'Para o bebê':['6 bodies de manga curta e longa','6 macacões / mijões','Meias e luvinhas','2 toucas','Manta e cueiro','Fraldas RN e P','Lenços umedecidos','Pomada de assadura','Toalha com capuz','Roupa da alta','Cobertor'],
+ 'Acompanhante':['Roupa confortável para 2 dias','Lanches e garrafa de água','Carregador de celular','Documentos pessoais','Travesseiro','Dinheiro para estacionamento'],
+ 'Extras':['Cadeirinha instalada no carro','Câmera ou celular com espaço livre','Fone de ouvido e playlist','Lista de contatos importantes','Caderno para anotações']
+};
+VIEWS.mala=()=>{
+  const custom=state.malaCustom;
+  const todos=[...Object.values(MALA).flat(),...custom.map(c=>c.t)];
+  const feitos=todos.filter(t=>state.mala[t]).length;
+  const pct=todos.length?Math.round(feitos/todos.length*100):0;
+  const g=gest();
+  return `
+  <div class="page-head"><div class="t"><h1>Mala da Maternidade</h1>
+    <p>${g.w>=32?'Recomenda-se ter a mala pronta a partir da semana 32 — você já está nessa fase.':`Deixe pronta por volta da semana 32 — faltam ${Math.max(0,32-g.w)} semanas.`}</p></div>
+    <div class="a">
+      <button class="btn btn-ghost" id="btnImprimir">${ic('download','ic ic-sm')} Imprimir lista</button>
+      <button class="btn btn-primary" id="btnAddMala">${ic('plus','ic ic-sm')} Novo item</button></div></div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      ${ringHTML(pct,pct+'%','pronta')}
+      <div style="flex:1;min-width:220px">
+        <h3>${feitos} de ${todos.length} itens separados</h3>
+        <p style="font-size:13.5px;color:var(--text-2);margin-top:4px">${pct===100?'Sua mala está completa. Deixe perto da porta.':'Vá marcando conforme separa cada item.'}</p>
+        <div class="bar" style="margin-top:14px"><i style="width:${pct}%"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    ${Object.entries(MALA).map(([cat,itens],idx)=>{
+      const f=itens.filter(t=>state.mala[t]).length;
+      return `<div class="card">
+        <div class="card-head"><span class="chip-ic ${['blue','pink','yellow','mint','lilac'][idx%5]}">${ic('bag')}</span>
+          <h3>${cat}<div class="sub">${f}/${itens.length} separados</div></h3></div>
+        <div class="bar" style="margin-bottom:14px"><i style="width:${Math.round(f/itens.length*100)}%"></i></div>
+        <div class="list">${itens.map(t=>`<label class="chk"><input type="checkbox" data-mala="${esc(t)}"${state.mala[t]?' checked':''}>
+          <span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span class="txt">${esc(t)}</span></label>`).join('')}</div></div>`;
+    }).join('')}
+    ${custom.length?`<div class="card"><div class="card-head"><span class="chip-ic lilac">${ic('star')}</span><h3>Seus itens<div class="sub">${custom.filter(c=>state.mala[c.t]).length}/${custom.length}</div></h3></div>
+      <div class="list">${custom.map((c,i)=>`<label class="chk"><input type="checkbox" data-mala="${esc(c.t)}"${state.mala[c.t]?' checked':''}>
+        <span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span class="txt">${esc(c.t)}</span>
+        <button class="mini-btn danger" data-delmala="${i}">${ic('trash','ic ic-sm')}</button></label>`).join('')}</div></div>`:''}
+  </div>`;
+};
+BIND.mala=()=>{
+  $$('[data-mala]').forEach(c=>c.onchange=()=>{
+    state.mala[c.dataset.mala]=c.checked; save();
+    if(c.checked){const r=c.getBoundingClientRect();confetti(r.left+30,r.top)}
+  });
+  $$('[data-delmala]').forEach(b=>b.onclick=e=>{e.preventDefault();state.malaCustom.splice(+b.dataset.delmala,1);save();repaint()});
+  $('#btnAddMala').onclick=()=>openModal({title:'Novo item da mala',icon:'bag',cor:'blue',
+    body:`<div class="field"><label>Item</label><input class="input" id="mlT" placeholder="Ex.: chá de camomila"></div>`,
+    ok:'Adicionar',onOk:()=>{const t=$('#mlT').value.trim();if(!t)return false;state.malaCustom.push({t});save();repaint();toast('Item adicionado')}});
+  $('#btnImprimir').onclick=()=>window.print();
+};
+
+/* ============================== PLANO DE PARTO ============================== */
+ADD_LABEL.parto='Salvar plano';
+const PLANO=[
+ {id:'tipo',t:'Tipo de parto desejado',ops:['Normal','Cesárea','Normal, com cesárea se necessário','Ainda decidindo']},
+ {id:'ambiente',t:'Ambiente da sala',ops:['Luz baixa e silêncio','Música da minha playlist','Sem preferência']},
+ {id:'acompanhante',t:'Acompanhante',ops:['Parceiro(a)','Mãe / familiar','Doula','Parceiro(a) e doula']},
+ {id:'analgesia',t:'Alívio da dor',ops:['Analgesia peridural','Métodos naturais primeiro','Somente se eu pedir','Decidir no momento']},
+ {id:'movimento',t:'Liberdade de movimento',ops:['Quero caminhar e trocar de posição','Prefiro ficar no leito','Sem preferência']},
+ {id:'episiotomia',t:'Episiotomia',ops:['Somente se for indispensável','Prefiro evitar','Deixo a critério médico']},
+ {id:'cordao',t:'Corte do cordão',ops:['Clampeamento tardio','Acompanhante corta o cordão','Padrão da equipe']},
+ {id:'pele',t:'Contato pele a pele',ops:['Imediato e prolongado','Assim que possível','Sem preferência']},
+ {id:'amamentacao',t:'Amamentação',ops:['Na primeira hora','Quero apoio de consultora','Vou usar fórmula','Ainda decidindo']},
+ {id:'fotos',t:'Registro do nascimento',ops:['Quero fotos e vídeo','Somente fotos','Sem registro']}
+];
+VIEWS.parto=()=>{
+  const p=state.plano, preenchidos=PLANO.filter(q=>p[q.id]).length;
+  return `
+  <div class="page-head"><div class="t"><h1>Plano de Parto</h1>
+    <p>Um documento com suas preferências para levar à maternidade. Nada aqui é definitivo — a equipe adapta conforme a segurança de vocês dois.</p></div>
+    <div class="a"><button class="btn btn-ghost" id="btnPlanoPrint">${ic('download','ic ic-sm')} Imprimir</button>
+      <button class="btn btn-primary" id="btnPlanoResumo">${ic('spark','ic ic-sm')} Gerar documento</button></div></div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      ${ringHTML(preenchidos/PLANO.length*100,preenchidos+'/'+PLANO.length,'respondido')}
+      <div style="flex:1;min-width:230px">
+        <h3>${preenchidos===PLANO.length?'Plano completo':'Continue de onde parou'}</h3>
+        <p style="font-size:13.5px;color:var(--text-2);margin-top:4px">Suas respostas são salvas automaticamente. Leve o documento impresso e converse com seu obstetra antes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:18px">
+    ${PLANO.map((q,i)=>`<div class="card">
+      <div class="card-head"><span class="chip-ic ${['pink','mint','blue','lilac','yellow'][i%5]}">${ic('plan')}</span><h3 style="font-size:15px">${q.t}</h3></div>
+      <div class="list">${q.ops.map(o=>`
+        <label class="chk"><input type="radio" name="pl_${q.id}" data-plano="${q.id}" value="${esc(o)}"${p[q.id]===o?' checked':''}>
+          <span class="box" style="border-radius:99px"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+          <span class="txt" style="text-decoration:none!important;color:var(--text)!important">${esc(o)}</span></label>`).join('')}</div>
+    </div>`).join('')}
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="chip-ic lilac">${ic('edit')}</span><h3>Observações livres</h3></div>
+    <textarea class="input" id="plObs" style="min-height:130px" placeholder="Alergias, medos, pedidos específicos, quem pode entrar na sala…">${esc(p.obs||'')}</textarea>
+    <p class="hint">Ex.: alergias medicamentosas, preferência por não receber visitas logo após o parto, desejo de guardar a placenta.</p>
+  </div>`;
+};
+BIND.parto=()=>{
+  $$('[data-plano]').forEach(r=>r.onchange=()=>{ state.plano[r.dataset.plano]=r.value; save(); updateSidebarProgress(); });
+  $('#plObs').onblur=()=>{ state.plano.obs=$('#plObs').value; save(); };
+  $('#btnPlanoPrint').onclick=()=>window.print();
+  $('#btnPlanoResumo').onclick=async()=>{
+    await aiRun('Montando seu plano de parto','Organizando preferências em um documento claro',
+      ['Lendo suas respostas','Agrupando por etapa do parto','Redigindo em linguagem objetiva','Formatando o documento']);
+    const p=state.plano;
+    const linhas=PLANO.filter(q=>p[q.id]).map(q=>`<div class="row-item"><div class="body"><b>${q.t}</b><small>${esc(p[q.id])}</small></div></div>`).join('');
+    openModal({title:'Plano de parto',icon:'plan',cor:'lilac',ok:'',cancel:'Fechar',
+      body:`<p style="font-size:14px;color:var(--text-2);margin-bottom:14px">Gestante: <b>${esc(state.profile.nome||'—')}</b> · Semana ${gest().w} · DPP ${fmt(state.profile.dpp)}
+        ${state.profile.medico?`<br>Obstetra: ${esc(state.profile.medico)}`:''}${state.profile.hospital?`<br>Maternidade: ${esc(state.profile.hospital)}`:''}</p>
+        ${linhas||'<p style="color:var(--text-3)">Nenhuma preferência marcada ainda.</p>'}
+        ${p.obs?`<hr class="divider"><b style="font-family:'Poppins';font-size:14px">Observações</b><p style="white-space:pre-wrap;color:var(--text-2);margin-top:6px">${esc(p.obs)}</p>`:''}
+        <hr class="divider"><p class="hint">Documento gerado pelo Diário da Gestação. As decisões finais durante o parto seguem a avaliação clínica da equipe.</p>`});
+  };
+};
+</script>
+
+<style>
+@media print{
+  .sidebar,.topbar,.bottomnav,.scrim,.toasts,.ai-overlay,.nprogress,.page-head .a,.row-actions,.mini-btn{display:none!important}
+  .main{margin:0}
+  body{background:#fff!important}
+  .card{break-inside:avoid;box-shadow:none;border:1px solid #ddd}
+}
+</style>
+<script>
+/* ============================== DICAS ============================== */
+ADD_LABEL.dicas='Nova memória';
+const ARTIGOS=[
+ {c:'Saúde',cor:'pink',t:'Sinais de alerta que pedem ida ao hospital',d:'Sangramento vaginal, dor de cabeça forte com visão turva, febre acima de 38 °C, perda de líquido, dor abdominal intensa e redução dos movimentos do bebê.',
+  txt:'Alguns sintomas nunca devem esperar a próxima consulta. Procure atendimento imediatamente se notar: sangramento vaginal de qualquer volume; perda de líquido claro pela vagina; dor de cabeça forte e persistente, principalmente acompanhada de visão turva, luzes piscando ou inchaço súbito no rosto e mãos (sinais de pré-eclâmpsia); febre acima de 38 °C; dor abdominal intensa e contínua; contrações regulares antes de 37 semanas; e redução importante nos movimentos do bebê depois da 28ª semana.\n\nNa dúvida, ligue para a maternidade. Nenhuma equipe considera exagero uma gestante que procura ajuda — o custo de esperar é sempre maior.',t2:'6 min de leitura'},
+ {c:'Nutrição',cor:'mint',t:'O prato ideal na gestação',d:'Metade de vegetais, um quarto de proteína, um quarto de carboidrato integral — e uma fonte de gordura boa.',
+  txt:'Não existe dieta única, mas há um desenho de prato que funciona bem: metade preenchida por legumes e verduras variadas, um quarto por proteína (ovo, frango, peixe, carne magra ou leguminosas) e um quarto por carboidrato integral (arroz integral, batata-doce, mandioca, quinoa). Complete com uma fonte de gordura boa: azeite, abacate, castanhas.\n\nNo primeiro trimestre não é preciso aumentar calorias. No segundo, cerca de +340 kcal por dia; no terceiro, +450 kcal. Isso equivale a um lanche reforçado, não a "comer por dois". Fracionar em 5 a 6 refeições reduz enjoo e azia.',t2:'5 min de leitura'},
+ {c:'Bem-estar',cor:'lilac',t:'Como dormir melhor no terceiro trimestre',d:'Posição lateral esquerda, travesseiro entre as pernas e rotina noturna previsível fazem mais diferença do que qualquer suplemento.',
+  txt:'A partir da segunda metade da gestação, dormir de lado — preferencialmente do lado esquerdo — melhora o fluxo sanguíneo para a placenta. Um travesseiro entre os joelhos e outro apoiando a barriga reduzem a tensão lombar.\n\nEvite líquidos em grande volume nas duas horas antes de deitar (sem cortar a hidratação do dia), jante mais cedo para diminuir o refluxo e mantenha o quarto escuro e fresco. Se a insônia persistir por semanas, converse com seu obstetra: às vezes ela sinaliza anemia, apneia ou ansiedade que merecem tratamento.',t2:'4 min de leitura'},
+ {c:'Exercício',cor:'blue',t:'Atividade física liberada por trimestre',d:'Caminhada, hidroginástica, yoga adaptada e musculação leve são seguras na maioria das gestações sem intercorrências.',
+  txt:'A recomendação geral é de 150 minutos semanais de atividade moderada. Caminhada, natação, hidroginástica, bicicleta ergométrica, yoga e pilates adaptados e musculação com carga leve costumam ser liberados.\n\nEvite esportes de contato, atividades com risco de queda (equitação, esqui), mergulho e exercícios em decúbito dorsal prolongado após o segundo trimestre. O teste da fala é um bom termômetro: se você consegue conversar durante o exercício, a intensidade está adequada. Pare imediatamente diante de sangramento, tontura, dor no peito ou contrações.',t2:'5 min de leitura'},
+ {c:'Saúde',cor:'pink',t:'Vacinas recomendadas na gravidez',d:'dTpa a partir de 20 semanas, influenza em qualquer idade gestacional, hepatite B e covid-19 conforme calendário.',
+  txt:'A dTpa (difteria, tétano e coqueluche) é indicada a cada gestação, a partir da 20ª semana, e protege o recém-nascido contra coqueluche nos primeiros meses. A vacina da gripe pode ser aplicada em qualquer idade gestacional e reduz complicações respiratórias.\n\nHepatite B é indicada para quem não completou o esquema. Vacinas de vírus vivo atenuado, como tríplice viral e febre amarela, são contraindicadas de rotina — cada caso deve ser avaliado. Leve sempre a carteira de vacinação ao pré-natal.',t2:'4 min de leitura'},
+ {c:'Bem-estar',cor:'yellow',t:'Saúde mental também é pré-natal',d:'Ansiedade e tristeza persistentes na gestação são comuns e tratáveis — e não significam que você será uma mãe pior.',
+  txt:'Cerca de uma em cada cinco gestantes apresenta sintomas significativos de ansiedade ou depressão. Oscilação de humor pontual é esperada; o alerta acontece quando tristeza, desinteresse, culpa ou preocupação constante duram mais de duas semanas e atrapalham o dia.\n\nFale com seu obstetra sem medo de julgamento. Psicoterapia é a primeira linha e, quando necessário, existem medicamentos com bom perfil de segurança na gestação. Rede de apoio, sono e atividade física têm efeito real — não são conselho vazio.',t2:'6 min de leitura'}
+];
+const MIDIA=[
+ {tipo:'Vídeo',t:'O que acontece em cada trimestre',d:'Um panorama visual do desenvolvimento do bebê, da concepção ao nascimento.',dur:'18 min',cor:'blue'},
+ {tipo:'Podcast',t:'Conversas sobre parto humanizado',d:'Obstetras e doulas explicam o que é e o que não é parto humanizado.',dur:'42 min',cor:'lilac'},
+ {tipo:'Vídeo',t:'Exercícios seguros na gestação',d:'Sequência guiada de 20 minutos, adaptável a todos os trimestres.',dur:'22 min',cor:'mint'},
+ {tipo:'Podcast',t:'Amamentação sem culpa',d:'Consultora de amamentação responde às dúvidas mais comuns dos primeiros dias.',dur:'35 min',cor:'pink'}
+];
+let catDica='Todos';
+VIEWS.dicas=()=>{
+  const cats=['Todos',...new Set(ARTIGOS.map(a=>a.c))];
+  const lista=catDica==='Todos'?ARTIGOS:ARTIGOS.filter(a=>a.c===catDica);
+  const g=gest();
+  return `
+  <div class="page-head"><div class="t"><h1>Dicas</h1><p>Conteúdo curado sobre saúde, nutrição e bem-estar — organizado por tema.</p></div></div>
+
+  <div class="card" style="margin-bottom:18px;background:var(--lilac-soft);border-color:transparent">
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <span class="chip-ic lilac" style="background:var(--surface)">${ic('spark')}</span>
+      <div><h3>Para a sua semana ${g.w}</h3>
+        <p style="font-size:14.5px;color:var(--text-2);margin-top:5px">${esc(dicaSemana(g.w))}</p></div>
+    </div>
+  </div>
+
+  <div class="seg" style="max-width:520px;margin-bottom:18px">
+    ${cats.map(c=>`<button class="${catDica===c?'on':''}" data-cat="${c}">${c}</button>`).join('')}
+  </div>
+
+  <div class="grid g2" style="margin-bottom:18px">
+    ${lista.map((a,i)=>`<div class="article" data-art="${ARTIGOS.indexOf(a)}">
+      <span class="thumb ${a.cor}" style="background:var(--${a.cor}-soft);color:var(--${a.cor}-ink)">${ic('book','ic ic-lg')}</span>
+      <div class="body"><b>${esc(a.t)}</b><p>${esc(a.d)}</p>
+        <div class="meta"><span class="tag ${a.cor}">${a.c}</span><span>${a.t2}</span></div></div>
+    </div>`).join('')}
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="chip-ic blue">${ic('play')}</span><h3>Vídeos e podcasts com especialistas</h3></div>
+    <div class="grid g2">
+      ${MIDIA.map((m,i)=>`<div class="article" data-mid="${i}">
+        <span class="thumb" style="background:var(--${m.cor}-soft);color:var(--${m.cor}-ink)">${ic(m.tipo==='Vídeo'?'play':'mic','ic ic-lg')}</span>
+        <div class="body"><b>${esc(m.t)}</b><p>${esc(m.d)}</p>
+          <div class="meta"><span class="tag ${m.cor}">${m.tipo}</span><span>${m.dur}</span></div></div></div>`).join('')}
+    </div>
+  </div>`;
+};
+function dicaSemana(w){
+  if(w<8) return 'Comece o ácido fólico se ainda não começou e evite automedicação. Enjoo costuma piorar entre a 6ª e a 9ª semana — refeições pequenas ajudam mais do que ficar em jejum.';
+  if(w<13) return 'É a fase de organizar exames e a primeira ultrassonografia. O cansaço é real: dormir mais não é preguiça, é demanda metabólica.';
+  if(w<20) return 'Costuma ser o período mais confortável da gestação. Bom momento para iniciar exercícios liberados e agendar o ultrassom morfológico.';
+  if(w<28) return 'Atenção ao teste de tolerância à glicose e à vacina dTpa. Dores lombares aparecem — alongamento e postura fazem diferença.';
+  if(w<34) return 'Comece a contar os movimentos do bebê diariamente e finalize a mala da maternidade. Azia e insônia são esperadas nesta fase.';
+  return 'Reconheça os sinais de trabalho de parto: contrações regulares que aumentam de intensidade, perda do tampão mucoso e ruptura da bolsa. Mantenha documentos e mala prontos.';
+}
+BIND.dicas=()=>{
+  $$('[data-cat]').forEach(b=>b.onclick=()=>{catDica=b.dataset.cat;repaint()});
+  $$('[data-art]').forEach(b=>b.onclick=async()=>{
+    const a=ARTIGOS[+b.dataset.art];
+    openModal({title:a.t,icon:'book',cor:a.cor,ok:'',cancel:'Fechar',
+      body:`<span class="tag ${a.cor}">${a.c}</span><span class="tag gray" style="margin-left:6px">${a.t2}</span>
+        <p style="white-space:pre-wrap;color:var(--text-2);line-height:1.8;margin-top:14px">${esc(a.txt)}</p>
+        <hr class="divider"><p class="hint">Conteúdo informativo, sem substituir orientação do seu obstetra.</p>`});
+  });
+  $$('[data-mid]').forEach(b=>b.onclick=()=>{
+    const m=MIDIA[+b.dataset.mid];
+    openModal({title:m.t,icon:m.tipo==='Vídeo'?'play':'mic',cor:m.cor,ok:'',cancel:'Fechar',
+      body:`<div style="aspect-ratio:16/9;border-radius:16px;background:var(--accent-grad);display:grid;place-items:center;color:#3B2E44;margin-bottom:14px">
+          <div style="text-align:center">${ic(m.tipo==='Vídeo'?'play':'mic','ic')}<div style="font-family:'Poppins';font-weight:600;margin-top:8px">${m.tipo} · ${m.dur}</div></div></div>
+        <p style="color:var(--text-2)">${esc(m.d)}</p>
+        <p class="hint" style="margin-top:12px">Este espaço é reservado para a mídia do conteúdo. Conecte aqui o player da sua biblioteca ou plataforma preferida.</p>`});
+  });
+};
+
+/* ============================== COMUNIDADE ============================== */
+ADD_LABEL.comunidade='Publicar';
+function seedPosts(){
+  const d=n=>iso(addDays(new Date(),-n));
+  return [
+   {id:uid(),autor:'Camila R.',sem:32,data:d(0),txt:'Alguém mais sente aquele aperto no fim do dia? Minha barriga endurece toda por uns 30 segundos e passa. A obstetra disse que é contração de treinamento, mas confesso que assusta na primeira vez.',likes:12,tag:'3º trimestre'},
+   {id:uid(),autor:'Juliana M.',sem:19,data:d(1),txt:'Senti o primeiro chute ontem à noite! Parecia uma borboleta presa. Fiquei uma hora com a mão na barriga esperando de novo. Vale registrar tudo, gente, esses detalhes somem da memória rápido.',likes:34,tag:'2º trimestre'},
+   {id:uid(),autor:'Patrícia L.',sem:27,data:d(2),txt:'Dica que salvou meu enjoo: bolacha de água e sal antes de levantar da cama, ainda deitada. Descobri com a minha avó e funcionou melhor que qualquer chá.',likes:47,tag:'Dicas'},
+   {id:uid(),autor:'Renata S.',sem:38,data:d(3),txt:'Mala pronta e ansiedade a mil. Coloquei uma lista impressa na porta da geladeira com tudo que falta pegar na hora H (celular, carregador, documentos). Recomendo demais.',likes:22,tag:'Preparação'},
+   {id:uid(),autor:'Fernanda A.',sem:12,data:d(4),txt:'Passei da barreira das 12 semanas hoje e finalmente contei no trabalho. O alívio de poder falar abertamente é imenso. Para quem está no começo: esse período de segredo passa.',likes:56,tag:'1º trimestre'}
+  ];
+}
+let filtroPost='Todos';
+VIEWS.comunidade=()=>{
+  const tags=['Todos',...new Set(state.posts.map(p=>p.tag))];
+  const lista=(filtroPost==='Todos'?state.posts:state.posts.filter(p=>p.tag===filtroPost))
+    .slice().sort((a,b)=>b.data.localeCompare(a.data));
+  const g=gest();
+  return `
+  <div class="page-head"><div class="t"><h1>Comunidade</h1><p>Um espaço para compartilhar experiências com outras gestantes.</p></div></div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="card-head"><span class="chip-ic pink">${ic('users')}</span><h3>Compartilhar com o grupo</h3></div>
+    <textarea class="input" id="postTxt" placeholder="O que você quer contar hoje?" style="min-height:90px"></textarea>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+      <select class="input" id="postTag" style="max-width:200px">
+        ${['1º trimestre','2º trimestre','3º trimestre','Dicas','Preparação','Desabafo'].map(t=>`<option${t===TRI_NOME[g.tri]?' selected':''}>${t}</option>`).join('')}
+      </select>
+      <button class="btn btn-primary" id="postBtn">${ic('share','ic ic-sm')} Publicar</button>
+    </div>
+    <p class="hint">Suas publicações ficam salvas apenas neste dispositivo — é um espaço de treino e registro, não uma rede pública.</p>
+  </div>
+
+  <div class="seg" style="max-width:600px;margin-bottom:18px">
+    ${tags.map(t=>`<button class="${filtroPost===t?'on':''}" data-tag="${esc(t)}">${esc(t)}</button>`).join('')}
+  </div>
+
+  <div class="list">
+    ${lista.map(p=>`<div class="post">
+      <div class="post-head">
+        <span class="post-av" style="background:var(--${['pink','mint','blue','lilac','yellow'][p.autor.charCodeAt(0)%5]}-soft);color:var(--${['pink','mint','blue','lilac','yellow'][p.autor.charCodeAt(0)%5]}-ink)">${esc(p.autor[0])}</span>
+        <div style="flex:1"><b>${esc(p.autor)}</b><small>${p.sem?`Semana ${p.sem} · `:''}${fmtShort(p.data)}</small></div>
+        <span class="tag gray">${esc(p.tag)}</span>
+      </div>
+      <p>${esc(p.txt)}</p>
+      <div class="post-foot">
+        <button class="like-btn${state.likes[p.id]?' on':''}" data-like="${p.id}">${ic('heart','ic ic-sm')} ${p.likes+(state.likes[p.id]?1:0)}</button>
+        ${p.meu?`<button class="like-btn" data-delpost="${p.id}">${ic('trash','ic ic-sm')} Excluir</button>`:''}
+      </div>
+    </div>`).join('')}
+  </div>`;
+};
+BIND.comunidade=()=>{
+  $$('[data-tag]').forEach(b=>b.onclick=()=>{filtroPost=b.dataset.tag;repaint()});
+  $$('[data-like]').forEach(b=>b.onclick=e=>{
+    const id=b.dataset.like;
+    state.likes[id]=!state.likes[id]; save();
+    if(state.likes[id]) heartPop(e.clientX,e.clientY);
+    repaint();
+  });
+  $$('[data-delpost]').forEach(b=>b.onclick=()=>{state.posts=state.posts.filter(p=>p.id!==b.dataset.delpost);save();repaint();toast('Publicação removida')});
+  $('#postBtn').onclick=()=>{
+    const t=$('#postTxt').value.trim(); if(!t){toast('Escreva algo antes de publicar','warn');return}
+    state.posts.unshift({id:uid(),autor:state.profile.nome||'Você',sem:gest().w,data:hoje(),txt:t,likes:0,tag:$('#postTag').value,meu:true});
+    save(); repaint(); toast('Publicado na comunidade');
+  };
+};
+</script>
+
+<script>
+/* ============================== ANÁLISES ============================== */
+ADD_LABEL.analises='Registrar peso';
+VIEWS.analises=()=>{
+  const g=gest();
+  const pesos=[...state.pesos].sort((a,b)=>a.data.localeCompare(b.data));
+  const agua30=[];
+  for(let i=29;i>=0;i--){const d=iso(addDays(new Date(),-i)); agua30.push({x:fmtShort(d),y:state.agua[d]||0})}
+  const sint=[];
+  for(let i=5;i>=0;i--){
+    const ini=iso(addDays(new Date(),-(i*7+6))), fim=iso(addDays(new Date(),-i*7));
+    sint.push({x:fmtShort(fim),y:state.sintomas.filter(s=>s.data>=ini&&s.data<=fim).length});
+  }
+  const mov=[];
+  for(let i=13;i>=0;i--){const d=iso(addDays(new Date(),-i));
+    mov.push({x:fmtShort(d),y:state.chutes.filter(c=>c.data===d).reduce((a,c)=>a+c.n,0)})}
+  const mediaAgua=Math.round(agua30.reduce((a,s)=>a+s.y,0)/30);
+  const diasReg=new Set([...state.sintomas.map(s=>s.data),...Object.keys(state.agua),...state.entries.map(e=>e.data)]).size;
+  return `
+  <div class="page-head"><div class="t"><h1>Análises</h1><p>Tudo o que você registrou, cruzado em um só lugar.</p></div>
+    <div class="a"><button class="btn btn-ghost" id="btnExportA">${ic('download','ic ic-sm')} Exportar dados</button></div></div>
+
+  <div class="grid g4" style="margin-bottom:18px">
+    ${kpi('Semana atual',g.w,'de 40 semanas','pink','growth')}
+    ${kpi('Ganho de peso',(ganhoPeso()>=0?'+':'')+ganhoPeso()+' kg',faixaGanho(),'mint','scale')}
+    ${kpi('Média de água',mediaAgua+' ml','últimos 30 dias','blue','drop')}
+    ${kpi('Dias com registro',diasReg,'sua constância','lilac','calendar')}
+  </div>
+
+  <div class="grid g2" style="margin-bottom:18px">
+    <div class="card"><div class="card-head"><span class="chip-ic pink">${ic('scale')}</span><h3>Evolução do peso<div class="sub">kg por data registrada</div></h3></div>
+      ${pesos.length>1?chartLine(pesos.map(p=>({x:fmtShort(p.data),y:p.peso})),{h:210,dec:1,un:' kg'}):emptyBox('Registre ao menos dois pesos')}
+      <hr class="divider">
+      <div class="list">${infoRow('IMC pré-gestacional',imc()?imc()+' kg/m²':'—',imc()?classIMC(imc()):'informe altura e peso')}
+      ${infoRow('Faixa recomendada',faixaGanho().replace('recomendado ',''),'para todo o período')}</div></div>
+
+    <div class="card"><div class="card-head"><span class="chip-ic blue">${ic('drop')}</span><h3>Hidratação<div class="sub">30 dias</div></h3></div>
+      ${chartLine(agua30,{h:210,stroke:'#6FA8E8',fill:'url(#chartBlue)',cor:'#6FA8E8',un:' ml'})}
+      <hr class="divider">
+      <div class="list">${infoRow('Dias na meta',agua30.filter(a=>a.y>=state.metaAgua).length+'/30','meta de '+state.metaAgua+' ml')}</div></div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:18px">
+    <div class="card"><div class="card-head"><span class="chip-ic yellow">${ic('pulse')}</span><h3>Sintomas por semana<div class="sub">6 semanas</div></h3></div>
+      ${chartBars(sint,{h:200,cor:'#E5C15A',un:' registros'})}</div>
+    <div class="card"><div class="card-head"><span class="chip-ic lilac">${ic('waves')}</span><h3>Movimentos<div class="sub">14 dias</div></h3></div>
+      ${chartBars(mov,{h:200,meta:10,cor:'#B77BD8',un:' mov.'})}</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="chip-ic lilac">${ic('spark')}</span><h3>Observações geradas dos seus dados</h3>
+      <button class="btn btn-ghost btn-sm" id="btnReanalise">${ic('spark','ic ic-sm')} Reprocessar</button></div>
+    <div class="list" id="insightsBox">${insights()}</div>
+    <p class="hint">Análises estatísticas simples sobre seus próprios registros. Não constituem diagnóstico.</p>
+  </div>`;
+};
+const kpi=(k,v,d,cor,i)=>`<div class="card"><div class="card-head"><span class="chip-ic ${cor}">${ic(i)}</span></div>
+  <div class="stat"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${d}</div></div></div>`;
+function insights(){
+  const out=[]; const g=gest();
+  const pesos=[...state.pesos].sort((a,b)=>a.data.localeCompare(b.data));
+  if(pesos.length>1){
+    const dias=diasEntre(pesos[0].data,pesos[pesos.length-1].data)||1;
+    const taxa=((pesos[pesos.length-1].peso-pesos[0].peso)/dias*7).toFixed(2);
+    out.push(['Ritmo de ganho de peso',`Cerca de ${taxa} kg por semana entre os seus registros. No 2º e 3º trimestres, a faixa habitual fica entre 0,3 e 0,5 kg por semana.`]);
+  }
+  const a7=[],a14=[];
+  for(let i=0;i<7;i++)a7.push(state.agua[iso(addDays(new Date(),-i))]||0);
+  for(let i=7;i<14;i++)a14.push(state.agua[iso(addDays(new Date(),-i))]||0);
+  const m7=a7.reduce((a,b)=>a+b,0)/7, m14=a14.reduce((a,b)=>a+b,0)/7;
+  if(m7||m14) out.push(['Tendência de hidratação',`Média de ${Math.round(m7)} ml/dia nesta semana contra ${Math.round(m14)} ml/dia na anterior — ${m7>m14?'você melhorou':m7<m14?'houve queda':'estável'}.`]);
+  const s=state.sintomas.filter(x=>diasEntre(x.data,hoje())<14);
+  if(s.length){
+    const f=Object.entries(s.reduce((a,x)=>(a[x.tipo]=(a[x.tipo]||0)+1,a),{})).sort((a,b)=>b[1]-a[1])[0];
+    out.push(['Sintoma predominante',`${f[0]} apareceu ${f[1]} vez(es) em 14 dias. ${dicaSintoma(f[0])}`]);
+  }
+  const mov7=[...Array(7)].map((_,i)=>state.chutes.filter(c=>c.data===iso(addDays(new Date(),-i))).reduce((a,c)=>a+c.n,0));
+  if(g.w>=28){
+    const dias0=mov7.filter(v=>v===0).length;
+    out.push(['Movimentos fetais',dias0>2?`${dias0} dos últimos 7 dias sem registro de movimentos. Se isso reflete o que você sentiu de fato, avise seu obstetra.`:`Registros presentes em ${7-dias0} dos últimos 7 dias — bom acompanhamento.`]);
+  }
+  const c=proximaConsulta();
+  out.push(['Acompanhamento',c?`Próxima consulta em ${Math.max(0,diasEntre(hoje(),c.data))} dias (${fmt(c.data)}).`:'Nenhuma consulta futura agendada — no 3º trimestre elas costumam ser quinzenais ou semanais.']);
+  const chk=Object.values(CHECKLIST).flat();
+  const pend=chk.filter(t=>!state.checklist[t]).length;
+  out.push(['Preparação',`${chk.length-pend} de ${chk.length} itens da lista de verificação concluídos.`]);
+  if(!out.length) return `<p style="color:var(--text-3)">Registre alguns dias de dados para gerar observações.</p>`;
+  return out.map(o=>`<div class="row-item"><span class="chip-ic lilac">${ic('spark')}</span>
+    <div class="body"><b>${esc(o[0])}</b><small>${esc(o[1])}</small></div></div>`).join('');
+}
+BIND.analises=()=>{
+  $('#btnExportA').onclick=exportar;
+  $('#btnReanalise').onclick=async()=>{
+    await aiRun('Reprocessando análises','Recalculando séries e correlações',
+      ['Lendo base local','Calculando médias móveis','Comparando janelas de 7 e 14 dias','Escrevendo observações']);
+    $('#insightsBox').innerHTML=insights(); toast('Análises atualizadas');
+  };
+};
+
+/* ============================== CONFIGURAÇÕES ============================== */
+ADD_LABEL.config='Adicionar';
+VIEWS.config=()=>{
+  const s=state;
+  return `
+  <div class="page-head"><div class="t"><h1>Configurações</h1><p>Preferências do aplicativo e gestão dos seus dados.</p></div></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <div class="card-head"><span class="chip-ic pink">${ic('profile')}</span><h3>Conta</h3></div>
+      <div class="field"><label>Seu nome</label><input class="input" id="cfNome" value="${esc(s.profile.nome)}" placeholder="Como quer ser chamada"></div>
+      <div class="field"><label>Nome do bebê</label><input class="input" id="cfBebe" value="${esc(s.profile.bebe)}" placeholder="Apelido carinhoso"></div>
+      <button class="btn btn-primary btn-sm" id="cfSalvar">${ic('check','ic ic-sm')} Salvar</button>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="chip-ic lilac">${ic('settings')}</span><h3>Aparência</h3></div>
+      <div class="field"><label>Tema</label>
+        <div class="seg"><button class="${s.theme==='light'?'on':''}" data-tema="light">${ic('sun','ic ic-sm')} Claro</button>
+        <button class="${s.theme==='dark'?'on':''}" data-tema="dark">${ic('moon','ic ic-sm')} Escuro</button></div></div>
+      <label class="chk"><input type="checkbox" id="cfAnim"${s.config.animacoes?' checked':''}>
+        <span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+        <span class="txt" style="text-decoration:none!important;color:var(--text)!important">Animações e microinterações</span></label>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="chip-ic blue">${ic('drop')}</span><h3>Metas</h3></div>
+      <div class="field"><label>Meta diária de água (ml)</label><input class="input" type="number" id="cfAgua" value="${s.metaAgua}" step="100"></div>
+      <div class="field"><label>Meta calórica calculada</label><input class="input" value="${calMeta()} kcal — ${TRI_NOME[gest().tri]}" disabled style="opacity:.6"></div>
+      <button class="btn btn-soft btn-sm" id="cfMetas">${ic('check','ic ic-sm')} Atualizar metas</button>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="chip-ic yellow">${ic('bell')}</span><h3>Lembretes</h3></div>
+      <label class="chk" style="margin-bottom:10px"><input type="checkbox" id="cfLemb"${s.config.lembretes?' checked':''}>
+        <span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+        <span class="txt" style="text-decoration:none!important;color:var(--text)!important">Avisar sobre consultas próximas</span></label>
+      <label class="chk"><input type="checkbox" id="cfSem"${s.config.semanaAuto?' checked':''}>
+        <span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+        <span class="txt" style="text-decoration:none!important;color:var(--text)!important">Resumo automático a cada nova semana</span></label>
+      <p class="hint">Os avisos aparecem dentro do aplicativo quando você o abre.</p>
+    </div>
+
+    <div class="card span2">
+      <div class="card-head"><span class="chip-ic mint">${ic('download')}</span><h3>Seus dados</h3></div>
+      <p style="font-size:14px;color:var(--text-2);margin-bottom:16px">Tudo fica armazenado apenas neste navegador — nada é enviado para servidores. Exporte com frequência para não perder seus registros.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-ghost" id="cfExport">${ic('download','ic ic-sm')} Exportar backup (.json)</button>
+        <button class="btn btn-ghost" id="cfImport">${ic('share','ic ic-sm')} Importar backup</button>
+        <input type="file" id="cfFile" accept="application/json" style="display:none">
+        <button class="btn btn-ghost" id="cfLimpar" style="color:var(--pink-ink)">${ic('trash','ic ic-sm')} Apagar todos os dados</button>
+      </div>
+      <hr class="divider">
+      <div class="grid g4">
+        ${miniStat('Memórias',state.entries.length,'registros')}
+        ${miniStat('Consultas',state.consultas.length,'agendadas')}
+        ${miniStat('Sintomas',state.sintomas.length,'registros')}
+        ${miniStat('Publicações',state.posts.filter(p=>p.meu).length,'suas')}
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <img src="logo_gestacao.jpg-.png" style="width:44px;height:44px;border-radius:14px;object-fit:cover" alt="">
+      <div><h3>Diário da Gestação</h3>
+        <p style="font-size:13.5px;color:var(--text-2);margin-top:4px">Versão 1.0 · funciona offline · dados locais.<br>
+        As informações do aplicativo são educativas e não substituem o acompanhamento pré-natal.</p></div>
+    </div>
+  </div>`;
+};
+BIND.config=()=>{
+  $('#cfSalvar').onclick=()=>{
+    state.profile.nome=$('#cfNome').value.trim(); state.profile.bebe=$('#cfBebe').value.trim();
+    save(); updateTopbar(); toast('Dados salvos');
+  };
+  $$('[data-tema]').forEach(b=>b.onclick=()=>{setTheme(b.dataset.tema);repaint()});
+  $('#cfAnim').onchange=e=>{state.config.animacoes=e.target.checked;save();
+    document.documentElement.style.setProperty('--ease',e.target.checked?'cubic-bezier(.22,1,.36,1)':'linear')};
+  $('#cfMetas').onclick=()=>{state.metaAgua=clamp(+$('#cfAgua').value||2500,500,6000);save();repaint();toast('Metas atualizadas')};
+  $('#cfLemb').onchange=e=>{state.config.lembretes=e.target.checked;save()};
+  $('#cfSem').onchange=e=>{state.config.semanaAuto=e.target.checked;save()};
+  $('#cfExport').onclick=exportar;
+  $('#cfImport').onclick=()=>$('#cfFile').click();
+  $('#cfFile').onchange=e=>{
+    const f=e.target.files[0]; if(!f)return;
+    const r=new FileReader();
+    r.onload=()=>{ try{
+      const d=JSON.parse(r.result);
+      state=Object.assign(defaults(),d); save(); setTheme(state.theme||'light');
+      renderNav(); updateTopbar(); repaint(); toast('Backup importado com sucesso');
+    }catch(err){ toast('Arquivo inválido','warn') } };
+    r.readAsText(f);
+  };
+  $('#cfLimpar').onclick=()=>openModal({title:'Apagar todos os dados',icon:'trash',cor:'pink',
+    body:`<p style="color:var(--text-2)">Isso remove permanentemente memórias, fotos, consultas, sintomas, pesos e listas deste navegador. A ação não pode ser desfeita.</p>
+      <p class="hint" style="margin-top:12px">Sugestão: exporte um backup antes.</p>`,
+    ok:'Apagar tudo',onOk:()=>{
+      localStorage.removeItem(KEY); state=defaults(); state.posts=seedPosts();
+      save(); setTheme('light'); renderNav(); updateTopbar(); repaint(); toast('Dados apagados');
+    }});
+};
+function exportar(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`diario-gestacao-${hoje()}.json`;
+  a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+  toast('Backup exportado');
+}
+
+/* ============================== AÇÃO RÁPIDA ============================== */
+function quickAdd(e){
+  const acoes={
+    painel:()=>modalMemoria(), memorias:()=>modalMemoria(), dicas:()=>modalMemoria(),
+    consultas:()=>modalConsulta(), sintomas:()=>modalSintoma(), nutricao:()=>modalRefeicao(),
+    perfil:()=>modalPeso(), crescimento:()=>modalPeso(), analises:()=>modalPeso(),
+    agua:()=>{ state.agua[hoje()]=(state.agua[hoje()]||0)+200; save(); repaint(); toast('200 ml registrados'); },
+    movimentos:()=>{ go('movimentos'); toast('Toque no painel a cada movimento'); },
+    checklist:()=>{ go('checklist').then?.(()=>{}); setTimeout(()=>$('#btnAddCheck')?.click(),700); },
+    mala:()=>{ setTimeout(()=>$('#btnAddMala')?.click(),100); },
+    parto:()=>{ setTimeout(()=>$('#btnPlanoResumo')?.click(),100); },
+    comunidade:()=>{ $('#postTxt')?.focus(); },
+    config:()=>modalMemoria()
+  };
+  (acoes[view]||acoes.painel)();
+}
+$('#btnAdd').onclick=quickAdd;
+
+/* ============================== ONBOARDING ============================== */
+function onboarding(){
+  openModal({title:'Bem-vinda',icon:'heart',cor:'pink',cancel:'Depois',
+    body:`<p style="color:var(--text-2);margin-bottom:16px">Vamos configurar o básico para que os cálculos da sua gestação fiquem corretos. Você pode mudar tudo depois em Perfil da Gestação.</p>
+      <div class="field"><label>Como podemos te chamar?</label><input class="input" id="obNome" placeholder="Seu nome ou apelido"></div>
+      <div class="field"><label>Data da última menstruação</label><input class="input" type="date" id="obDum" value="${state.profile.dum}"></div>
+      <div class="field"><label>Ou informe a data provável do parto</label><input class="input" type="date" id="obDpp" value="${state.profile.dpp}"></div>
+      <p class="hint">Seus dados ficam apenas neste dispositivo.</p>`,
+    ok:'Começar',
+    onOk:()=>{
+      state.profile.nome=$('#obNome').value.trim()||'mamãe';
+      const dum=$('#obDum').value, dpp=$('#obDpp').value;
+      if(dum) state.profile.dum=dum;
+      state.profile.dpp = dpp || (dum?iso(addDays(parseISO(dum),280)):state.profile.dpp);
+      state.onboarded=true; save();
+      closeModal();
+      aiRun('Preparando seu diário','Calculando idade gestacional e montando seu painel',
+        ['Salvando seu perfil','Calculando semana atual','Posicionando marcos da jornada','Montando o painel'])
+        .then(()=>{ updateTopbar(); repaint(); toast(`Bem-vinda, ${state.profile.nome}`); });
+      return false;
+    }});
+  $('#obDum').onchange=e=>{ if(e.target.value) $('#obDpp').value=iso(addDays(parseISO(e.target.value),280)); };
+}
+
+/* ============================== LEMBRETES ============================== */
+function checarLembretes(){
+  if(!state.config.lembretes) return;
+  const c=proximaConsulta(); if(!c) return;
+  const d=diasEntre(hoje(),c.data);
+  if(d>=0&&d<=2) setTimeout(()=>toast(d===0?`Consulta hoje às ${c.hora}`:`Consulta em ${d} dia${d>1?'s':''}: ${c.titulo}`,'warn'),2200);
+}
+
+/* ============================== INICIALIZAÇÃO ============================== */
+load();
+document.documentElement.dataset.theme = state.theme||'light';
+$('meta[name=theme-color]').setAttribute('content', state.theme==='dark'?'#0C0A11':'#F8BBD0');
+if(!state.config.animacoes) document.documentElement.style.setProperty('--ease','linear');
+
+const hashInicial=location.hash.replace('#','');
+if(ORDEM.includes(hashInicial)) view=hashInicial;
+renderNav(); updateTopbar(); updateSidebarProgress();
+
+addEventListener('hashchange',()=>{
+  const h=location.hash.replace('#','');
+  if(ORDEM.includes(h)&&h!==view) go(h);
+});
+setInterval(updateTopbar,60000);
+
+(async()=>{
+  $('#stage').innerHTML=skeleton(view);
+  await aiRun('Abrindo seu diário','Carregando registros salvos neste dispositivo',
+    ['Verificando armazenamento local','Restaurando seus registros','Calculando idade gestacional','Preparando o painel']);
+  paint();
+  if(!state.onboarded) setTimeout(onboarding,500);
+  else checarLembretes();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Criativos · Diário da Gestação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#12101A;color:#EFEBF4;font-family:'Roboto',system-ui,sans-serif;padding:32px 24px 80px}
+h1{font-family:'Poppins';font-size:26px;font-weight:600;letter-spacing:-.02em;margin:0 0 6px}
+.sub{color:#A79FB5;font-size:15px;max-width:70ch;margin:0 0 26px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px;position:sticky;top:0;background:#12101A;padding:14px 0;z-index:5;border-bottom:1px solid #2A2436}
+button{font-family:'Poppins';font-size:14px;font-weight:600;padding:11px 18px;border-radius:11px;border:1px solid #3A3350;background:#1D1829;color:#EFEBF4;cursor:pointer;transition:.18s}
+button:hover{background:#272033;transform:translateY(-2px)}
+button.pri{background:linear-gradient(135deg,#EE7FAE,#B77BD8 52%,#6FA8E8);border-color:transparent;color:#fff}
+.grid{display:grid;gap:30px}
+.peca{background:#1A1624;border:1px solid #2A2436;border-radius:16px;padding:18px}
+.peca .head{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.peca .head b{font-family:'Poppins';font-size:15px;font-weight:600;flex:1;min-width:180px}
+.peca .head code{font-family:ui-monospace,monospace;font-size:12px;color:#A79FB5;background:#241E31;padding:4px 9px;border-radius:6px}
+canvas{width:100%;height:auto;display:block;border-radius:10px;background:#000}
+.uso{font-size:13px;color:#8F87A0;margin-top:12px}
+</style>
+</head>
+<body>
+
+<h1>Criativos prontos para exportar</h1>
+<p class="sub">Cada peça é desenhada em resolução real. Clique em baixar e ela sai em PNG no tamanho exato exigido pela plataforma. O tema claro costuma performar melhor no Discover e no Gmail, o escuro no YouTube. Exporte os dois e teste.</p>
+
+<div class="bar">
+  <button class="pri" id="baixarTudo">Baixar todas as peças</button>
+  <button id="tema">Alternar tema: escuro</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+/* ============================================================
+   PALETAS
+   ============================================================ */
+const TEMAS = {
+  escuro:{
+    bg1:'#3A1C33', bg2:'#4E2A63', bg3:'#1F4470',
+    tinta:'#FFFFFF', tinta2:'rgba(255,255,255,.78)', tinta3:'rgba(255,255,255,.55)',
+    chipBg:'rgba(255,255,255,.14)', chipBd:'rgba(255,255,255,.26)',
+    telaBg:'#FBFAFD', telaTinta:'#221C2A', telaTinta2:'#6B6478', telaLinha:'#EDE9F2',
+    moldura:'#0E0B14'
+  },
+  claro:{
+    bg1:'#FDEAF2', bg2:'#F1E6FA', bg3:'#E4F0FD',
+    tinta:'#241C2B', tinta2:'#5E5569', tinta3:'#8E8499',
+    chipBg:'rgba(255,255,255,.7)', chipBd:'rgba(36,28,43,.12)',
+    telaBg:'#FFFFFF', telaTinta:'#221C2A', telaTinta2:'#6B6478', telaLinha:'#EFEBF4',
+    moldura:'#241C2B'
+  }
+};
+const ACENTO = ['#EE7FAE','#B77BD8','#6FA8E8'];
+let tema = 'escuro';
+
+/* ============================================================
+   PEÇAS
+   ============================================================ */
+const PECAS = [
+  {id:'capa-hubla-1280x720', w:1280, h:720, layout:'lateral',
+   titulo:'40 semanas registradas no seu celular',
+   sub:'E em mais lugar nenhum. Sem conta, sem nuvem, sem anúncio.',
+   chip:'PAGAMENTO ÚNICO', selo:'16 seções · offline · acesso vitalício',
+   uso:'Capa do produto na Hubla. Também serve como thumbnail em qualquer plataforma de checkout.'},
+
+  {id:'banner-1920x480', w:1920, h:480, layout:'banner',
+   titulo:'O diário da sua gestação que fica só com você',
+   sub:'Acompanhe cada semana, gere seu plano de parto e leve as perguntas para a consulta.',
+   chip:'R$ 67 · UMA VEZ SÓ',
+   uso:'Banner de topo de página, área de membros ou capa de rede social.'},
+
+  {id:'demandgen-quadrado-1200x1200', w:1200, h:1200, layout:'quadrado',
+   titulo:'Seu diário de gestação, só seu',
+   sub:'Nada sai do seu celular. Sem conta e sem anúncio.',
+   chip:'ACESSO VITALÍCIO',
+   uso:'Geração de Demanda, proporção 1:1. Obrigatória na campanha.'},
+
+  {id:'demandgen-retrato-960x1200', w:960, h:1200, layout:'retrato',
+   titulo:'Chegue na consulta sabendo o que perguntar',
+   sub:'O app monta a lista da sua semana e imprime seu plano de parto.',
+   chip:'16 SEÇÕES',
+   uso:'Geração de Demanda, proporção 4:5. É a que mais aparece no feed do Discover.'},
+
+  {id:'demandgen-paisagem-1200x628', w:1200, h:628, layout:'lateral',
+   titulo:'O app de gravidez que funciona offline',
+   sub:'Registre sintomas, chutes e consultas sem depender de internet.',
+   chip:'SEM ASSINATURA', selo:'Pagamento único de R$ 67',
+   uso:'Geração de Demanda, proporção 1.91:1. Obrigatória na campanha.'},
+
+  {id:'logo-quadrado-1200x1200', w:1200, h:1200, layout:'logo',
+   uso:'Logotipo 1:1 exigido pela Geração de Demanda.'},
+
+  {id:'logo-paisagem-1200x300', w:1200, h:300, layout:'logo4x1',
+   uso:'Logotipo 4:1 exigido pela Geração de Demanda.'}
+];
+
+/* ============================================================
+   UTILITÁRIOS DE DESENHO
+   ============================================================ */
+function rr(c,x,y,w,h,r){
+  r=Math.min(r,w/2,h/2);
+  c.beginPath();
+  c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r);
+  c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath();
+}
+function quebra(c,txt,maxW){
+  const p=txt.split(' '); const linhas=[]; let l='';
+  for(const w of p){
+    const t=l?l+' '+w:w;
+    if(c.measureText(t).width>maxW && l){linhas.push(l); l=w;} else l=t;
+  }
+  if(l)linhas.push(l);
+  return linhas;
+}
+function textoBloco(c,txt,x,y,maxW,lh){
+  const linhas=quebra(c,txt,maxW);
+  linhas.forEach((l,i)=>c.fillText(l,x,y+i*lh));
+  return y+linhas.length*lh;
+}
+function gradAcento(c,x1,y1,x2,y2){
+  const g=c.createLinearGradient(x1,y1,x2,y2);
+  g.addColorStop(0,ACENTO[0]); g.addColorStop(.52,ACENTO[1]); g.addColorStop(1,ACENTO[2]);
+  return g;
+}
+function fundo(c,w,h,t){
+  const g=c.createLinearGradient(0,0,w,h);
+  g.addColorStop(0,t.bg1); g.addColorStop(.5,t.bg2); g.addColorStop(1,t.bg3);
+  c.fillStyle=g; c.fillRect(0,0,w,h);
+  // brilhos suaves
+  const b1=c.createRadialGradient(w*.14,h*.1,0,w*.14,h*.1,w*.55);
+  b1.addColorStop(0,'rgba(255,255,255,.16)'); b1.addColorStop(1,'rgba(255,255,255,0)');
+  c.fillStyle=b1; c.fillRect(0,0,w,h);
+  const b2=c.createRadialGradient(w*.9,h*.95,0,w*.9,h*.95,w*.5);
+  b2.addColorStop(0,'rgba(255,255,255,.1)'); b2.addColorStop(1,'rgba(255,255,255,0)');
+  c.fillStyle=b2; c.fillRect(0,0,w,h);
+}
+function coracao(c,cx,cy,s,cor){
+  c.save(); c.translate(cx,cy); c.scale(s/24,s/24);
+  c.beginPath();
+  c.moveTo(12,21);
+  c.bezierCurveTo(4.4,15.6,2,12.4,2,9.2);
+  c.bezierCurveTo(2,6,4.6,3.8,7.4,3.8);
+  c.bezierCurveTo(9.4,3.8,11,4.9,12,6.4);
+  c.bezierCurveTo(13,4.9,14.6,3.8,16.6,3.8);
+  c.bezierCurveTo(19.4,3.8,22,6,22,9.2);
+  c.bezierCurveTo(22,12.4,19.6,15.6,12,21);
+  c.closePath();
+  c.fillStyle=cor; c.fill(); c.restore();
+}
+/* chip: ancora 'esq' usa x como borda esquerda, 'centro' usa x como eixo */
+function chip(c,txt,x,y,t,esc,ancora){
+  const alinhoAnt=c.textAlign;
+  c.textAlign='left';
+  c.font='600 '+Math.round(20*esc)+"px Poppins";
+  const tw=c.measureText(txt).width, ph=Math.round(46*esc), pad=Math.round(24*esc);
+  const bw=tw+pad*2;
+  const bx = ancora==='centro' ? x-bw/2 : x;
+  rr(c,bx,y,bw,ph,ph/2);
+  c.fillStyle=t.chipBg; c.fill();
+  c.lineWidth=Math.max(1,1.5*esc); c.strokeStyle=t.chipBd; c.stroke();
+  c.fillStyle=t.tinta; c.textBaseline='middle';
+  c.fillText(txt,bx+pad,y+ph/2+1);
+  c.textBaseline='alphabetic';
+  c.textAlign=alinhoAnt;
+  return ph;
+}
+
+/* mockup do aplicativo */
+function celular(c,x,y,w,t){
+  const h=w*2.05, r=w*.13, pad=w*.038;
+  c.save();
+  c.shadowColor='rgba(0,0,0,.45)'; c.shadowBlur=w*.16; c.shadowOffsetY=w*.06;
+  rr(c,x,y,w,h,r); c.fillStyle=t.moldura; c.fill();
+  c.restore();
+
+  const sx=x+pad, sy=y+pad, sw=w-pad*2, sh=h-pad*2, sr=r-pad*.55;
+  rr(c,sx,sy,sw,sh,sr); c.fillStyle=t.telaBg; c.fill();
+  c.save(); rr(c,sx,sy,sw,sh,sr); c.clip();
+
+  const u=sw/100; // unidade relativa
+
+  // topo
+  c.fillStyle=t.telaTinta; c.font='600 '+(u*5.4)+"px Poppins";
+  c.fillText('Boa tarde, Ana',sx+u*7,sy+u*13);
+  c.fillStyle=t.telaTinta2; c.font='400 '+(u*3.7)+"px Roboto";
+  c.fillText('Painel · Semana 22 · 2º trimestre',sx+u*7,sy+u*19);
+  rr(c,sx+sw-u*16,sy+u*7,u*9,u*9,u*3); c.fillStyle=gradAcento(c,sx+sw-u*16,sy,sx+sw-u*7,sy+u*16); c.fill();
+  c.strokeStyle=t.telaLinha; c.lineWidth=u*.4;
+  c.beginPath(); c.moveTo(sx,sy+u*24); c.lineTo(sx+sw,sy+u*24); c.stroke();
+
+  // card hero
+  const hx=sx+u*6, hy=sy+u*30, hw=sw-u*12, hh=u*44;
+  rr(c,hx,hy,hw,hh,u*6);
+  const hg=c.createLinearGradient(hx,hy,hx+hw,hy+hh);
+  hg.addColorStop(0,'#5B2F52'); hg.addColorStop(.55,'#7B4A95'); hg.addColorStop(1,'#3E6BA8');
+  c.fillStyle=hg; c.fill();
+
+  c.font='600 '+(u*3.1)+"px Poppins"; c.fillStyle='rgba(255,255,255,.85)';
+  const ct='2º TRIMESTRE · 122 DIAS';
+  const cw=c.measureText(ct).width;
+  rr(c,hx+u*5,hy+u*5,cw+u*7,u*7.5,u*3.75);
+  c.fillStyle='rgba(255,255,255,.2)'; c.fill();
+  c.fillStyle='#fff'; c.fillText(ct,hx+u*8.5,hy+u*10.2);
+
+  c.font='600 '+(u*10)+"px Poppins"; c.fillStyle='#fff';
+  c.fillText('Semana 22',hx+u*5,hy+u*24);
+  c.font='400 '+(u*3.6)+"px Roboto"; c.fillStyle='rgba(255,255,255,.88)';
+  c.fillText('Seu bebê está do tamanho de um mamão,',hx+u*5,hy+u*32);
+  c.fillText('cerca de 27,8 cm e 430 g.',hx+u*5,hy+u*38);
+
+  // dois cards
+  const cy2=hy+hh+u*5, cw2=(hw-u*5)/2, ch2=u*30;
+  [['ÁGUA','1600','ml',.64,'#5C9FE0'],['MOVIMENTOS','12','hoje',1,'#9E6BD0']].forEach((d,i)=>{
+    const cx2=hx+i*(cw2+u*5);
+    rr(c,cx2,cy2,cw2,ch2,u*5); c.fillStyle=t.telaBg; c.fill();
+    c.strokeStyle=t.telaLinha; c.lineWidth=u*.4; c.stroke();
+    rr(c,cx2+u*4,cy2+u*4,u*8,u*8,u*2.6);
+    c.fillStyle=d[4]+'26'; c.fill();
+    c.fillStyle=t.telaTinta2; c.font='600 '+(u*2.9)+"px Poppins";
+    c.fillText(d[0],cx2+u*4,cy2+u*17.5);
+    c.fillStyle=t.telaTinta; c.font='600 '+(u*7)+"px Poppins";
+    c.fillText(d[1],cx2+u*4,cy2+u*25);
+    const nw=c.measureText(d[1]).width;
+    c.fillStyle=t.telaTinta2; c.font='400 '+(u*3.2)+"px Roboto";
+    c.fillText(' '+d[2],cx2+u*4+nw,cy2+u*25);
+    rr(c,cx2+u*4,cy2+ch2-u*4.5,cw2-u*8,u*1.8,u*.9); c.fillStyle=t.telaLinha; c.fill();
+    rr(c,cx2+u*4,cy2+ch2-u*4.5,(cw2-u*8)*d[3],u*1.8,u*.9); c.fillStyle=d[4]; c.fill();
+  });
+
+  // card largo
+  const wy=cy2+ch2+u*5;
+  rr(c,hx,wy,hw,u*30,u*5); c.fillStyle=t.telaBg; c.fill();
+  c.strokeStyle=t.telaLinha; c.lineWidth=u*.4; c.stroke();
+  c.fillStyle=t.telaTinta; c.font='600 '+(u*4)+"px Poppins";
+  c.fillText('Resumo da semana',hx+u*5,wy+u*9);
+  c.fillStyle=t.telaTinta2; c.font='400 '+(u*3.4)+"px Roboto";
+  ['Hidratação dentro da meta. Náusea caiu 40%','em relação à semana anterior. Próxima','consulta em 6 dias, com 4 perguntas.'].forEach((l,i)=>
+    c.fillText(l,hx+u*5,wy+u*(16+i*5.2)));
+
+  c.restore();
+}
+
+/* ============================================================
+   LAYOUTS
+   ============================================================ */
+function desenhar(p){
+  const t=TEMAS[tema];
+  const cv=document.getElementById('cv-'+p.id);
+  const c=cv.getContext('2d');
+  const w=p.w, h=p.h;
+  c.clearRect(0,0,w,h);
+  c.textBaseline='alphabetic';
+
+  if(p.layout==='logo' || p.layout==='logo4x1'){ return logo(c,w,h,t,p.layout); }
+
+  fundo(c,w,h,t);
+
+  const esc = Math.min(w,h)/700;
+
+  if(p.layout==='lateral'){
+    /* celular dimensionado pela altura e sangrando só pela base */
+    const pw=(h*1.02)/2.05;
+    celular(c,w*.62,h*.17,pw,t);
+    const x=w*.07, maxW=w*.47;
+    let y=h*.15;
+    y+=chip(c,p.chip,x,y,t,esc*1.05)+h*.075;
+    c.fillStyle=t.tinta; c.font='600 '+Math.round(w*.047)+"px Poppins";
+    y=textoBloco(c,p.titulo,x,y,maxW,w*.057);
+    c.fillStyle=t.tinta2; c.font='400 '+Math.round(w*.024)+"px Roboto";
+    y=textoBloco(c,p.sub,x,y+w*.032,maxW,w*.033);
+    const marcaY=h*.92;
+    if(p.selo){
+      /* nunca deixa o selo encostar na marca */
+      const seloY=Math.min(y+w*.028, marcaY-w*.052);
+      c.fillStyle=t.tinta3; c.font='500 '+Math.round(w*.02)+"px Poppins";
+      c.fillText(p.selo,x,seloY);
+    }
+    marca(c,x,marcaY,w*.03,t);
+  }
+
+  if(p.layout==='banner'){
+    const pw=(h*1.02)/2.05;
+    celular(c,w*.73,h*.15,pw,t);
+    const x=w*.045, base=h*.19;
+    /* marca e chip na mesma linha, sem colisao */
+    const mw=marca(c,x,base,h*.075,t);
+    const ph=Math.round(46*esc*.8);
+    chip(c,p.chip,x+mw+w*.022,base-ph*.72,t,esc*.8);
+    c.fillStyle=t.tinta; c.font='600 '+Math.round(w*.026)+"px Poppins";
+    let y=textoBloco(c,p.titulo,x,h*.50,w*.50,w*.033);
+    c.fillStyle=t.tinta2; c.font='400 '+Math.round(w*.0155)+"px Roboto";
+    textoBloco(c,p.sub,x,y+w*.021,w*.50,w*.022);
+  }
+
+  /* quadrado e retrato: texto empilhado no topo, celular sangrando pela base.
+     A posicao do celular vem do fim do texto, entao nunca ha sobreposicao. */
+  if(p.layout==='quadrado' || p.layout==='retrato'){
+    const vert = p.layout==='retrato';
+    marcaCentro(c,w/2,h*(vert?.065:.072),w*(vert?.040:.036),t);
+    chip(c,p.chip,w/2,h*(vert?.088:.098),t,esc*(vert?.85:.9),'centro');
+    c.textAlign='center';
+    c.fillStyle=t.tinta;
+    c.font='600 '+Math.round(w*(vert?.072:.066))+"px Poppins";
+    let y=textoBloco(c,p.titulo,w/2,h*(vert?.205:.235),w*(vert?.86:.82),w*(vert?.086:.080));
+    c.fillStyle=t.tinta2;
+    c.font='400 '+Math.round(w*(vert?.032:.030))+"px Roboto";
+    y=textoBloco(c,p.sub,w/2,y+w*.030,w*(vert?.80:.74),w*(vert?.044:.041));
+    c.textAlign='left';
+    const pw=w*(vert?.60:.46);
+    celular(c,w/2-pw/2,y+h*.035,pw,t);
+  }
+}
+
+function marca(c,x,y,s,t){
+  coracao(c,x,y-s*.75,s*1.5,gradAcento(c,x,y-s,x+s*1.5,y+s*.5));
+  c.fillStyle=t.tinta; c.font='600 '+Math.round(s*1.15)+"px Poppins";
+  c.fillText('Diário da Gestação',x+s*2,y);
+  return s*2+c.measureText('Diário da Gestação').width;
+}
+function marcaCentro(c,cx,y,s,t){
+  c.font='600 '+Math.round(s*1.15)+"px Poppins";
+  const tw=c.measureText('Diário da Gestação').width;
+  const total=s*2+tw;
+  const x=cx-total/2;
+  coracao(c,x,y-s*.75,s*1.5,gradAcento(c,x,y-s,x+s*1.5,y+s*.5));
+  c.fillStyle=t.tinta; c.textAlign='left';
+  c.fillText('Diário da Gestação',x+s*2,y);
+}
+
+function logo(c,w,h,t,tipo){
+  c.fillStyle = tema==='escuro' ? '#17121F' : '#FFFFFF';
+  c.fillRect(0,0,w,h);
+  if(tipo==='logo'){
+    const s=w*.20;
+    coracao(c,w/2-s*.75,h/2-s*.95,s*1.5,gradAcento(c,w/2-s,h/2-s,w/2+s,h/2+s));
+    c.textAlign='center';
+    c.fillStyle= tema==='escuro' ? '#FFFFFF' : '#241C2B';
+    c.font='600 '+Math.round(w*.082)+"px Poppins";
+    c.fillText('Diário da',w/2,h*.66);
+    c.fillText('Gestação',w/2,h*.66+w*.10);
+    c.textAlign='left';
+  }else{
+    const s=h*.46;
+    const txt='Diário da Gestação';
+    c.font='600 '+Math.round(h*.30)+"px Poppins";
+    const tw=c.measureText(txt).width;
+    const total=s*1.9+tw;
+    const x=w/2-total/2;
+    coracao(c,x,h/2-s*.72,s*1.45,gradAcento(c,x,h/2-s,x+s*1.5,h/2+s));
+    c.fillStyle= tema==='escuro' ? '#FFFFFF' : '#241C2B';
+    c.fillText(txt,x+s*1.9,h/2+h*.10);
+  }
+}
+
+/* ============================================================
+   MONTAGEM
+   ============================================================ */
+const grid=document.getElementById('grid');
+PECAS.forEach(p=>{
+  const el=document.createElement('div');
+  el.className='peca';
+  el.innerHTML=`<div class="head"><b>${p.id.replace(/-/g,' ')}</b>
+    <code>${p.w} × ${p.h}</code>
+    <button data-baixar="${p.id}">Baixar PNG</button></div>
+    <canvas id="cv-${p.id}" width="${p.w}" height="${p.h}"></canvas>
+    <p class="uso">${p.uso}</p>`;
+  grid.appendChild(el);
+});
+
+function baixar(p){
+  const cv=document.getElementById('cv-'+p.id);
+  cv.toBlob(b=>{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(b);
+    a.download=`${p.id}-${tema}.png`;
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+  },'image/png');
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-baixar]');
+  if(b) baixar(PECAS.find(p=>p.id===b.dataset.baixar));
+});
+document.getElementById('baixarTudo').onclick=()=>{
+  PECAS.forEach((p,i)=>setTimeout(()=>baixar(p),i*350));
+};
+document.getElementById('tema').onclick=()=>{
+  tema = tema==='escuro' ? 'claro' : 'escuro';
+  document.getElementById('tema').textContent='Alternar tema: '+tema;
+  PECAS.forEach(desenhar);
+};
+
+async function iniciar(){
+  try{
+    await document.fonts.load('600 64px Poppins');
+    await document.fonts.load('400 32px Roboto');
+    await document.fonts.ready;
+  }catch(e){}
+  PECAS.forEach(desenhar);
+}
+iniciar();
+</script>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#F8BBD0">
+<title>Diário da Gestação: o app que guarda tudo no seu celular</title>
+<meta name="description" content="Aplicativo de diário da gestação com 16 seções: semana a semana, sintomas, consultas, plano de parto e análises. Pagamento único, sem assinatura, sem anúncio e sem enviar seus dados para ninguém.">
+<link rel="icon" href="logo_gestacao.jpg-.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#F8BBD0; --mint:#A5D6A7; --yellow:#FFF59D; --blue:#BBDEFB; --lilac:#E1BEE7;
+  --pink-ink:#C2185B; --mint-ink:#2E7D46; --yellow-ink:#9A7B0A; --blue-ink:#1565C0; --lilac-ink:#7B3FA0;
+  --pink-soft:#FDEEF4; --mint-soft:#EDF7EE; --yellow-soft:#FFFBE6; --blue-soft:#EAF3FD; --lilac-soft:#F6EDFA;
+  --bg:#FBFAFD; --surface:#FFFFFF; --surface-2:#F7F5FA; --surface-3:#F1EDF6;
+  --text:#1F1927; --text-2:#5F576D; --text-3:#948DA1;
+  --border:rgba(31,25,39,.09); --border-2:rgba(31,25,39,.16);
+  --shadow-sm:0 2px 8px rgba(31,25,39,.06);
+  --shadow-md:0 10px 30px rgba(31,25,39,.09);
+  --shadow-lg:0 30px 70px rgba(31,25,39,.16);
+  --shadow-glow:0 12px 34px rgba(224,98,155,.32);
+  --accent:#E0629B;
+  --grad:linear-gradient(135deg,#EE7FAE 0%,#B77BD8 52%,#6FA8E8 100%);
+  --grad-soft:linear-gradient(135deg,#F8BBD0 0%,#E1BEE7 48%,#BBDEFB 100%);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --r:20px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Roboto',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Poppins',sans-serif;margin:0;line-height:1.18;letter-spacing:-.028em;font-weight:600}
+h1{font-size:clamp(30px,5.2vw,52px)}
+h2{font-size:clamp(25px,3.9vw,38px)}
+h3{font-size:19px}
+p{margin:0}
+img{max-width:100%;display:block}
+.ic{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ic-lg{width:26px;height:26px}
+.wrap{width:min(1140px,100%);margin:0 auto;padding:0 20px}
+.narrow{width:min(820px,100%);margin:0 auto;padding:0 20px}
+section{padding:76px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Poppins';font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--pink-ink);background:var(--pink-soft);padding:7px 15px;border-radius:99px;margin-bottom:18px}
+.lead{font-size:clamp(16px,2vw,19px);color:var(--text-2);margin-top:16px;max-width:62ch}
+.center{text-align:center}
+.center .lead{margin-left:auto;margin-right:auto}
+
+/* ---------- botões ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:0 30px;height:60px;border-radius:16px;border:0;cursor:pointer;
+  font-family:'Poppins';font-size:18px;font-weight:600;letter-spacing:-.01em;text-decoration:none;transition:transform .18s var(--ease),box-shadow .26s var(--ease)}
+.btn-cta{background:var(--grad);color:#fff;box-shadow:var(--shadow-glow)}
+.btn-cta:hover{transform:translateY(-3px);box-shadow:0 20px 46px rgba(224,98,155,.45)}
+.btn-cta:active{transform:translateY(0) scale(.98)}
+.btn-ghost{background:var(--surface);color:var(--text);border:1px solid var(--border-2);box-shadow:var(--shadow-sm)}
+.btn-ghost:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.btn-sm{height:48px;font-size:15.5px;padding:0 22px;border-radius:13px}
+.cta-sub{font-size:13.5px;color:var(--text-3);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap}
+.cta-sub .ic{width:15px;height:15px;color:var(--mint-ink)}
+
+/* ---------- topo ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(18px) saturate(180%);border-bottom:1px solid var(--border)}
+.topbar .wrap{display:flex;align-items:center;gap:14px;height:70px}
+.brand{display:flex;align-items:center;gap:11px;flex:1;min-width:0}
+.brand img{width:38px;height:38px;border-radius:12px;object-fit:cover;border:1px solid var(--border)}
+.brand b{font-family:'Poppins';font-size:16px;font-weight:600;letter-spacing:-.02em}
+.brand span{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);font-weight:600}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(900px 500px at 12% 0%,#FDEAF2 0%,transparent 58%),radial-gradient(800px 460px at 92% 12%,#EAF2FD 0%,transparent 55%)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:52px;align-items:center}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-bullets{list-style:none;padding:0;margin:26px 0 30px;display:flex;flex-direction:column;gap:12px}
+.hero-bullets li{display:flex;gap:11px;align-items:flex-start;font-size:16.5px}
+.hero-bullets .ic{color:var(--mint-ink);margin-top:4px}
+.hero-cta{display:flex;flex-direction:column;align-items:flex-start;gap:0}
+
+/* mockup de celular */
+.phone{width:290px;margin:0 auto;border-radius:38px;background:#14101C;padding:11px;box-shadow:var(--shadow-lg);position:relative}
+.phone::after{content:'';position:absolute;top:20px;left:50%;transform:translateX(-50%);width:70px;height:5px;border-radius:99px;background:rgba(255,255,255,.22)}
+.screen{border-radius:28px;overflow:hidden;background:#FBFAFD;height:558px;display:flex;flex-direction:column}
+.sc-top{padding:26px 15px 10px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--border)}
+.sc-top .t{flex:1}
+.sc-top b{display:block;font-family:'Poppins';font-size:13px;font-weight:600}
+.sc-top small{font-size:9.5px;color:var(--text-3)}
+.sc-av{width:26px;height:26px;border-radius:9px;background:var(--grad-soft)}
+.sc-body{padding:12px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+.sc-hero{border-radius:16px;padding:15px;color:#fff;background:linear-gradient(120deg,#5B2F52,#7B4A95 55%,#3E6BA8);position:relative;overflow:hidden}
+.sc-hero .chip{display:inline-block;font-family:'Poppins';font-size:8.5px;font-weight:600;padding:4px 9px;border-radius:99px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.26);margin-bottom:8px}
+.sc-hero b{display:block;font-family:'Poppins';font-size:21px;letter-spacing:-.03em;font-weight:600}
+.sc-hero small{font-size:10px;opacity:.86;display:block;margin-top:3px;line-height:1.45}
+.sc-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.sc-card{background:#fff;border:1px solid var(--border);border-radius:13px;padding:11px}
+.sc-card .ci{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;margin-bottom:7px}
+.sc-card .k{font-size:9px;color:var(--text-3);font-family:'Poppins';font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.sc-card .v{font-family:'Poppins';font-size:17px;font-weight:600;letter-spacing:-.03em;line-height:1.2}
+.sc-card .v i{font-style:normal;font-size:9.5px;color:var(--text-3)}
+.sc-bar{height:4px;border-radius:99px;background:var(--surface-3);margin-top:7px;overflow:hidden}
+.sc-bar i{display:block;height:100%;border-radius:99px}
+.sc-wide{background:#fff;border:1px solid var(--border);border-radius:13px;padding:12px}
+.sc-wide b{font-family:'Poppins';font-size:11px;font-weight:600;display:block;margin-bottom:5px}
+.sc-wide p{font-size:9.5px;color:var(--text-2);line-height:1.55}
+.sc-nav{margin-top:auto;border-top:1px solid var(--border);padding:9px 12px;display:flex;justify-content:space-around;background:#fff}
+.sc-nav span{width:17px;height:17px;border-radius:5px;background:var(--surface-3)}
+.sc-nav span.on{background:var(--grad-soft)}
+
+/* ---------- faixa de confiança ---------- */
+.trust{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:22px 0}
+.trust-grid{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.trust-item{display:flex;align-items:center;gap:10px;font-family:'Poppins';font-size:14px;font-weight:500;color:var(--text-2);padding:9px 17px;border-radius:99px;background:var(--surface-2)}
+.trust-item .ic{width:17px;height:17px;color:var(--accent)}
+
+/* ---------- cards genéricos ---------- */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:26px;box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.card-h:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.chip-ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;margin-bottom:15px}
+.pink{background:var(--pink-soft);color:var(--pink-ink)}
+.mint{background:var(--mint-soft);color:var(--mint-ink)}
+.blue{background:var(--blue-soft);color:var(--blue-ink)}
+.lilac{background:var(--lilac-soft);color:var(--lilac-ink)}
+.yellow{background:var(--yellow-soft);color:var(--yellow-ink)}
+.card p{font-size:15px;color:var(--text-2);margin-top:7px}
+
+/* ---------- comparativo ---------- */
+.compare{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-md)}
+.crow{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr);align-items:center;gap:12px;padding:16px 22px;border-bottom:1px solid var(--border)}
+.crow:last-child{border-bottom:0}
+.crow.head{background:var(--surface-2);font-family:'Poppins';font-size:13.5px;font-weight:600;letter-spacing:.01em}
+.crow.head span:not(:first-child){text-align:center}
+.crow .lbl{font-size:15px;font-weight:500}
+.cv{display:flex;align-items:center;justify-content:center;gap:7px;font-size:13.5px;font-family:'Poppins';font-weight:500}
+.cv.no{color:var(--text-3)}
+.cv.yes{color:var(--mint-ink)}
+.cv .ic{width:17px;height:17px}
+.chead-us{display:inline-flex;align-items:center;gap:7px;color:var(--pink-ink)}
+
+/* ---------- passos ---------- */
+.step{position:relative;padding-top:8px}
+.step-n{font-family:'Poppins';font-size:13px;font-weight:700;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--grad);color:#fff;margin-bottom:15px;box-shadow:var(--shadow-sm)}
+
+/* ---------- caixa de oferta ---------- */
+.offer{position:relative;border-radius:28px;padding:2px;background:var(--grad);box-shadow:var(--shadow-lg)}
+.offer-in{background:var(--surface);border-radius:26px;padding:40px 34px}
+.stack{list-style:none;padding:0;margin:0 0 24px}
+.stack li{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px dashed var(--border)}
+.stack li:last-child{border-bottom:0}
+.stack .ic{color:var(--mint-ink);flex:none}
+.stack .txt{flex:1;font-size:15.5px}
+.stack .txt b{font-family:'Poppins';font-weight:600;display:block;font-size:15.5px}
+.stack .txt small{color:var(--text-3);font-size:13px}
+.stack .val{font-family:'Poppins';font-size:14px;font-weight:600;color:var(--text-3);text-decoration:line-through;flex:none}
+.total{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-radius:15px;background:var(--surface-2);margin-bottom:26px;font-family:'Poppins';font-weight:600}
+.total .a{font-size:15px;color:var(--text-2)}
+.total .b{font-size:22px;color:var(--text-3);text-decoration:line-through;letter-spacing:-.02em}
+.price{text-align:center;margin-bottom:24px}
+.price .from{font-size:15px;color:var(--text-3);text-decoration:line-through;font-family:'Poppins';font-weight:500}
+.price .now{font-family:'Poppins';font-size:clamp(46px,8vw,66px);font-weight:700;letter-spacing:-.045em;line-height:1;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0}
+.price .now sup{font-size:.42em;font-weight:600;vertical-align:super;letter-spacing:-.02em}
+.price .inst{font-size:15.5px;color:var(--text-2);font-family:'Poppins';font-weight:500}
+.price .once{display:inline-block;margin-top:12px;font-size:13px;font-family:'Poppins';font-weight:600;color:var(--mint-ink);background:var(--mint-soft);padding:7px 15px;border-radius:99px}
+
+/* ---------- garantia ---------- */
+.guarantee{display:flex;gap:26px;align-items:center;flex-wrap:wrap;background:var(--mint-soft);border:1px solid rgba(46,125,70,.2);border-radius:var(--r);padding:32px}
+.seal{width:112px;height:112px;flex:none;border-radius:50%;display:grid;place-items:center;text-align:center;background:var(--surface);border:2.5px dashed var(--mint-ink);color:var(--mint-ink);font-family:'Poppins'}
+.seal b{display:block;font-size:33px;font-weight:700;line-height:1;letter-spacing:-.04em}
+.seal span{font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase}
+
+/* ---------- FAQ ---------- */
+.faq{background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-bottom:12px;overflow:hidden;transition:box-shadow .25s}
+.faq[open]{box-shadow:var(--shadow-sm)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 24px;display:flex;align-items:center;gap:14px;font-family:'Poppins';font-size:16.5px;font-weight:600;letter-spacing:-.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'';width:10px;height:10px;border-right:2.2px solid var(--text-3);border-bottom:2.2px solid var(--text-3);transform:rotate(45deg);margin-left:auto;flex:none;transition:transform .3s var(--ease)}
+.faq[open] summary::after{transform:rotate(-135deg)}
+.faq .a{padding:0 24px 22px 24px;color:var(--text-2);font-size:15.5px}
+.faq .a p+p{margin-top:11px}
+
+/* ---------- rodapé ---------- */
+footer{background:#141020;color:#B9B2C6;padding:52px 0 34px;font-size:14px}
+footer h4{color:#fff;font-size:15px;margin-bottom:12px}
+footer a{color:#D9D3E3;text-decoration:underline;text-underline-offset:3px}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;margin-bottom:34px}
+.fdisc{border-top:1px solid rgba(255,255,255,.12);padding-top:22px;font-size:12.5px;color:#8A8398;line-height:1.7}
+.fill{background:rgba(255,213,79,.16);color:#FFD54F;padding:1px 7px;border-radius:5px;font-family:'Poppins';font-size:11.5px;font-weight:600}
+
+/* ---------- barra fixa mobile ---------- */
+.sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:60;padding:11px 14px calc(11px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.9);backdrop-filter:blur(18px);border-top:1px solid var(--border)}
+.sticky-cta .btn{width:100%;height:54px}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-cta{align-items:stretch}
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr;gap:26px}
+}
+@media (max-width:640px){
+  section{padding:56px 0}
+  .g2,.g4{grid-template-columns:1fr}
+  .crow{grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr) minmax(0,.9fr);padding:14px;gap:8px}
+  .crow .lbl{font-size:13.5px}
+  .cv{font-size:12px;gap:5px}
+  .cv .ic{width:15px;height:15px}
+  .crow.head{font-size:12px}
+  .offer-in{padding:30px 22px}
+  .btn{width:100%;font-size:16.5px;padding:0 18px}
+  .topbar .btn{width:auto}
+  .sticky-cta{display:block}
+  body{padding-bottom:82px}
+  .guarantee{padding:24px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.dep{display:flex;flex-direction:column;gap:15px;height:100%}
+.dep-q{font-size:16px;color:var(--text);line-height:1.72}
+.dep-who{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:4px}
+.dep-av{width:44px;height:44px;border-radius:14px;flex:none;display:grid;place-items:center;font-family:'Poppins';font-weight:600;font-size:16px;color:#4A3A52}
+.dep-who b{font-family:'Poppins';font-size:14.5px;font-weight:600;display:block;line-height:1.3}
+.dep-who small{color:var(--text-3);font-size:12.5px}
+.stars{display:flex;gap:3px;color:#E0A02C}
+.stars svg{width:15px;height:15px;fill:currentColor;stroke:none}
+.aviso{border:2px dashed #C9A227;background:#FFFBEA;color:#6E5307;border-radius:14px;padding:17px 21px;margin-bottom:30px;font-size:14.5px;line-height:1.6}
+.aviso b{display:block;font-family:'Poppins';font-size:15.5px;margin-bottom:5px;color:#54400A}
+.aviso code{font-family:ui-monospace,monospace;font-size:13px;background:rgba(201,162,39,.16);padding:2px 6px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4.8 12.6l4.6 4.6L19.2 7.4"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6.2 6.2l11.6 11.6M17.8 6.2L6.2 17.8"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10.5" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-off" viewBox="0 0 24 24"><path d="M12 3.2v8.6"/><path d="M7.6 5.6a8 8 0 1 0 8.8 0"/></symbol>
+<symbol id="i-plan" viewBox="0 0 24 24"><path d="M13.8 2.8H8A3.2 3.2 0 0 0 4.8 6v12A3.2 3.2 0 0 0 8 21.2h8a3.2 3.2 0 0 0 3.2-3.2V8.2Z"/><path d="M13.6 2.9V8h5.4"/><path d="M8.6 13h6.8M8.6 16.8h4.4"/></symbol>
+<symbol id="i-analytics" viewBox="0 0 24 24"><path d="M3 20.5h18"/><path d="M6.2 20.5v-5.8M11 20.5V6.2M15.8 20.5v-9M20.6 20.5V10"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3.4"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+<symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2.5 12.5h4L9.5 5l4.5 14 2.8-6.5h4.7"/></symbol>
+<symbol id="i-growth" viewBox="0 0 24 24"><path d="M3 16.8l5.2-5.2 3.4 3.4L20.5 6"/><path d="M15 6h5.5v5.5"/><path d="M3 21h18"/></symbol>
+<symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.2s6.2 5.9 6.2 10.3a6.2 6.2 0 0 1-12.4 0C5.8 9.1 12 3.2 12 3.2Z"/></symbol>
+<symbol id="i-waves" viewBox="0 0 24 24"><path d="M2.5 8c1.6-1.6 3.2-1.6 4.8 0s3.2 1.6 4.8 0 3.2-1.6 4.8 0 3.2 1.6 4.6 0"/><path d="M2.5 13c1.6-1.6 3.2-1.6 4.8 0s3.2 1.6 4.8 0 3.2-1.6 4.8 0 3.2 1.6 4.6 0"/><path d="M2.5 18c1.6-1.6 3.2-1.6 4.8 0s3.2 1.6 4.8 0 3.2-1.6 4.8 0 3.2 1.6 4.6 0"/></symbol>
+<symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3.4"/><circle cx="8.6" cy="9.6" r="1.7"/><path d="M3.6 17.4l4.3-4.3a2 2 0 0 1 2.8 0l3.4 3.4"/></symbol>
+<symbol id="i-bag" viewBox="0 0 24 24"><rect x="2.8" y="7" width="18.4" height="13.5" rx="3.2"/><path d="M8.6 7V5.6A2.6 2.6 0 0 1 11.2 3h1.6a2.6 2.6 0 0 1 2.6 2.6V7"/><path d="M2.8 12.2h18.4"/></symbol>
+<symbol id="i-checklist" viewBox="0 0 24 24"><path d="M3.2 6.4l1.6 1.6L8.2 4.6"/><path d="M3.2 12.4l1.6 1.6 3.4-3.4"/><path d="M3.2 18.4l1.6 1.6 3.4-3.4"/><path d="M12 6.5h9M12 12.5h9M12 18.5h6"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3.5v11.4M7.6 10.6l4.4 4.4 4.4-4.4"/><path d="M4 17.5v1.4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1.4"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M11.5 2.6l1.9 4.9 4.9 1.9-4.9 1.9-1.9 4.9-1.9-4.9L4.7 9.4l4.9-1.9z"/><path d="M18.4 15.4l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.8l7.5 3v6.1c0 4.6-3 8-7.5 9.3-4.5-1.3-7.5-4.7-7.5-9.3V5.8Z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></symbol>
+<symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V3.8h10V9"/><rect x="3.5" y="9" width="17" height="7.5" rx="2.4"/><path d="M7 14h10v6.2H7z"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24"><path d="M4.5 19.5c-2-8 3-15 15.5-15.5.5 12.5-7.5 17.5-15.5 15.5Z"/><path d="M8.5 15.5c1.6-3.4 4.3-5.8 7.5-7"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9.2" cy="8" r="3.4"/><path d="M2.8 19.6c0-3.5 2.9-5.4 6.4-5.4s6.4 1.9 6.4 5.4"/><path d="M16.2 5.1a3.4 3.4 0 0 1 0 6.4"/></symbol>
+</svg>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <img src="logo_gestacao.jpg-.png" alt="">
+      <div><b>Diário da Gestação</b><span>Sua jornada</span></div>
+    </div>
+    <a href="#oferta" class="btn btn-cta btn-sm">Quero o meu</a>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><svg class="ic" style="width:14px;height:14px"><use href="#i-lock"/></svg> Pagamento único · sem assinatura</span>
+      <h1>O diário da sua gestação que fica <em>no seu celular</em>. E em mais lugar nenhum.</h1>
+      <p class="lead">Um aplicativo com 16 seções para acompanhar cada semana, registrar sintomas, contar movimentos e chegar em cada consulta sabendo exatamente o que perguntar. Sem conta, sem nuvem, sem anúncio de fralda perseguindo você.</p>
+      <ul class="hero-bullets">
+        <li><svg class="ic"><use href="#i-check"/></svg><span><b>Funciona offline.</b> Seus registros ficam salvos no seu aparelho, não em um servidor.</span></li>
+        <li><svg class="ic"><use href="#i-check"/></svg><span><b>Vira documento.</b> Plano de parto e lista de perguntas prontos para imprimir e levar.</span></li>
+        <li><svg class="ic"><use href="#i-check"/></svg><span><b>Paga uma vez.</b> Acesso vitalício, inclusive nas próximas gestações.</span></li>
+      </ul>
+      <div class="hero-cta">
+        <a href="#oferta" class="btn btn-cta">Quero meu diário por R$ 67</a>
+        <p class="cta-sub"><svg class="ic"><use href="#i-shield"/></svg> 30 dias de garantia · acesso imediato após a compra</p>
+      </div>
+    </div>
+
+    <div class="phone" aria-hidden="true">
+      <div class="screen">
+        <div class="sc-top">
+          <div class="t"><b>Boa tarde, Ana</b><small>Painel · Semana 22 · 2º trimestre</small></div>
+          <div class="sc-av"></div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-hero">
+            <span class="chip">2º TRIMESTRE · 122 DIAS</span>
+            <b>Semana 22 <span style="font-size:13px;opacity:.7">+ 4d</span></b>
+            <small>Seu bebê está do tamanho de um mamão, cerca de 27,8 cm e 430 g.</small>
+          </div>
+          <div class="sc-row">
+            <div class="sc-card">
+              <div class="ci blue"><svg class="ic" style="width:13px;height:13px"><use href="#i-drop"/></svg></div>
+              <div class="k">Água</div><div class="v">1600<i> ml</i></div>
+              <div class="sc-bar"><i style="width:64%;background:linear-gradient(90deg,#8FC4F2,#5C9FE0)"></i></div>
+            </div>
+            <div class="sc-card">
+              <div class="ci lilac"><svg class="ic" style="width:13px;height:13px"><use href="#i-waves"/></svg></div>
+              <div class="k">Movimentos</div><div class="v">12<i> hoje</i></div>
+              <div class="sc-bar"><i style="width:100%;background:linear-gradient(90deg,#C69AE6,#9E6BD0)"></i></div>
+            </div>
+          </div>
+          <div class="sc-wide">
+            <b>Resumo da semana</b>
+            <p>Hidratação dentro da meta. Náusea caiu 40% em relação à semana anterior. Próxima consulta em 6 dias, com 4 perguntas na sua lista.</p>
+          </div>
+        </div>
+        <div class="sc-nav"><span class="on"></span><span></span><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="wrap trust-grid">
+    <span class="trust-item"><svg class="ic"><use href="#i-lock"/></svg> Dados 100% no seu aparelho</span>
+    <span class="trust-item"><svg class="ic"><use href="#i-off"/></svg> Funciona sem internet</span>
+    <span class="trust-item"><svg class="ic"><use href="#i-x"/></svg> Zero anúncios</span>
+    <span class="trust-item"><svg class="ic"><use href="#i-shield"/></svg> Garantia de 30 dias</span>
+  </div>
+</div>
+
+<!-- ===================== O PROBLEMA ===================== -->
+<section>
+  <div class="narrow center">
+    <span class="eyebrow">Por que não usar o app grátis</span>
+    <h2>O aplicativo gratuito não é gratuito. Você paga com os seus dados.</h2>
+    <p class="lead">Os apps de gestação mais baixados pedem cadastro, sincronizam tudo em servidores e sustentam a operação vendendo espaço publicitário para marcas de fralda, fórmula e plano de saúde. Gravidez é o dado mais valioso do varejo, e ele está sendo coletado enquanto você registra um enjoo.</p>
+  </div>
+
+  <div class="wrap" style="margin-top:44px">
+    <div class="compare">
+      <div class="crow head">
+        <span>&nbsp;</span>
+        <span>App gratuito comum</span>
+        <span class="center"><span class="chead-us"><svg class="ic" style="width:16px;height:16px"><use href="#i-spark"/></svg> Diário da Gestação</span></span>
+      </div>
+      <div class="crow"><span class="lbl">Onde ficam seus registros</span>
+        <span class="cv no"><svg class="ic"><use href="#i-x"/></svg> Servidor da empresa</span>
+        <span class="cv yes"><svg class="ic"><use href="#i-check"/></svg> Só no seu aparelho</span></div>
+      <div class="crow"><span class="lbl">Precisa criar conta</span>
+        <span class="cv no"><svg class="ic"><use href="#i-x"/></svg> Sim, com e-mail</span>
+        <span class="cv yes"><svg class="ic"><use href="#i-check"/></svg> Nenhum cadastro</span></div>
+      <div class="crow"><span class="lbl">Anúncios dentro do app</span>
+        <span class="cv no"><svg class="ic"><use href="#i-x"/></svg> O tempo todo</span>
+        <span class="cv yes"><svg class="ic"><use href="#i-check"/></svg> Zero</span></div>
+      <div class="crow"><span class="lbl">Funciona sem internet</span>
+        <span class="cv no"><svg class="ic"><use href="#i-x"/></svg> Parcialmente</span>
+        <span class="cv yes"><svg class="ic"><use href="#i-check"/></svg> Totalmente</span></div>
+      <div class="crow"><span class="lbl">Plano de parto para imprimir</span>
+        <span class="cv no"><svg class="ic"><use href="#i-x"/></svg> Não gera</span>
+        <span class="cv yes"><svg class="ic"><use href="#i-check"/></svg> Documento pronto</span></div>
+      <div class="crow"><span class="lbl">Perguntas para a consulta</span>
+        <span class="cv no"><svg class="ic"><use href="#i-x"/></svg> Você anota no bloco</span>
+        <span class="cv yes"><svg class="ic"><use href="#i-check"/></svg> Sugeridas por semana</span></div>
+      <div class="crow"><span class="lbl">Análise cruzada dos registros</span>
+        <span class="cv no"><svg class="ic"><use href="#i-x"/></svg> Gráficos soltos</span>
+        <span class="cv yes"><svg class="ic"><use href="#i-check"/></svg> Peso, água, sintomas e movimentos juntos</span></div>
+      <div class="crow"><span class="lbl">Levar seus dados embora</span>
+        <span class="cv no"><svg class="ic"><use href="#i-x"/></svg> Ficam presos lá</span>
+        <span class="cv yes"><svg class="ic"><use href="#i-check"/></svg> Backup em um clique</span></div>
+      <div class="crow"><span class="lbl">Custo real</span>
+        <span class="cv no"><svg class="ic"><use href="#i-x"/></svg> Seus dados + assinatura escondida</span>
+        <span class="cv yes"><svg class="ic"><use href="#i-check"/></svg> R$ 67, uma vez só</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MECANISMO ===================== -->
+<section style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="narrow center">
+    <span class="eyebrow">O método por trás</span>
+    <h2>Registrar. Analisar. Levar.</h2>
+    <p class="lead">A maioria das gestantes registra e nunca mais olha. O Diário da Gestação foi construído ao contrário: tudo o que você anota em 30 segundos por dia vira, no fim da semana, um documento útil para a pessoa que cuida de você.</p>
+  </div>
+  <div class="wrap grid g3" style="margin-top:46px">
+    <div class="step">
+      <div class="step-n">1</div>
+      <h3>Registrar em 30 segundos</h3>
+      <p>Um toque para a água, um toque a cada movimento do bebê, um clique no sintoma. Nada de formulário longo, porque foi desenhado para quem está exausta.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <h3>O app cruza sozinho</h3>
+      <p>A seção Análises junta peso, hidratação, sintomas e movimentos na mesma linha do tempo e mostra o que mudou de uma semana para a outra.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <h3>Levar para a consulta</h3>
+      <p>Você sai com a lista de perguntas da sua semana e o plano de parto impresso. A consulta deixa de ser "está tudo bem?" e vira uma conversa com dados.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== O QUE VOCÊ RECEBE ===================== -->
+<section>
+  <div class="narrow center">
+    <span class="eyebrow">Dentro do aplicativo</span>
+    <h2>16 seções, uma para cada coisa que você precisa lembrar</h2>
+  </div>
+  <div class="wrap grid g4" style="margin-top:44px">
+    <div class="card card-h"><div class="chip-ic pink"><svg class="ic ic-lg"><use href="#i-growth"/></svg></div>
+      <h3>Crescimento do bebê</h3><p>Tamanho, peso e comprimento estimados da semana 4 à 40, com os marcos de desenvolvimento de cada fase.</p></div>
+    <div class="card card-h"><div class="chip-ic mint"><svg class="ic ic-lg"><use href="#i-calendar"/></svg></div>
+      <h3>Consultas</h3><p>Calendário do pré-natal com lembretes e a lista de perguntas para levar, sugerida conforme a sua semana.</p></div>
+    <div class="card card-h"><div class="chip-ic yellow"><svg class="ic ic-lg"><use href="#i-pulse"/></svg></div>
+      <h3>Sintomas</h3><p>16 sintomas com intensidade de 1 a 5, histórico e detecção de padrões entre uma semana e outra.</p></div>
+    <div class="card card-h"><div class="chip-ic lilac"><svg class="ic ic-lg"><use href="#i-waves"/></svg></div>
+      <h3>Movimentos e chutes</h3><p>Contador por sessão com a meta clínica de 10 movimentos em 2 horas, recomendada a partir da semana 28.</p></div>
+    <div class="card card-h"><div class="chip-ic blue"><svg class="ic ic-lg"><use href="#i-drop"/></svg></div>
+      <h3>Água</h3><p>Meta diária ajustável, registro por toque e histórico de 30 dias, porque o volume sanguíneo aumenta cerca de 45% na gestação.</p></div>
+    <div class="card card-h"><div class="chip-ic mint"><svg class="ic ic-lg"><use href="#i-leaf"/></svg></div>
+      <h3>Nutrição</h3><p>Meta calórica por trimestre, nutrientes essenciais com fontes alimentares e a lista do que evitar.</p></div>
+    <div class="card card-h"><div class="chip-ic pink"><svg class="ic ic-lg"><use href="#i-image"/></svg></div>
+      <h3>Memórias</h3><p>Seu diário com humor, texto e fotos. Comprimidas automaticamente e guardadas no seu aparelho.</p></div>
+    <div class="card card-h"><div class="chip-ic lilac"><svg class="ic ic-lg"><use href="#i-plan"/></svg></div>
+      <h3>Plano de parto</h3><p>10 decisões estruturadas viram um documento pronto para imprimir e entregar na maternidade.</p></div>
+    <div class="card card-h"><div class="chip-ic blue"><svg class="ic ic-lg"><use href="#i-checklist"/></svg></div>
+      <h3>Lista de verificação</h3><p>30 tarefas divididas pelos três trimestres, dos exames à cadeirinha do carro.</p></div>
+    <div class="card card-h"><div class="chip-ic yellow"><svg class="ic ic-lg"><use href="#i-bag"/></svg></div>
+      <h3>Mala da maternidade</h3><p>Checklist completo em 5 categorias, com barra de progresso e versão para imprimir.</p></div>
+    <div class="card card-h"><div class="chip-ic pink"><svg class="ic ic-lg"><use href="#i-analytics"/></svg></div>
+      <h3>Análises</h3><p>Todos os seus registros cruzados: evolução de peso, hidratação, sintomas por semana e movimentos.</p></div>
+    <div class="card card-h"><div class="chip-ic mint"><svg class="ic ic-lg"><use href="#i-download"/></svg></div>
+      <h3>Backup dos seus dados</h3><p>Exporte tudo em um arquivo. Trocou de celular, seus nove meses vão junto, e continuam sendo seus.</p></div>
+  </div>
+</section>
+
+<!-- ===================== OFERTA ===================== -->
+<section id="oferta" style="background:linear-gradient(180deg,var(--surface-2),var(--bg))">
+  <div class="narrow center" style="margin-bottom:40px">
+    <span class="eyebrow">A oferta completa</span>
+    <h2>Tudo o que está incluído</h2>
+  </div>
+
+  <div class="wrap" style="max-width:760px">
+    <div class="offer">
+      <div class="offer-in">
+        <ul class="stack">
+          <li><svg class="ic"><use href="#i-check"/></svg><span class="txt"><b>Aplicativo Diário da Gestação completo</b><small>16 seções, acesso vitalício, funciona offline</small></span><span class="val">R$ 97</span></li>
+          <li><svg class="ic"><use href="#i-check"/></svg><span class="txt"><b>Módulo Análises</b><small>Peso, água, sintomas e movimentos cruzados</small></span><span class="val">R$ 67</span></li>
+          <li><svg class="ic"><use href="#i-check"/></svg><span class="txt"><b>Gerador de Plano de Parto</b><small>Documento pronto para imprimir e levar</small></span><span class="val">R$ 47</span></li>
+          <li><svg class="ic"><use href="#i-check"/></svg><span class="txt"><b>Perguntas para a consulta</b><small>Sugeridas automaticamente pela sua semana</small></span><span class="val">R$ 37</span></li>
+          <li><svg class="ic"><use href="#i-check"/></svg><span class="txt"><b>Checklist dos 3 trimestres + Mala da Maternidade</b><small>Mais de 60 itens organizados</small></span><span class="val">R$ 37</span></li>
+          <li><svg class="ic"><use href="#i-check"/></svg><span class="txt"><b>Backup exportável</b><small>Seus dados saem com você quando quiser</small></span><span class="val">R$ 27</span></li>
+        </ul>
+
+        <div class="total"><span class="a">Valor somado</span><span class="b">R$ 312</span></div>
+
+        <div class="price">
+          <div class="from">De R$ 197</div>
+          <div class="now"><sup>R$</sup>67</div>
+          <div class="inst">ou 12x de R$ 6,71</div>
+          <span class="once">Pagamento único · sem mensalidade</span>
+        </div>
+
+        <a href="https://pay.hub.la/DtfVoqsT1V2kjeKxSXM0" class="btn btn-cta" style="width:100%">Garantir meu acesso agora</a>
+        <p class="cta-sub"><svg class="ic"><use href="#i-lock"/></svg> Compra segura · acesso liberado na hora · 30 dias de garantia</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GARANTIA ===================== -->
+<section style="padding-top:0">
+  <div class="wrap" style="max-width:900px">
+    <div class="guarantee">
+      <div class="seal"><div><b>30</b><span>dias</span></div></div>
+      <div style="flex:1;min-width:260px">
+        <h2 style="font-size:26px;margin-bottom:10px">O risco é todo meu</h2>
+        <p style="color:var(--text-2);font-size:16px">Use o Diário da Gestação por 30 dias inteiros. Registre suas semanas, gere seu plano de parto, leve as perguntas para a consulta. Se em qualquer momento desse período você achar que não valeu, é só me escrever e eu devolvo os R$ 67. Sem formulário, sem pergunta, sem constrangimento.</p>
+        <p style="color:var(--text-3);font-size:14px;margin-top:12px">A lei brasileira garante 7 dias de arrependimento em compras online. Eu ofereço mais que o quádruplo porque confio no que construí.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     DEPOIMENTOS
+     ATENÇÃO: os três textos abaixo são EXEMPLOS do formato que funciona.
+     NÃO SÃO DEPOIMENTOS REAIS. Troque pelos verdadeiros antes de publicar
+     e apague a div.aviso logo abaixo.
+     ===================================================================== -->
+<section style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="narrow center">
+    <span class="eyebrow">Quem já está usando</span>
+    <h2>O que as gestantes dizem</h2>
+  </div>
+
+  <div class="wrap" style="max-width:820px;margin-top:30px">
+    <div class="aviso">
+      <b>Modelo, não publique assim</b>
+      Os três depoimentos abaixo são exemplos do formato que converte: situação concreta, o que mudou na prática e a semana da gestação. Substitua pelos reais e apague este aviso (o bloco <code>&lt;div class="aviso"&gt;</code>).
+    </div>
+  </div>
+
+  <div class="wrap grid g3" style="margin-top:0">
+    <div class="card dep">
+      <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg></div>
+      <p class="dep-q">"Eu usava outro aplicativo e, na mesma semana em que registrei que estava grávida, comecei a receber anúncio de fralda no Instagram. Eu não tinha contado nem para a minha mãe ainda. Troquei por esse e o alívio de saber que nada sai do meu celular não tem preço."</p>
+      <div class="dep-who"><span class="dep-av" style="background:var(--pink-soft)">M</span>
+        <div><b>Marina C.</b><small>Semana 19, primeira gestação</small></div></div>
+    </div>
+
+    <div class="card dep">
+      <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg></div>
+      <p class="dep-q">"Minha obstetra disse que eu fui a primeira paciente que chegou com as perguntas anotadas. Ela olhou o histórico de sintomas da semana, viu que a azia piorava todo dia depois do almoço e ajustou a medicação por causa disso."</p>
+      <div class="dep-who"><span class="dep-av" style="background:var(--mint-soft)">L</span>
+        <div><b>Letícia R.</b><small>Semana 27</small></div></div>
+    </div>
+
+    <div class="card dep">
+      <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.85-4.45 4.25 1.1 6.1L12 17.1l-5.45 2.9 1.1-6.1L3.2 9.65l6.1-.85z"/></svg></div>
+      <p class="dep-q">"Comprei na semana 34 achando que já era tarde demais. Montei a mala pelo checklist, imprimi o plano de parto e levei para a maternidade. A enfermeira pediu uma cópia para anexar no prontuário. Valeu os 67 reais só por aquele momento."</p>
+      <div class="dep-who"><span class="dep-av" style="background:var(--blue-soft)">J</span>
+        <div><b>Juliana P.</b><small>Semana 38</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section>
+  <div class="narrow">
+    <div class="center" style="margin-bottom:40px">
+      <span class="eyebrow">Dúvidas frequentes</span>
+      <h2>Antes de você perguntar</h2>
+    </div>
+
+    <details class="faq" open><summary>Funciona no meu celular?</summary>
+      <div class="a"><p>Sim. O Diário da Gestação abre direto no navegador do seu celular, tablet ou computador. Android, iPhone, não importa. Depois de abrir, você adiciona à tela inicial e ele passa a funcionar como qualquer outro aplicativo, com ícone próprio.</p>
+      <p>Não é preciso baixar nada da loja de aplicativos, o que significa que ele não ocupa espaço e não recebe atualizações forçadas.</p></div></details>
+
+    <details class="faq"><summary>Preciso de internet para usar?</summary>
+      <div class="a"><p>Só na primeira vez, para carregar o aplicativo. Depois disso ele funciona completamente offline: no consultório sem sinal, no avião, no interior. Todos os cálculos de semana, gráficos e registros acontecem dentro do seu aparelho.</p></div></details>
+
+    <details class="faq"><summary>É assinatura? Vai cobrar todo mês?</summary>
+      <div class="a"><p>Não. Você paga R$ 67 uma única vez e o acesso é vitalício. Não existe renovação, não existe cobrança recorrente, não existe versão premium escondida. Se você engravidar de novo daqui a três anos, continua sendo seu.</p></div></details>
+
+    <details class="faq"><summary>Para onde vão os meus dados?</summary>
+      <div class="a"><p>Para lugar nenhum. Tudo o que você escreve, fotografa e registra fica gravado no armazenamento do seu próprio navegador. Não existe cadastro, não existe servidor recebendo essas informações e não há terceiros com acesso a elas.</p>
+      <p>É por isso que o backup manual importa: como nada está na nuvem, é você quem guarda a cópia.</p></div></details>
+
+    <details class="faq"><summary>Se eu trocar de celular, perco tudo?</summary>
+      <div class="a"><p>Não, desde que você exporte o backup antes. Em Configurações existe o botão "Exportar backup", que gera um arquivo com toda a sua gestação. No aparelho novo, você abre o aplicativo e importa esse arquivo. Memórias, fotos, consultas e gráficos voltam exatamente como estavam.</p></div></details>
+
+    <details class="faq"><summary>Já estou no terceiro trimestre. Ainda vale a pena?</summary>
+      <div class="a"><p>Vale, e talvez ainda mais. É justamente na reta final que entram a contagem de movimentos, o plano de parto, a mala da maternidade e as consultas semanais, quatro das seções mais usadas do aplicativo. Você também pode registrar as semanas que já passaram, preenchendo a data que quiser.</p></div></details>
+
+    <details class="faq"><summary>Isso substitui o meu pré-natal?</summary>
+      <div class="a"><p>De jeito nenhum, e ele foi construído justamente para o contrário: para que você chegue mais preparada nas consultas que já faz. O aplicativo organiza e apresenta as suas informações, mas não diagnostica, não prescreve e não interpreta exames. Quem cuida de você e do seu bebê é a sua equipe de saúde.</p></div></details>
+
+    <details class="faq"><summary>Como recebo depois de pagar?</summary>
+      <div class="a"><p>O acesso é liberado imediatamente após a confirmação do pagamento. Você recebe no e-mail cadastrado o link do aplicativo e um passo a passo curto de como adicioná-lo à tela inicial do seu celular.</p></div></details>
+
+    <details class="faq"><summary>E se eu não gostar?</summary>
+      <div class="a"><p>Você tem 30 dias para pedir o reembolso integral. Basta enviar um e-mail para <span class="fill">[SEU E-MAIL]</span> e a devolução é processada sem que eu peça justificativa.</p></div></details>
+  </div>
+</section>
+
+<!-- ===================== CTA FINAL ===================== -->
+<section style="background:linear-gradient(135deg,#5B2F52,#7B4A95 55%,#3E6BA8);color:#fff;text-align:center">
+  <div class="narrow">
+    <span class="eyebrow" style="background:rgba(255,255,255,.16);color:#fff">Última chamada</span>
+    <h2 style="color:#fff">Sua gestação passa uma vez. O registro dela dura para sempre.</h2>
+    <p class="lead" style="color:rgba(255,255,255,.86)">Daqui a alguns anos, o que vai restar dessas 40 semanas é o que você tiver anotado. Que seja num lugar que é seu, que ninguém possa desligar, vender ou transformar em anúncio.</p>
+    <div style="margin-top:34px">
+      <a href="https://pay.hub.la/DtfVoqsT1V2kjeKxSXM0" class="btn btn-cta" style="background:#fff;color:#7B4A95;box-shadow:0 16px 40px rgba(0,0,0,.28)">Quero meu diário por R$ 67</a>
+      <p class="cta-sub" style="color:rgba(255,255,255,.8)"><svg class="ic" style="color:#fff"><use href="#i-shield"/></svg> Pagamento único · acesso vitalício · 30 dias de garantia</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RODAPÉ ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <h4>Diário da Gestação</h4>
+        <p style="color:#9A93A8;font-size:13.5px">Um aplicativo para acompanhar as 40 semanas com privacidade, feito para funcionar no seu celular e em mais lugar nenhum.</p>
+      </div>
+      <div>
+        <h4>Institucional</h4>
+        <p><a href="[LINK]">Política de Privacidade</a><br><a href="[LINK]">Termos de Uso</a><br><a href="[LINK]">Política de Reembolso</a></p>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <p><span class="fill">[SEU E-MAIL]</span><br><span class="fill">[SEU WHATSAPP]</span></p>
+      </div>
+    </div>
+    <div class="fdisc">
+      <p><strong style="color:#CFC8DA">Aviso importante:</strong> o Diário da Gestação é uma ferramenta de organização e registro pessoal, de caráter informativo e educativo. Ele não realiza diagnóstico, não prescreve tratamento, não interpreta exames e não substitui, em nenhuma hipótese, o acompanhamento pré-natal com profissionais de saúde qualificados. Diante de sangramento, dor intensa, febre, perda de líquido, dor de cabeça forte com alterações visuais ou redução dos movimentos do bebê, procure atendimento médico imediatamente.</p>
+      <p style="margin-top:12px"><span class="fill">[RAZÃO SOCIAL]</span> · CNPJ <span class="fill">[00.000.000/0001-00]</span> · <span class="fill">[ENDEREÇO]</span></p>
+      <p style="margin-top:12px">© <span class="fill">[ANO]</span> Diário da Gestação. Todos os direitos reservados. Este site não é afiliado ao Google, Meta ou a qualquer outra plataforma.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-cta"><a href="#oferta" class="btn btn-cta">Quero meu diário por R$ 67</a></div>
+
+<script>
+/* Repassa os parametros de campanha da pagina para o checkout da Hubla.
+   Sem isso, o Google Ads manda o gclid para a landing e a informacao morre ali,
+   entao voce nao consegue saber qual anuncio gerou cada venda.
+   Se nao quiser esse comportamento, e so apagar este bloco. */
+(function(){
+  var p = new URLSearchParams(location.search);
+  var chaves = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','src','sck'];
+  var extras = new URLSearchParams();
+  chaves.forEach(function(k){ var v = p.get(k); if(v) extras.set(k, v); });
+  if(!extras.toString()) return;
+  document.querySelectorAll('a[href*="pay.hub.la"]').forEach(function(a){
+    try{
+      var u = new URL(a.href);
+      extras.forEach(function(v,k){ u.searchParams.set(k,v); });
+      a.href = u.toString();
+    }catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
